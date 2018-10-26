@@ -23,7 +23,7 @@
         const code = params.get('code')
 
         if (code) {
-
+          console.log(code)
         } else {
           this.handleAuth()
         }
