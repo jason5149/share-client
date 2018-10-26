@@ -5,7 +5,9 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development webpack-dev-server --colors --progress --config webpack.config.js --env=development",
     "debug": "cross-env NODE_ENV=development webpack --colors --progress --config webpack.config.js --env=test",
-    "release": "cross-env NODE_ENV=production webpack --colors --progress --config webpack.config.js --env=production"
+    "release": "cross-env NODE_ENV=production webpack --colors --progress --config webpack.config.js --env=production",
+    "rebuild": "rm -rf ./node_modules && yarn install",
+    "deploy": "git pull && npm run release && pm2 startOrRestart ecosystem.config.js --env production"
   },
   "repository": {
     "type": "git",
