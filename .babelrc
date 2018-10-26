@@ -1,28 +1,18 @@
 {
   "presets": [
-    [
-      "@babel/preset-env",
-      { "modules": false }
-    ]
+    "react",
+    ["stage-0"],
+    ["env", { "modules": false }]
   ],
   "plugins": [
-    "@babel/plugin-syntax-dynamic-import",
-    "@babel/plugin-transform-runtime",
-    [
-      "component",
-      {
-        "libraryName": "mint-ui",
-        "style": true
-      },
-      "mint-ui"
-    ],
+    "syntax-dynamic-import",
+    "transform-decorators-legacy",
+    "transform-class-properties",
     [
       "import",
-      { 
-        "libraryName": "pms-saas-common", 
-        "camel2DashComponentName": false
-      },
-      "pms-saas-common"
+      { "libraryName": "antd-mobile", "style": true },
+      { "libraryName": "pms-saas-component" },
+      { "libraryName": "pms-saas-common" }
     ]
   ]
 }

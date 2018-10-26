@@ -3,6 +3,10 @@
   height: @height;
 }
 
+.px2rem(@name, @px) {
+  @{name}: @px / @baseFontSize * 1rem;
+}
+
 .boxSizing(@type: border-box) {
   -webkit-box-sizing: @type;
      -moz-box-sizing: @type;

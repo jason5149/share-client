@@ -1,43 +1,49 @@
-const webpack = require('webpack')
 const path = require('path')
-const merge = require('webpack-merge')
-const commonConfig = require('./build/common')
-const devConfig = require('./build/development')
-const prodConfig = require('./build/production')
-const ProjectConfig = require('./project.config')
+const webpack = require('webpack')
+const webpackMerge = require('webpack-merge')
 
-const build = env => {
-  let config = {}
+const common = require('./build/common')
+const dev = require('./build/development')
+const prod = require('./build/production')
 
-  if (env === 'development') {
-    const devServerOptions = {
-      plugins: [
-        new webpack.HotModuleReplacementPlugin(),
-      ],
-      devServer: {
-        contentBase:        path.resolve('dist'),
-        historyApiFallback: true,
-        inline:             true,
-        hot:                true,
-        port:               3000,
-        progress:           true,
-        compress:           true,
-        proxy:              {
-          '/api': {
-            // target: 'http://192.168.1.83:8090',
-            target:       ProjectConfig.PROXY,
-            changeOrigin: true,
-          },
+/* eslint-disable */
+const build = params => {
+  const env = params
+  const project = require('./project.config')
+  const devOptions = {
+    plugins: [
+      new webpack.HotModuleReplacementPlugin(),
+    ],
+    devServer: {
+      contentBase:        path.resolve('dist'),
+      port:               project.port,
+      historyApiFallback: true,
+      inline:             true,
+      hot:                true,
+      progress:           true,
+      compress:           true,
+      proxy:              {
+        [project.target]: {
+          target:       project.proxy,
+          changeOrigin: true,
         },
       },
-      devtool: '#source-map',
-    }
+    },
+    devtool: '#source-map',
+  }
+  let config
 
-    config = merge(commonConfig(), devConfig(), devServerOptions)
-  } else if (env === 'test') {
-    config = merge(commonConfig(), devConfig())
-  } else if (env === 'production') {
-    config = merge(commonConfig(), prodConfig())
+  //  开发环境 
+  if (env === 'development') {
+    config = webpackMerge(common(), dev(), devOptions)
+  } 
+  //  测试环境
+  else if (env === 'test') {
+    config = webpackMerge(common(), dev())
+  } 
+  //  生产环境
+  else if (env === 'production') {
+    config = webpackMerge(common(), prod())
   }
 
   return config
