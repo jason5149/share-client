@@ -15,6 +15,10 @@ class AuthPage extends PureComponent {
     this.init()
   }
 
+  componentWillUnmount() {
+    this.destroy()
+  }
+
   init() {
     Toast.loading('微信授权中', 10)
 
@@ -30,6 +34,10 @@ class AuthPage extends PureComponent {
     }
   }
 
+  destroy() {
+    Toast.hide()
+  }
+
   handleAuth = () => {
     const appId = WX_APP_ID
     const url = 'https://open.weixin.qq.com/connect/oauth2/authorize'
@@ -37,7 +45,6 @@ class AuthPage extends PureComponent {
     const authParams = wxAuth4Public(appId, redirectUrl, 'userInfo')
     
     window.location.replace(`${ url }?${ object2Url(authParams) }#wechat_redirect`)
-    // console.log(`${ url }?${ object2Url(authParams) }#wechat_redirect`)
   }
 
   handleCode = async code => {
