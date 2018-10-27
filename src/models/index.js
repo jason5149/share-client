@@ -1,9 +1,14 @@
 import BasicModel from './basic'
-import WxModel from './wx'
 import NewsModel from './news'
+import PrizeModel from './prize'
+import UserModel from './user'
+import WxModel from './wx'
+
 
 export default {
   BasicModel,
-  WxModel,
   NewsModel,
+  PrizeModel,
+  UserModel,
+  WxModel,
 }

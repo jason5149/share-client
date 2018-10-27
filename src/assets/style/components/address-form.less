@@ -1,0 +1,34 @@
+.addres-item {
+  &:extend([layout]);
+  &:extend([layout=row]);
+  &:extend([layout-align="space-between center"]);
+  .px2rem(padding-left, 30);
+  .address-label {
+    color: #666;
+    flex-shrink: 0;
+    .px2rem(width, 120);
+    .px2rem(font-size, 30);
+  }
+  .am-list-item {
+    width: 100%;
+    .am-input-control {
+      input {
+        .px2rem(font-size, 30);
+      }
+    }
+  }
+  .address-picker-desc {
+    color: #B5B5B5;
+    .px2rem(font-size, 30);
+  }
+  &.address-switch {
+    height: 44px;
+    .px2rem(padding-right, 30);
+  }
+}
+
+.address-form-btn {
+  .px2rem(margin-top, 100);
+  .px2rem(padding-left, 30);
+  .px2rem(padding-right, 30);
+}

@@ -6,6 +6,8 @@ class Item extends PureComponent {
     const { 
       id, 
       title, 
+      date,
+      author_name,
       thumbnail_pic_s,
       thumbnail_pic_s02,
       thumbnail_pic_s03, 
@@ -35,10 +37,10 @@ class Item extends PureComponent {
             <div className='news-item-integrals'>
               <div layout='row' layout-align='start center'>
                 <span className='news-integral-desc'>
-                  XXX
+                  {author_name}
                 </span>
                 <span className='news-integral-desc'>
-                  1小时前
+                  {date}
                 </span>
               </div>
               <div layout='row' layout-align='start center'>

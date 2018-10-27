@@ -10,6 +10,11 @@ class BasicModel {
     { id: 3, title: 'banner 3', src: 'http://wanjia.sh1a.qingstor.com/tour-3.jpg' },
   ]
 
+  myTabs = [
+    { title: '进行中' },
+    { title: '已完成' },
+  ]
+
   @action
   getBannerList = async () => {
     const result = await getBannerList()

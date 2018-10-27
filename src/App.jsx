@@ -7,6 +7,8 @@ import { BASE_PATH } from '@utils/const'
 
 const AuthPage = AsyncComponent(() => import('@pages/Auth'))
 const HomePage = AsyncComponent(() => import('@pages/Home'))
+const MyPage = AsyncComponent(() => import('@pages/My/Index'))
+const PrizePage = AsyncComponent(() => import('@pages/Prize/Index'))
 
 class App extends PureComponent {
   render() {
@@ -17,6 +19,8 @@ class App extends PureComponent {
             <Route exact path={ `${ BASE_PATH }/` } render={ () => <Redirect to={ `${ BASE_PATH }/home` } /> } />
             <Route path={ `${ BASE_PATH }/auth` } component={ AuthPage } />
             <AuthRoute path={ `${ BASE_PATH }/home` } component={ HomePage } />
+            <AuthRoute path={ `${ BASE_PATH }/my` } component={ MyPage } />
+            <AuthRoute path={ `${ BASE_PATH }/prize` } component={ PrizePage } />
           </div>
         </Router>
       </ErrorBoundary>
