@@ -8,8 +8,8 @@ export default ({ component: Component, ...rest }) => (
   <Route 
     { ...rest }
     render={ props => {
-      const wxUserInfo = getWxUserInfo()
-      // const wxUserInfo = null
+      // const wxUserInfo = getWxUserInfo()
+      const wxUserInfo = 'Jason'
 
       if (wxUserInfo) {
         return <Component { ...props } />
