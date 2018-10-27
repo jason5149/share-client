@@ -89,7 +89,7 @@ class Form extends Component {
           </div>
           <div className='addres-item'>
             <span className='address-label'>
-            手机号
+              手机号
             </span>
             <InputItem 
               value={ phone }
@@ -99,19 +99,19 @@ class Form extends Component {
           </div>
           <div className='addres-item'>
             <span className='address-label'>
-            省市区
+              省/市/区
             </span>
             {/* eslint-disable-next-line */}
             <a className='am-list-item' onClick={ this.handleAddressPicker }>
               <div className='am-list-line' layout='row' layout-align='space-between center'>
-                <span className='address-picker-desc'>{address.length > 0 ? address.join('/') : '请选择省市区'}</span>
+                <span className='address-picker-desc'>{address.length > 0 ? address.join('/') : '请选择省/市/区'}</span>
                 <Icon type='right' style={{ color: '#999' }} />
               </div>
             </a>
           </div>
           <div className='addres-item'>
             <span className='address-label'>
-            详细地址
+              详细地址
             </span>
             <InputItem 
               value={ detail }
@@ -124,7 +124,7 @@ class Form extends Component {
         <List>
           <div className='addres-item address-switch'>
             <span className='address-label'>
-            详细地址
+              设置默认
             </span>
             <Switch
               checked={ isDefault }
