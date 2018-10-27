@@ -45,11 +45,11 @@ class HomePage extends Component {
   }
 
   handleNewsListRefresh = () => {
-
+    console.log('onRefresh')
   }
 
   handleNewsListPageChange = () => {
-    
+    console.log('onReached')
   }
 
   render() {

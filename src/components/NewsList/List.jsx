@@ -40,11 +40,13 @@ class List extends Component {
       this.setState({
         refreshing: false,
       })
-    }, 500)
+    }, 800)
   }
 
   handleEndReached = () => {
-    console.log('reach end')
+    const { onReached } = this.props
+
+    onReached()
   }
 
   render() {
@@ -55,13 +57,20 @@ class List extends Component {
         className='news-list-container'
         ref={ el => this.list = el }
         dataSource={ dataSource }
+        useBodyScroll={ false }
         renderRow={ rowData => <Item { ...rowData } /> }
-        PullToRefresh={ (
+        pullToRefresh={ (
           <PullToRefresh
-            refreshing={ refreshing } 
+            refreshing={ refreshing }
+            indicator={{
+              activate:   <span className='news-list-indicator'>松开立即刷新</span>,
+              deactivate: <span className='news-list-indicator'>下拉刷新</span>,
+              finish:     <span className='news-list-indicator'>完成刷新</span>,
+            }} 
             onRefresh={ this.handleRefresh }
           />
         ) }
+        scrollRenderAheadDistance={ 500 }
         onEndReached={ this.handleEndReached }
         onEndReachedThreshold={ 10 }
       />
