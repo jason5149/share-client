@@ -50,6 +50,7 @@ class List extends Component {
   }
 
   render() {
+    const { onClick } = this.props
     const { dataSource, refreshing } = this.state
 
     return (
@@ -58,7 +59,7 @@ class List extends Component {
         ref={ el => this.list = el }
         dataSource={ dataSource }
         useBodyScroll={ false }
-        renderRow={ rowData => <Item { ...rowData } /> }
+        renderRow={ rowData => <Item { ...rowData } onClick={ onClick } /> }
         pullToRefresh={ (
           <PullToRefresh
             refreshing={ refreshing }

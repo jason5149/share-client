@@ -24,7 +24,7 @@ class BasicModel {
       return false
     }
 
-    console.log(result.body)
+    // this.bannerList = result.body
   }
 }
 

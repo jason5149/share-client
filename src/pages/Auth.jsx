@@ -20,6 +20,8 @@ class AuthPage extends PureComponent {
   }
 
   init() {
+    document.title = '微信授权'
+
     Toast.loading('微信授权中', 10)
 
     const search = urlParams(window.location.href)

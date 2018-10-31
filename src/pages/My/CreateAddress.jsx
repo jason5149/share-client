@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
+import { Toast } from 'antd-mobile'
 import { AsyncComponent } from 'pms-saas-component'
+import { BASE_PATH } from '@utils/const'
 
 const AddressForm = AsyncComponent(() => import('@components/AddressForm'))
 
@@ -17,8 +19,17 @@ class CreateAddressPage extends Component {
     document.title = '添加收货地址'
   }
 
-  handleAddressSubmit = addressInfo => {
-    console.log(addressInfo)
+  handleAddressSubmit = async addressInfo => {
+    const { UserModel, history } = this.props
+    const { createAddress } = UserModel
+
+    const result = await createAddress(addressInfo)
+
+    if (result) {
+      Toast.show('添加成功', 1)
+
+      history.push(`${ BASE_PATH }/my/address`)
+    }
   }
 
   render() {

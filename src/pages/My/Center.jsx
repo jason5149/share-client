@@ -1,23 +1,21 @@
 import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
+import { WhiteSpace, List } from 'antd-mobile'
 import { AsyncComponent } from 'pms-saas-component'
 import { getWxUserInfo } from '@utils/cache'
 import { BASE_PATH } from '@utils/const'
-import { WhiteSpace } from 'antd-mobile'
+
+const { Item } = List
 
 const ProfilePanel = AsyncComponent(() => import('@components/ProfilePanel'))
-const NewsTabs = AsyncComponent(() => import('@components/NewsTabs'))
-const NewsList = AsyncComponent(() => import('@components/NewsList'))
 
 @inject(
-  'BasicModel',
   'UserModel',
 )
 @observer
 class MyCenterPage extends Component {
   state = {
     userInfo: getWxUserInfo(),
-    newsList: [],
   }
 
   componentDidMount() {
@@ -26,27 +24,12 @@ class MyCenterPage extends Component {
 
   init() {
     document.title = '我的'
-
-    this.handleSearchMyNewsList()
   }
 
-  handleSearchMyNewsList = async () => {
-    const { UserModel } = this.props
-    const { getNewsList } = UserModel
+  handleMissionClick = () => {
+    const { history } = this.props
 
-    const newsList = await getNewsList()
-
-    this.setState({
-      newsList,
-    })
-  }
-
-  handleNewsListRefresh = () => {
-    console.log('onRefresh')
-  }
-
-  handleNewsListPageChange = () => {
-    console.log('onReached')
+    history.push(`${ BASE_PATH }/my/news`)
   }
 
   handlePrizeClick = () => {
@@ -62,9 +45,7 @@ class MyCenterPage extends Component {
   }
 
   render() {
-    const { BasicModel } = this.props
-    const { userInfo, newsList } = this.state
-    const { myTabs } = BasicModel
+    const { userInfo } = this.state
 
     return (
       <div className='page-container'>
@@ -74,15 +55,14 @@ class MyCenterPage extends Component {
           onAddressClick={ this.handleAddressClick }
         />
         <WhiteSpace />
-        <NewsTabs tabs={ myTabs }>
-          {newsList.length > 0 && (
-            <NewsList 
-              list={ newsList } 
-              onRefresh={ this.handleNewsListRefresh }
-              onReached={ this.handleNewsListPageChange }
-            />
-          )}
-        </NewsTabs>
+        <List>
+          <Item arrow='horizontal' onClick={ this.handleMissionClick }>我的任务</Item>
+          <Item arrow='horizontal' onClick={ this.handlePrizeClick }>我的奖品</Item>
+        </List>
+        <WhiteSpace />
+        <List>
+          <Item arrow='horizontal' onClick={ this.handleAddressClick }>收货地址</Item>
+        </List>
       </div>
     )
   }

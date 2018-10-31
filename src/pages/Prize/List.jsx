@@ -19,6 +19,8 @@ class PrizeListPage extends Component {
   }
 
   init() {
+    document.title = '奖品列表'
+
     this.handleSearchPrizeList()
   }
 

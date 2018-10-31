@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
 import { AsyncComponent } from 'pms-saas-component'
+import { BASE_PATH } from '../../utils/const'
 
 const BannerCarousel = AsyncComponent(() => import('@components/BannerCarousel'))
 const NewsTabs = AsyncComponent(() => import('@components/NewsTabs'))
@@ -22,6 +23,8 @@ class HomePage extends Component {
   }
 
   init() {
+    document.title = '首页'
+
     this.handleSearchBannerList()
     this.handleSearchNewsList()
   }
@@ -44,12 +47,20 @@ class HomePage extends Component {
     })
   }
 
+  handleNewsDetailClick = id => {
+    const { history } = this.props
+
+    if (!id) return
+
+    history.push(`${ BASE_PATH }/news/${ id }`)
+  }
+
   handleNewsListRefresh = () => {
-    console.log('onRefresh')
+    
   }
 
   handleNewsListPageChange = () => {
-    console.log('onReached')
+
   }
 
   render() {
@@ -65,6 +76,7 @@ class HomePage extends Component {
           {newsList.length > 0 && (
             <NewsList 
               list={ newsList } 
+              onClick={ this.handleNewsDetailClick }
               onRefresh={ this.handleNewsListRefresh }
               onReached={ this.handleNewsListPageChange }
             />

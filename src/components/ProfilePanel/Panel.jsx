@@ -1,9 +1,8 @@
 import React, { PureComponent } from 'react'
-import { Button } from 'antd-mobile'
 
 class Panel extends PureComponent {
   render() {
-    const { userInfo, onPrizeClick, onAddressClick } = this.props
+    const { userInfo } = this.props
     const { headImgUrl } = userInfo
 
     return (
@@ -29,12 +28,6 @@ class Panel extends PureComponent {
             <span className='profile-info-desc'>57%</span>
           </li>
         </ul>
-        <span className='prize-btn'>
-          <Button type='warning' size='small' onClick={ onPrizeClick }>我的奖品</Button>
-        </span>
-        <span className='address-btn'>
-          <Button type='warning' size='small' onClick={ onAddressClick }>收货地址</Button>
-        </span>
       </div>
     )
   }

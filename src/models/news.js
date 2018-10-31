@@ -1,6 +1,6 @@
 import { observable, action } from 'mobx'
 import { Toast } from 'antd-mobile'
-import { getNewsList } from '@services/news'
+import { getNewsList, getNewsDetail } from '@services/news'
 
 class NewsModel {
   @observable
@@ -18,6 +18,9 @@ class NewsModel {
   @observable
   newsListTotal = 0
 
+  @observable
+  newsDetail = null
+
   @action
   getNewsList = async params => {
     const result = await getNewsList(params)
@@ -32,6 +35,18 @@ class NewsModel {
     }
 
     return result.body.list
+  }
+
+  @action
+  getNewsDetail = async params => {
+    const result = await getNewsDetail(params)
+
+    if (result.code !== '10000') {
+      Toast.show(result.message, 1)
+      return false
+    }
+
+    this.newsDetail = result.body
   }
 }
 

@@ -11,12 +11,15 @@ class Item extends PureComponent {
       thumbnail_pic_s,
       thumbnail_pic_s02,
       thumbnail_pic_s03, 
+      onClick,
     } = this.props
 
     return (
-      <div 
+      /* eslint-disable-next-line */
+      <div
         key={ id }
         className='news-item-container'
+        onClick={ () => onClick(id) }
       >
         <div className='news-item-content'>
           <div className='news-item-title'>

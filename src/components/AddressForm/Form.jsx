@@ -33,8 +33,10 @@ class Form extends Component {
     toggleAddressModel()
   }
 
-  handlePickerConfirm = val => {
-    console.log(val)
+  handlePickerConfirm = address => {
+    this.setState({
+      address,
+    })
   }
 
   handlePickerCancel = () => {
