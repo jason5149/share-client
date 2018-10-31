@@ -32,7 +32,7 @@ class App extends PureComponent {
     const { login } = UserModel
 
     if (wxUserInfo) {
-      const { openid } = wxUserInfo
+      const { openId: openid } = wxUserInfo
 
       const result = await login({ openid })
 
