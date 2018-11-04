@@ -3,6 +3,7 @@ import { Toast } from 'antd-mobile'
 import { 
   login,
   getAddressList, 
+  createAddress,
   getNewsList, 
   getPrizeList, 
 } from '@services/user'
@@ -45,12 +46,26 @@ class UserModel {
   }
 
   @action
+  createAddress = async params => {
+    const result = await createAddress(params)
+
+    if (result.code !== '10000') {
+      Toast.show(result.message, 1)
+      return false
+    }
+
+    return true
+  }
+
+  @action
   toggleAddressModel = () => {
     this.addressModalVisible = !this.addressModalVisible
   }
 
   @action
   getNewsList = async params => {
+    Toast.loading('加载中')
+
     const result = await getNewsList(params)
 
     if (result.code !== '10000') {
@@ -61,6 +76,8 @@ class UserModel {
     if (result.body) {
       this.newsListTotal = result.body.page.totalNum
     }
+
+    Toast.hide()
 
     return result.body.list
   }

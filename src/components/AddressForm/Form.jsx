@@ -10,6 +10,7 @@ import {
   Toast, 
 } from 'antd-mobile'
 import { AsyncComponent } from 'pms-saas-component'
+import REGEX from '@utils/regex'
 
 const AddressModal = AsyncComponent(() => import('@components/AddressModal'))
 
@@ -36,7 +37,7 @@ class Form extends Component {
   handlePickerConfirm = address => {
     this.setState({
       address,
-    })
+    }, () => this.handlePickerCancel())
   }
 
   handlePickerCancel = () => {
@@ -45,7 +46,7 @@ class Form extends Component {
 
   handleSubmit = () => {
     const { onSubmit } = this.props
-    const { name, phone, address, detail } = this.state
+    const { name, phone, address, detail, isDefault } = this.state
 
     if (!name) {
       Toast.show('请输入收货人姓名', 1)
@@ -53,6 +54,9 @@ class Form extends Component {
     }
     if (!phone) {
       Toast.show('请输入收货人手机号', 1)
+      return false
+    } else if (!REGEX.MOBILE.test(phone)) {
+      Toast.show('手机号格式不正确', 1)
       return false
     }
     if (address.length < 2) {
@@ -65,10 +69,13 @@ class Form extends Component {
     }
 
     onSubmit({
-      name,
-      phone,
-      address,
-      detail,
+      userName:  name,
+      mobile:    phone,
+      province:  address[0],
+      city:      address[1],
+      area:      address[2],
+      address:   detail,
+      isDefault: isDefault ? 1 : 0,
     })
   }
 

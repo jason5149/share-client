@@ -23,6 +23,8 @@ class NewsModel {
 
   @action
   getNewsList = async params => {
+    Toast.loading('加载中')
+
     const result = await getNewsList(params)
 
     if (result.code !== '10000') {
@@ -33,6 +35,8 @@ class NewsModel {
     if (result.body) {
       this.newsListTotal = result.body.page.totalNum
     }
+
+    Toast.hide()
 
     return result.body.list
   }

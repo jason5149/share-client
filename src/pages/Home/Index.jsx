@@ -72,16 +72,36 @@ class HomePage extends Component {
     return (
       <div className='page-container'>
         <BannerCarousel list={ bannerList } />
-        <NewsTabs tabs={ newsTabs }>
-          {newsList.length > 0 && (
-            <NewsList 
-              list={ newsList } 
-              onClick={ this.handleNewsDetailClick }
-              onRefresh={ this.handleNewsListRefresh }
-              onReached={ this.handleNewsListPageChange }
-            />
-          )}
-        </NewsTabs>
+        <div
+          style={{
+              position: 'absolute',
+              top:      '156px',
+              right:    0,
+              bottom:   0,
+              left:     0,
+            }}
+        >
+          <NewsTabs tabs={ newsTabs }>
+            <div
+              style={{
+              position: 'absolute',
+              top:      0,
+              right:    0,
+              bottom:   0,
+              left:     0,
+            }}
+            >
+              {newsList.length > 0 && (
+              <NewsList 
+                list={ newsList } 
+                onClick={ this.handleNewsDetailClick }
+                onRefresh={ this.handleNewsListRefresh }
+                onReached={ this.handleNewsListPageChange }
+              />
+            )}
+            </div>
+          </NewsTabs>
+        </div>
       </div>
     )
   }
