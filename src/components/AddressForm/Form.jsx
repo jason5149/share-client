@@ -31,11 +31,16 @@ class Form extends Component {
     const { changeAddressInfo } = UserModel
 
     if (address.length === 3) {
-      changeAddressInfo({
-        province: address[0],
-        city:     address[1],
-        area:     address[2],
-      })
+      /* eslint-disable-next-line */
+      for (let i = 0, len = address.length; i < len; i++) {
+        if (i === 0) {
+          changeAddressInfo('province', address[i])
+        } else if (i === 1) {
+          changeAddressInfo('city', address[i])
+        } else if (i === 2) {
+          changeAddressInfo('area', address[i])
+        }
+      }
 
       this.handlePickerCancel()
     }
@@ -48,7 +53,7 @@ class Form extends Component {
   handleSubmit = () => {
     const { UserModel, onSubmit } = this.props
     const { addressInfo } = UserModel
-    const { userName, mobile, province, city, area, address, default: isDefault  } = addressInfo
+    const { id, userName, mobile, province, city, area, address, default: isDefault  } = addressInfo
 
     if (!userName) {
       Toast.show('请输入收货人姓名', 1)
@@ -71,6 +76,7 @@ class Form extends Component {
     }
 
     onSubmit({
+      id,
       userName,
       mobile,
       province,
@@ -151,6 +157,7 @@ class Form extends Component {
           <Button type='warning' onClick={ this.handleSubmit }>确认</Button>
         </div>
         <AddressModal 
+          // address={ [province, city, area] }
           onConfirm={ this.handlePickerConfirm }
           onCancel={ this.handlePickerCancel }
         />

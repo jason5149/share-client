@@ -15,11 +15,13 @@ class AddressModal extends Component {
   render() {
     const { UserModel, onConfirm, onCancel } = this.props
     const { addressData } = this.state
-    const { addressModalVisible } = UserModel
+    const { addressInfo, addressModalVisible } = UserModel
+    const { province, city, area } = addressInfo
 
     return (
       <Picker
         data={ addressData }
+        value={ province && city && area ? [addressInfo.province, addressInfo.city, addressInfo.area] : [] }
         visible={ addressModalVisible }
         onOk={ onConfirm }
         onDismiss={ onCancel }

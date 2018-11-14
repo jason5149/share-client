@@ -49,21 +49,34 @@ class CreateAddressPage extends Component {
 
   handleAddressSubmit = async addressInfo => {
     const { UserModel, history } = this.props
-    const { createAddress } = UserModel
+    const { createAddress, updateAddress } = UserModel
+    const { id } = addressInfo
 
-    const result = await createAddress(addressInfo)
+    if (id) {
+      const result = await updateAddress(addressInfo)
 
-    if (result) {
-      Toast.show('添加成功', 1)
+      if (result) {
+        Toast.show('编辑成功', 1)
+      }
+    } else {
+      const result = await createAddress(addressInfo)
 
-      history.push(`${ BASE_PATH }/my/address`)
+      if (result) {
+        Toast.show('添加成功', 1)
+      }
     }
+
+    setTimeout(() => {
+      history.push(`${ BASE_PATH }/my/address`)
+    }, 200)
   }
 
   render() {
+    const { id } = this.state
+
     return (
       <div className='page-container'>
-        <AddressForm onSubmit={ this.handleAddressSubmit } />
+        <AddressForm edit={ !!id } onSubmit={ this.handleAddressSubmit } />
       </div>
     )
   }

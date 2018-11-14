@@ -73,6 +73,7 @@ class UserModel {
   }
 
   changeAddressInfo = (field, value) => {
+    console.log(field, value)
     this.addressInfo[field] = value
   }
 

@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
-import { Toast, Button } from 'antd-mobile'
+import { Toast, Button, Modal } from 'antd-mobile'
 import { AsyncComponent } from 'pms-saas-component'
 import { BASE_PATH } from '@utils/const'
 
+const { alert } = Modal
 const AddressList = AsyncComponent(() => import('@components/AddressList'))
 
 @inject(
@@ -43,17 +44,27 @@ class MyAddressPage extends Component {
     history.push(`${ BASE_PATH }/my/address/create?id=${ id }`)
   }
 
-  handleDeleteAddress = async item => {
+  handleDeleteAddress = item => {
     const { UserModel } = this.props
     const { deleteAddress } = UserModel
+    const { id } = item
 
-    const result = await deleteAddress(item)
+    alert('删除收货地址', '您是否要删除该收货地址？', [
+      { text: '取消', onPress: () => console.log('cancel') },
+      { 
+        text:    '确认', 
+        style:   { color: '#e94f4f' },
+        onPress: async () => {
+          const result = await deleteAddress({ id })
 
-    if (result) {
-      Toast.show('删除地址成功')
-
-      this.handleSearchAddressList()
-    }
+          if (result) {
+            Toast.show('删除地址成功')
+      
+            this.handleSearchAddressList()
+          }    
+        }, 
+      },
+    ])
   }
 
   handleDefaultChange = async item => {
