@@ -19,14 +19,6 @@ const AddressModal = AsyncComponent(() => import('@components/AddressModal'))
 )
 @observer
 class Form extends Component {
-  state = {
-    name:      '',
-    phone:     '',
-    address:   [],
-    detail:    '',
-    isDefault: false,
-  }
-
   handleAddressPicker = () => {
     const { UserModel } = this.props
     const { toggleAddressModel } = UserModel
@@ -35,9 +27,18 @@ class Form extends Component {
   }
 
   handlePickerConfirm = address => {
-    this.setState({
-      address,
-    }, () => this.handlePickerCancel())
+    const { UserModel } = this.props
+    const { changeAddressInfo } = UserModel
+
+    if (address.length === 3) {
+      changeAddressInfo({
+        province: address[0],
+        city:     address[1],
+        area:     address[2],
+      })
+
+      this.handlePickerCancel()
+    }
   }
 
   handlePickerCancel = () => {
@@ -45,42 +46,45 @@ class Form extends Component {
   }
 
   handleSubmit = () => {
-    const { onSubmit } = this.props
-    const { name, phone, address, detail, isDefault } = this.state
+    const { UserModel, onSubmit } = this.props
+    const { addressInfo } = UserModel
+    const { userName, mobile, province, city, area, address, default: isDefault  } = addressInfo
 
-    if (!name) {
+    if (!userName) {
       Toast.show('请输入收货人姓名', 1)
       return false
     }
-    if (!phone) {
+    if (!mobile) {
       Toast.show('请输入收货人手机号', 1)
       return false
-    } else if (!REGEX.MOBILE.test(phone)) {
+    } else if (!REGEX.MOBILE.test(mobile)) {
       Toast.show('手机号格式不正确', 1)
       return false
     }
-    if (address.length < 2) {
+    if (!(province || city || area)) {
       Toast.show('请选择省/市/区', 1)
       return false
     }
-    if (!detail) {
+    if (!address) {
       Toast.show('请输入详细地址', 1)
       return false
     }
 
     onSubmit({
-      userName:  name,
-      mobile:    phone,
-      province:  address[0],
-      city:      address[1],
-      area:      address[2],
-      address:   detail,
-      isDefault: isDefault ? 1 : 0,
+      userName,
+      mobile,
+      province,
+      city,
+      area,
+      address,
+      isDefault,
     })
   }
 
   render() {
-    const { name, phone, address, detail, isDefault } = this.state
+    const { UserModel } = this.props
+    const { addressInfo = {}, changeAddressInfo } = UserModel
+    const { userName = '', mobile = '', province, city, area, address = '', default: isDefault  } = addressInfo
 
     return (
       <Fragment>
@@ -91,9 +95,9 @@ class Form extends Component {
               收货人
             </span>
             <InputItem 
-              value={ name }
+              value={ userName }
               placeholder='请输入收货人姓名' 
-              onChange={ value => this.setState({ name: value }) }
+              onChange={ value => changeAddressInfo('userName', value) }
             />
           </div>
           <div className='addres-item'>
@@ -101,9 +105,9 @@ class Form extends Component {
               手机号
             </span>
             <InputItem 
-              value={ phone }
+              value={ mobile }
               placeholder='请输入收货人手机号' 
-              onChange={ value => this.setState({ phone: value }) }
+              onChange={ value => changeAddressInfo('mobile', value) }
             />
           </div>
           <div className='addres-item'>
@@ -113,7 +117,7 @@ class Form extends Component {
             {/* eslint-disable-next-line */}
             <a className='am-list-item' onClick={ this.handleAddressPicker }>
               <div className='am-list-line' layout='row' layout-align='space-between center'>
-                <span className='address-picker-desc'>{address.length > 0 ? address.join('/') : '请选择省/市/区'}</span>
+                <span className='address-picker-desc'>{province && city && area ? `${ province }/${ city }/${ area }` : '请选择省/市/区'}</span>
                 <Icon type='right' style={{ color: '#999' }} />
               </div>
             </a>
@@ -123,9 +127,9 @@ class Form extends Component {
               详细地址
             </span>
             <InputItem 
-              value={ detail }
+              value={ address }
               placeholder='请输入详细地址' 
-              onChange={ value => this.setState({ detail: value }) }
+              onChange={ value => changeAddressInfo('address', value) }
             />
           </div>
         </List>
@@ -138,9 +142,7 @@ class Form extends Component {
             <Switch
               checked={ isDefault }
               onChange={ () => {
-                this.setState({
-                  isDefault: !isDefault,
-                })
+                changeAddressInfo('default', !isDefault)
             } }
             />
           </div>

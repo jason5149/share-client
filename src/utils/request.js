@@ -1,4 +1,5 @@
 import { isEmptyObject, object2Url } from 'pms-saas-common'
+import { getUserInfo } from '@utils/cache'
 
 /**
  * 
@@ -55,6 +56,7 @@ const handleOptions = (method = 'POST', url = '', params = {}, headers = {}) => 
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
       ...headers,
+      token:          getUserInfo() && getUserInfo().token,
     },
   }
 

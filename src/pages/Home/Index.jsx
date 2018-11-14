@@ -84,12 +84,12 @@ class HomePage extends Component {
           <NewsTabs tabs={ newsTabs }>
             <div
               style={{
-              position: 'absolute',
-              top:      0,
-              right:    0,
-              bottom:   0,
-              left:     0,
-            }}
+                position: 'absolute',
+                top:      0,
+                right:    0,
+                bottom:   0,
+                left:     0,
+              }}
             >
               {newsList.length > 0 && (
               <NewsList 

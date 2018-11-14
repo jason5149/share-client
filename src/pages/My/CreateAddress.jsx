@@ -11,12 +11,40 @@ const AddressForm = AsyncComponent(() => import('@components/AddressForm'))
 )
 @observer
 class CreateAddressPage extends Component {
+  state = {
+    id: '',
+  }
+  
   componentDidMount() {
     this.init()
   }
 
   init() {
     document.title = '添加收货地址'
+
+    const { location } = this.props
+    const { search } = location
+
+    /* eslint-disable-next-line */
+    const params = new URLSearchParams(search)
+
+    const id = params.get('id')
+
+    if (id) {
+      this.setState({
+        id,
+      }, () => {
+        this.handleSearchAddressDetail()
+      })
+    }
+  }
+
+  handleSearchAddressDetail = async () => {
+    const { UserModel } = this.props
+    const { getAddressInfo } = UserModel
+    const { id } = this.state
+
+    getAddressInfo(id)
   }
 
   handleAddressSubmit = async addressInfo => {

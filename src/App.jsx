@@ -5,7 +5,7 @@ import { AsyncComponent } from 'pms-saas-component'
 import AuthRoute from '@components/AuthRoute'
 import ErrorBoundary from '@components/ErrorBoundary'
 import { BASE_PATH } from '@utils/const'
-import { getWxUserInfo } from '@utils/cache'
+import { getWxUserInfo, setUserInfo } from '@utils/cache'
 
 const AuthPage = AsyncComponent(() => import('@pages/Auth'))
 const HomePage = AsyncComponent(() => import('@pages/Home/Index'))
@@ -36,9 +36,10 @@ class App extends PureComponent {
 
       const result = await login({ openid })
 
-      console.log(result)
+      if (result) {
+        setUserInfo(result)
+      }
     }
-    
   }
 
   render() {

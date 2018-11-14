@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { ListView, PullToRefresh } from 'antd-mobile'
 import Item from './Item'
 
@@ -54,27 +54,30 @@ class List extends Component {
     const { dataSource, refreshing } = this.state
 
     return (
-      <ListView 
-        className='news-list-container'
-        ref={ el => this.list = el }
-        dataSource={ dataSource }
-        useBodyScroll={ false }
-        renderRow={ rowData => <Item { ...rowData } onClick={ onClick } /> }
-        pullToRefresh={ (
-          <PullToRefresh
-            refreshing={ refreshing }
-            indicator={{
-              activate:   <span className='news-list-indicator'>松开立即刷新</span>,
-              deactivate: <span className='news-list-indicator'>下拉刷新</span>,
-              finish:     <span className='news-list-indicator'>完成刷新</span>,
-            }} 
-            onRefresh={ this.handleRefresh }
-          />
-        ) }
-        scrollRenderAheadDistance={ 500 }
-        onEndReached={ this.handleEndReached }
-        onEndReachedThreshold={ 10 }
-      />
+      <Fragment>
+        <ListView 
+          className='news-list-container'
+          ref={ el => this.list = el }
+          dataSource={ dataSource }
+          useBodyScroll={ false }
+          renderRow={ rowData => <Item { ...rowData } onClick={ onClick } /> }
+          pullToRefresh={ (
+            <PullToRefresh
+              refreshing={ refreshing }
+              indicator={{
+                activate:   <span className='news-list-indicator'>松开立即刷新</span>,
+                deactivate: <span className='news-list-indicator'>下拉刷新</span>,
+                finish:     <span className='news-list-indicator'>完成刷新</span>,
+              }} 
+              onRefresh={ this.handleRefresh }
+            />
+          ) }
+          renderFooter={ () => <div layout='row' layout-align='center center'>——————我是底线——————</div> }
+          scrollRenderAheadDistance={ 500 }
+          onEndReached={ this.handleEndReached }
+          onEndReachedThreshold={ 10 }
+        />
+      </Fragment>
     )
   }
 }
