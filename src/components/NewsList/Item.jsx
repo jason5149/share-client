@@ -55,7 +55,7 @@ class Item extends PureComponent {
                 </span>
               </div>
             </div>
-            <Button type='warning' size='small'>分享赚积分</Button>
+            {/* <Button type='warning' size='small'>分享赚积分</Button> */}
           </div>
         </div>
       </div>
