@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 import { inject, observer } from 'mobx-react'
-import { AsyncComponent } from 'pms-saas-component'
+import AsyncComponent from 'pms-saas-component/lib/async-component'
 import AuthRoute from '@components/AuthRoute'
 import ErrorBoundary from '@components/ErrorBoundary'
 import { BASE_PATH } from '@utils/const'

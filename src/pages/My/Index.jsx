@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
-import { AsyncComponent } from 'pms-saas-component'
+import AsyncComponent from 'pms-saas-component/lib/async-component'
 
 const MyCenterPage = AsyncComponent(() => import('@pages/My/Center'))
 const MyNewsPage = AsyncComponent(() => import('@pages/My/News'))

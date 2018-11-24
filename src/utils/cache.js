@@ -5,7 +5,7 @@ import {
   // setSessionStorage,  
   // getSessionStorage,
   // removeSessionStorage,
-} from 'pms-saas-common'
+} from 'pms-saas-common/lib/storage/localStorage'
 
 export const setWxUserInfo = wxUserInfo => setLocalStorage('wxUserInfo', wxUserInfo)
 export const getWxUserInfo = () => getLocalStorage('wxUserInfo')

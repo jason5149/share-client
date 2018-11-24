@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
 import { WhiteSpace, List } from 'antd-mobile'
-import { AsyncComponent } from 'pms-saas-component'
+import AsyncComponent from 'pms-saas-component/lib/async-component'
 import { getWxUserInfo } from '@utils/cache'
 import { BASE_PATH } from '@utils/const'
 

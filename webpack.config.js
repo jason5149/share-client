@@ -1,52 +1,42 @@
 const path = require('path')
 const webpack = require('webpack')
-const webpackMerge = require('webpack-merge')
+const merge = require('webpack-merge')
+const devConfig = require('./build/dev')
+const prodConfig = require('./build/prod')
+const commonConfig = require('./build/common')
+const projectConfig = require('./project.config')
 
-const common = require('./build/common')
-const dev = require('./build/development')
-const prod = require('./build/production')
-
-/* eslint-disable */
-const build = params => {
-  const env = params
-  const project = require('./project.config')
-  const devOptions = {
-    plugins: [
-      new webpack.HotModuleReplacementPlugin(),
-    ],
-    devServer: {
-      contentBase:        path.resolve('dist'),
-      port:               project.port,
-      historyApiFallback: true,
-      inline:             true,
-      hot:                true,
-      progress:           true,
-      compress:           true,
-      proxy:              {
-        [project.target]: {
-          target:       project.proxy,
-          changeOrigin: true,
+module.exports = env => {
+  const { devServer } = projectConfig
+  
+  if (env === 'development') {
+    const devServerOption = {
+      plugins: [
+        new webpack.HotModuleReplacementPlugin(),
+      ],
+      devServer: {
+        hot:                true,
+        port:               devServer.port,
+        inline:             true,
+        progress:           true,
+        compress:           true,
+        contentBase:        path.resolve('dist'),
+        historyApiFallback: true,
+        proxy:              {
+          [devServer.target]: {
+            target:       devServer.url,
+            secure:       false,
+            changeOrigin: true,
+          },
         },
       },
-    },
-    devtool: '#source-map',
-  }
-  let config
+      devtool: '#sourcemap',
+    }
 
-  //  开发环境 
-  if (env === 'development') {
-    config = webpackMerge(common(), dev(), devOptions)
-  } 
-  //  测试环境
-  else if (env === 'test') {
-    config = webpackMerge(common(), dev())
-  } 
-  //  生产环境
-  else if (env === 'production') {
-    config = webpackMerge(common(), prod())
+    return merge(commonConfig(env), devConfig(), devServerOption)
+  } else if (env === 'test') {
+    return merge(commonConfig(env), devConfig())
+  } else if (env === 'production') {
+    return merge(commonConfig(env), prodConfig())
   }
-
-  return config
 }
-
-module.exports = build

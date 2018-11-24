@@ -1,0 +1,26 @@
+.news-title-container {
+  background: #fff;
+  &:extend([layout]);
+  &:extend([layout=column]);
+  &:extend([layout="center start"]);
+  .px2rem(padding-left, 20);
+  .px2rem(padding-right, 20);
+  .px2rem(padding-top, 20);
+  .px2rem(padding-bottom, 20);
+  .px2rem(margin-bottom, 20);
+  .title-desc {
+    font-weight: bold;
+    .px2rem(font-size, 34);
+    .px2rem(line-height, 50);
+  }
+  .sub-desc {
+    .px2rem(font-size, 22);
+    &:extend([layout]);
+    &:extend([layout=row]);
+    &:extend([layout="start center"]);
+    span {
+      .px2rem(margin-right, 20);
+      .px2rem(line-height, 40);
+    }
+  }
+}

@@ -9,7 +9,7 @@ import {
   Switch, 
   Toast, 
 } from 'antd-mobile'
-import { AsyncComponent } from 'pms-saas-component'
+import AsyncComponent from 'pms-saas-component/lib/async-component'
 import REGEX from '@utils/regex'
 
 const AddressModal = AsyncComponent(() => import('@components/AddressModal'))

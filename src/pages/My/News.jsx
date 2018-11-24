@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
-import { AsyncComponent } from 'pms-saas-component'
+import AsyncComponent from 'pms-saas-component/lib/async-component'
 
 const NewsTabs = AsyncComponent(() => import('@components/NewsTabs'))
 const NewsList = AsyncComponent(() => import('@components/NewsList'))

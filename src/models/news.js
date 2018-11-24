@@ -52,6 +52,9 @@ class NewsModel {
 
     this.newsDetail = result.body
   }
+
+  @action
+  emptyNewsDetail = () => this.newsDetail = null
 }
 
 export default new NewsModel()

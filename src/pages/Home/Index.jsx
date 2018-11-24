@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
-import { AsyncComponent } from 'pms-saas-component'
+import AsyncComponent from 'pms-saas-component/lib/async-component'
 import { BASE_PATH } from '../../utils/const'
 
 const BannerCarousel = AsyncComponent(() => import('@components/BannerCarousel'))

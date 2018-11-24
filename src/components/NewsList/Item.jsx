@@ -7,6 +7,8 @@ class Item extends PureComponent {
       id, 
       title, 
       date,
+      shareCount,
+      readCount,
       author_name,
       thumbnail_pic_s,
       thumbnail_pic_s02,
@@ -48,10 +50,12 @@ class Item extends PureComponent {
               </div>
               <div layout='row' layout-align='start center'>
                 <span className='news-integral-desc'>
-                  赠送阅读数：0
+                  赠送阅读数：
+                  {shareCount}
                 </span>
                 <span className='news-integral-desc'>
-                  目标阅读数：3000
+                  目标阅读数：
+                  {readCount}
                 </span>
               </div>
             </div>

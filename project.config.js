@@ -1,15 +1,22 @@
 const path = require('path')
 
 module.exports = {
-  entry: {
-    vendors: ['react', 'react-dom', 'react-router-dom'],
-    states:  ['mobx-react', 'mobx'],
-    babels:  `./src/polyfill.js`,
-    bundle:  `./src/index.js`,
+  basePath: process.env.NODE_ENV === 'production' ? '/' : '/',
+  entry:    {
+    vendors: [
+      'react', 
+      'react-dom', 
+      'react-router-dom', 
+      'mobx-react', 
+      'mobx',
+      '@babel/polyfill',
+      'es6-promise',
+      'core-js',
+    ],
+    bundle: './src/index.js',
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.json'],
-    alias:      {
+    alias: {
       '@@public':    path.resolve('public'),
       '@components': path.resolve('src', 'components'),
       '@models':     path.resolve('src', 'models'),
@@ -18,8 +25,11 @@ module.exports = {
       '@assets':     path.resolve('src', 'assets'),
       '@pages':      path.resolve('src', 'pages'),
     },
+    extensions: ['.js', '.jsx', '.json'],
   },
-  proxy:  'http://dev.tangjc.com',
-  port:   9090,
-  target: '/share-wx',
+  devServer: {
+    url:    'http://dev.tangjc.com',
+    target: '/share-wx',
+    port:   10023,
+  },
 }

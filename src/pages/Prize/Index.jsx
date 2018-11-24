@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
-import { AsyncComponent } from 'pms-saas-component'
+import AsyncComponent from 'pms-saas-component/lib/async-component'
 
 const PrizeListPage = AsyncComponent(() => import('@pages/Prize/List'))
 const PrizeDetailPage = AsyncComponent(() => import('@pages/Prize/Detail'))

@@ -1,4 +1,4 @@
-import { isEmptyObject, object2Url } from 'pms-saas-common'
+import { isEmptyObject, object2Url } from 'pms-saas-common/lib/util/object'
 import { getUserInfo } from '@utils/cache'
 
 /**
