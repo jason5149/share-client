@@ -10,9 +10,15 @@ class List extends Component {
     refreshing: false,
   }
 
-  list = null
+  elem = null
 
   componentDidMount() {
+    console.log('init')
+    this.init()
+  }
+
+  componentWillReceiveProps() {
+    console.log('update')
     this.init()
   }
 
@@ -21,10 +27,15 @@ class List extends Component {
     const { dataSource } = this.state
 
     setTimeout(() => {
+      console.log(this.elem && this.elem.scrollTo(0, 0))
+      // this.elem.ListView.scrollTo(0, 0)
+      // this.elem
+      // setTimeout(() => this.refs.lv.refs.listview.scrollTo(0, 0), 800);
+      // setTimeout(() => this.refs.lv.scrollTo(0, 0), 800);
       this.setState({
         dataSource: dataSource.cloneWithRows(list),
       })
-    })
+    }, 200)
   }
 
   handleRefresh = () => {
@@ -57,7 +68,7 @@ class List extends Component {
       <Fragment>
         <ListView 
           className='news-list-container'
-          ref={ el => this.list = el }
+          ref={ el => this.elem = el }
           dataSource={ dataSource }
           useBodyScroll={ false }
           renderRow={ rowData => <Item { ...rowData } onClick={ onClick } /> }

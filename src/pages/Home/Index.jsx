@@ -55,6 +55,15 @@ class HomePage extends Component {
     history.push(`${ BASE_PATH }/news/${ id }`)
   }
 
+  handleTabsChange = ({ title }, index) => {
+    console.log(title, index)
+    this.setState({
+      newsList: [],
+    }, () => {
+      this.handleSearchNewsList()
+    })
+  }
+
   handleNewsListRefresh = () => {
     
   }
@@ -81,25 +90,25 @@ class HomePage extends Component {
               left:     0,
             }}
         >
-          <NewsTabs tabs={ newsTabs }>
-            <div
-              style={{
-                position: 'absolute',
-                top:      0,
-                right:    0,
-                bottom:   0,
-                left:     0,
-              }}
-            >
-              {newsList.length > 0 && (
-              <NewsList 
-                list={ newsList } 
-                onClick={ this.handleNewsDetailClick }
-                onRefresh={ this.handleNewsListRefresh }
-                onReached={ this.handleNewsListPageChange }
-              />
+          <NewsTabs tabs={ newsTabs } onChange={ this.handleTabsChange }>
+            {newsList.length > 0 && (
+              <div
+                style={{
+                  position: 'absolute',
+                  top:      0,
+                  right:    0,
+                  bottom:   0,
+                  left:     0,
+                }}
+              >
+                <NewsList 
+                  list={ newsList } 
+                  onClick={ this.handleNewsDetailClick }
+                  onRefresh={ this.handleNewsListRefresh }
+                  onReached={ this.handleNewsListPageChange }
+                />
+              </div>
             )}
-            </div>
           </NewsTabs>
         </div>
       </div>

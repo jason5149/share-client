@@ -5,7 +5,7 @@ class NewsTabs extends Component {
   state = {}
 
   render() {
-    const { tabs, children } = this.props
+    const { tabs, onChange, children } = this.props
 
     return (
       <div className='news-tabs-container'>
@@ -14,6 +14,7 @@ class NewsTabs extends Component {
           renderTabBar={ props => 
             <Tabs.DefaultTabBar { ...props } page={ 6 } /> 
           }
+          onChange={ onChange }
         >
           {children}
         </Tabs>
