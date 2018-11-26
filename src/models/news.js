@@ -16,10 +16,16 @@ class NewsModel {
   ]
 
   @observable
+  activedTab = '热门'
+
+  @observable
   newsListTotal = 0
 
   @observable
   newsDetail = null
+
+  @action
+  setActivedTab = tab => this.activedTab = tab
 
   @action
   getNewsList = async params => {
@@ -32,11 +38,13 @@ class NewsModel {
       return false
     }
 
-    if (result.body) {
-      this.newsListTotal = result.body.page.totalNum
+    Toast.hide()
+
+    if (!result.body) {
+      return false
     }
 
-    Toast.hide()
+    this.newsListTotal = result.body.page.totalNum
 
     return result.body.list
   }

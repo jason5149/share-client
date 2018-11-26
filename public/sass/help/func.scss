@@ -1,0 +1,5 @@
+$base-font: 75!default;
+
+@function px2rem($value) {
+  @return $value / $base-font * 1rem;
+}

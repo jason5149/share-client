@@ -1,17 +1,16 @@
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
 import { Toast } from 'antd-mobile'
-import { wxAuth4Public } from 'pms-saas-common/lib/util/wx'
-import { urlParams, object2Url } from 'pms-saas-common/lib/util/object'
-import { WX_APP_ID } from '@utils/const'
-import { setWxUserInfo } from '../utils/cache'
-import { BASE_PATH } from '../utils/const'
+import { stringify, parse } from 'qs'
+import { wxAuth4Public } from '@utils/wx'
+import { setWxUserInfo } from '@utils/cache'
+import { BASE_PATH, WX_APP_ID } from '@utils/const'
 
 @inject(
   'WxModel',
 )
 @observer
-class AuthPage extends PureComponent {
+class AuthPage extends Component {
   componentDidMount() {
     this.init()
   }
@@ -25,7 +24,7 @@ class AuthPage extends PureComponent {
 
     Toast.loading('微信授权中', 10)
 
-    const search = urlParams(window.location.href)
+    const search = parse(window.location.href)
     /* eslint-disable-next-line */
     const params = new URLSearchParams(search)
     const code = params.get('code')
@@ -47,7 +46,7 @@ class AuthPage extends PureComponent {
     const redirectUrl = window.location.href.split('?')[0]
     const authParams = wxAuth4Public(appId, redirectUrl, 'userInfo')
     
-    window.location.replace(`${ url }?${ object2Url(authParams) }#wechat_redirect`)
+    window.location.replace(`${ url }?${ stringify(authParams) }#wechat_redirect`)
   }
 
   handleCode = async code => {
@@ -65,7 +64,7 @@ class AuthPage extends PureComponent {
 
   render() {
     return (
-      <div className='page-container' />
+      <div className='view-container' />
     )
   }
 }

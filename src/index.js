@@ -4,7 +4,7 @@ import { render } from 'react-dom'
 import { Provider } from 'mobx-react'
 import store from '@models'
 import App from './App'
-import '@assets/style/index.less'
+import '@assets/style/index.scss'
 
 render(
   <Provider { ...store }>

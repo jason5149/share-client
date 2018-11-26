@@ -1,0 +1,44 @@
+.container {
+  overflow: hidden;
+  @include size(100%, 100%);
+  @include position(relative);
+}
+
+.list-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align: center;
+  // @include size(100%, 100%);
+  overflow-y: auto; // I replaced it with `overflow: auto;`, then solved.
+  -webkit-overflow-scrolling: touch;
+}
+
+.view-container {
+  overflow: auto;
+  @include size(100%, 100%);
+  // @include position(relative);
+}
+
+.wrap-small {
+  padding: 0 px2rem(10);
+}
+
+.wrap-middle {
+  padding: 0 px2rem(20);
+}
+
+.wrap-large {
+  padding: 0 px2rem(30);
+}
+
+.fade-appear {
+  opacity: 0.01;
+}
+
+.fade-appear.fade-appear-active {
+  opacity: 1;
+  transition: opacity .5s ease-in;
+}

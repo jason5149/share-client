@@ -1,0 +1,43 @@
+.news-container {
+  height: 100%;
+  @include position(absolute, 156px, 0, 0, 0);
+  .am-tabs-default-bar-tab-active {
+    color: $theme-red;
+  }
+  .am-tabs-default-bar-underline {
+    border-color: $theme-red;
+  }
+  .am-list-body::before,
+  .am-list-body::after {
+    background: transparent!important;
+  }
+  .am-pull-to-refresh-indicator {
+    // height: 40px!important;
+    line-height: px2rem(42)
+  }
+  .news-list-container {
+    height: 100%;
+    overflow: auto;
+    background: #fff;
+    margin-bottom: 10px;
+    @include position;
+    .news-item-container {
+      padding-top: px2rem(16);
+      .news-item-content {
+        box-shadow: 0 -3px 10px 2px rgba(0, 0, 0, 0.075);
+        background: #fff;
+        padding-left: px2rem(20);
+        padding-right: px2rem(20);
+        border-top-left-radius: px2rem(18);
+        border-top-right-radius: px2rem(18);
+      }
+    }
+  }
+  .news-list-indicator {
+    font-size: px2rem(26);
+    line-height: px2rem(42);
+    @extend [layout];
+    @extend [layout=row];
+    @extend [layout-align="center center"];
+  }
+}
