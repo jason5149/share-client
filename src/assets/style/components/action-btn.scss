@@ -1,0 +1,12 @@
+.action-btn {
+  color: #fff;
+  z-index: 1000;
+  font-size: px2rem(26);
+  text-align: center;
+  background: $theme-red;
+  box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.1);
+  line-height: px2rem(128);
+  border-radius: 100%;
+  @include size(px2rem(128), px2rem(128));
+  @include position(fixed, null, px2rem(50), px2rem(50));
+}

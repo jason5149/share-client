@@ -1,0 +1,53 @@
+.profile-panel-container {
+  box-shadow: 0 1px 5px 3px rgba(0, 0, 0, 0.05);
+  background: #fff;
+  padding-top: px2rem(30);
+  @extend [layout];
+  @extend [layout=column];
+  @extend [layout-align="center center"];
+  @include position;
+  .profile-thumbnail {
+    display: flex;
+    @include size(px2rem(128), px2rem(128));
+    img {
+      box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.25);
+      border-radius: 100%;
+      @include size(px2rem(128), px2rem(128));
+    }
+  }
+  .profile-integral {
+    color: #666;
+    font-size: px2rem(26);
+    margin-top: px2rem(20);
+    margin-bottom: px2rem(20);
+  }
+  .profile-info-summary {
+    @extend [layout];
+    @extend [layout=row];
+    @extend [layout-align="space-between center"];
+    @include size(100%, auto);
+    li {
+      flex: 1;
+      padding-top: px2rem(20);
+      padding-bottom: px2rem(20);
+      @extend [layout];
+      @extend [layout=column];
+      @extend [layout-align="center center"];
+      .profile-info-title {
+        color: #999;
+        font-size: px2rem(26);
+        margin-bottom: px2rem(20);
+      }
+      .profile-info-desc {
+        color: #666;
+        font-size: px2rem(28);
+      }
+    }
+  }
+  .prize-btn {
+    @include position(absolute, px2rem(10), null, null, px2rem(10))
+  }
+  .address-btn {
+    @include position(absolute, px2rem(10), px2rem(10))
+  }
+}

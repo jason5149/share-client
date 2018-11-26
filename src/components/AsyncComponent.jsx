@@ -14,10 +14,6 @@ export default importComponent => {
       })
     }
   
-    componentWillUnmount() {
-      this.destroy()
-    }
-
     render() {
       const { component: C } = this.state
 

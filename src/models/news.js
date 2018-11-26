@@ -22,6 +22,9 @@ class NewsModel {
   newsListTotal = 0
 
   @observable
+  newsListPageIndex = 1
+
+  @observable
   newsDetail = null
 
   @action
@@ -29,8 +32,6 @@ class NewsModel {
 
   @action
   getNewsList = async params => {
-    Toast.loading('加载中')
-
     const result = await getNewsList(params)
 
     if (result.code !== '10000') {
@@ -38,13 +39,17 @@ class NewsModel {
       return false
     }
 
-    Toast.hide()
-
     if (!result.body) {
       return false
     }
 
+    this.newsListPageIndex = params.currentPage
     this.newsListTotal = result.body.page.totalNum
+    
+    if (params.currentPage >= result.body.page.totalPage) {
+      this.hasMore = false
+      return false
+    }
 
     return result.body.list
   }

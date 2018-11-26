@@ -17,6 +17,8 @@ class GlobalModel {
 
   @action
   getBannerList = async () => {
+    Toast.loading('加载中', 1)
+
     const result = await getBannerList()
 
     if (result.code !== '10000') {
@@ -24,6 +26,7 @@ class GlobalModel {
       return false
     }
 
+    Toast.hide()
     // this.bannerList = result.body
   }
 }

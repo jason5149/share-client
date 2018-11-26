@@ -48,7 +48,7 @@ class App extends Component {
             <Route path={ `${ BASE_PATH }/auth` } component={ AsyncComponent(() => import('@pages/Auth')) } />
             <AuthRoute path={ `${ BASE_PATH }/home` } component={ AsyncComponent(() => import('@pages/Home')) } />
             {/* <AuthRoute path={ `${ BASE_PATH }/news` } component={ NewsPage } /> */}
-            <AuthRoute path={ `${ BASE_PATH }/my` } component={ AsyncComponent(() => import('@pages/My')) } />
+            <AuthRoute path={ `${ BASE_PATH }/my` } component={ AsyncComponent(() => import('@pages/My/Index')) } />
             {/* <AuthRoute path={ `${ BASE_PATH }/prize` } component={ PrizePage } /> */}
           </div>
         </Router>

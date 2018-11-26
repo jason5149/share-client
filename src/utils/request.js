@@ -32,12 +32,14 @@ const SendRequest = async (method = 'POST', url = '', params = {}, headers = [])
     method,
   }
 
+  const token = getUserInfo() && getUserInfo().token
+
   if (['GET', 'DELETE'].indexOf(method) !== -1) {
-    options.headers = assign(...merge(defaultHeaders, headers, { token: getUserInfo() && getUserInfo().token}))
+    options.headers = assign(...merge(defaultHeaders, headers, [{ token }]))
 
     url += `${ isEmpty(params) ? '' : `?${ stringify(params) }` }`
   } else if (['POST', 'PUT'].indexOf(method) !== -1) {
-    options.headers = assign(...merge(defaultHeaders, headers, { token: getUserInfo() && getUserInfo().token}))
+    options.headers = assign(...merge(defaultHeaders, headers, [{ token }]))
 
     options.body = JSON.stringify(params)
   } else if (!(params instanceof FormData)) {
