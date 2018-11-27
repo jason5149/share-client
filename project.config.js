@@ -1,7 +1,7 @@
 const path = require('path')
 
 module.exports = {
-  basePath: process.env.NODE_ENV === 'production' ? '/' : '/',
+  basePath: process.env.NODE_ENV === 'production' ? '/client/' : '/',
   entry:    {
     vendors: [
       'react', 
