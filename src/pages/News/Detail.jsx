@@ -1,10 +1,15 @@
 import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
-import NewsTitle from '@components/NewsTitle'
-import UserModule from '@components/UserModule'
-import ShareInfo from '@components/ShareInfo'
-import NewsContext from '@components/NewsContext'
+import News from '@components/News'
 import { getWxUserInfo } from '@utils/cache'
+
+const { 
+  NewsTitle, 
+  UserPanel, 
+  SharePanel, 
+  NewsContext, 
+  Statement, 
+} = News
 
 @inject(
   'NewsModel',
@@ -19,60 +24,35 @@ class NewsDetailPage extends Component {
     this.init()
   }
 
-  componentWillUnmount() {
-    this.destroy()
-  }
-
   init() {
-    document.title = '热文详情'
-
     this.handleSearchNewsDetail()
-  }
-
-  destroy() {
-    const { NewsModel } = this.props
-    const { emptyNewsDetail } = NewsModel
-
-    emptyNewsDetail()
   }
 
   handleSearchNewsDetail = () => {
     const { NewsModel, match } = this.props
     const { getNewsDetail } = NewsModel
     const { params } = match
-    const { id } = params
 
-    getNewsDetail({ id })
+    getNewsDetail(params)
   }
+
 
   render() {
     const { NewsModel } = this.props
-    const { userInfo } = this.state
     const { newsDetail } = NewsModel
+    const { userInfo } = this.state
 
-    if (!newsDetail) {
-      return null
-    }
+    if (!newsDetail) return null
 
-    const { 
-      title, 
-      date,
-      author_name,
-      context, 
-      readCount,
-      shareCount, 
-    } = newsDetail
+    const { title, date, author_name, context, readCount, shareCount } = newsDetail
 
     return (
-      <div className='page-container'>
+      <div className='view-container'>
         <NewsTitle title={ title } date={ date } author={ author_name } />
-        <UserModule userInfo={ userInfo } />
-        <ShareInfo userInfo={ userInfo } />
-        <NewsContext 
-          context={ context } 
-          readCount={ readCount } 
-          shareCount={ shareCount }
-        />
+        <UserPanel userInfo={ userInfo } />
+        <SharePanel userInfo={ userInfo } />
+        <NewsContext context={ context } readCount={ readCount } shareCount={ shareCount } />
+        <Statement />
       </div>
     )
   }

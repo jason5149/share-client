@@ -1,96 +1,79 @@
-import { isEmptyObject, object2Url } from 'pms-saas-common/lib/util/object'
+import 'isomorphic-fetch'
+import { isEmpty, merge, assign } from 'lodash'
+import { stringify } from 'qs'
 import { getUserInfo } from '@utils/cache'
 
-/**
- * 
- * @param {*} response 
- * @param {*} formType 
- */
-const handleResponse = (response, formType) => {
+const defaultHeaders = [
+  { 'Content-Type': 'application/json;charset=UTF-8' },
+]
+
+const handleResponse = (response, formType = 'json') => {
+  /* eslint-disable-next-line */
+  console.info('REQUEST RESPONSE', response)
   return response[formType]()
 }
 
-/**
- * 
- * @param {*} { code, data, message } 
- */
-const handleResult = ({ code, body, message }) => {
-  return {
-    code, 
-    body,
-    message,
-  }
+const handleResult = ({ code, message, body }) => {
+  /* eslint-disable-next-line */
+  console.info('REQUEST RESULT  ', { code, message, body })
+
+  return { code, message, body }
 }
 
-/**
- * 
- * @param {*} error 
- */
 const handleError = error => {
+  /* eslint-disable-next-line */
+  console.error('REQUEST ERROR  ', error)
+  // return error
   return error
 }
 
-/**
- * 
- * @param {*} url 
- * @param {*} options 
- */
-const send = async (url, options, formType = 'json') => {
+const SendRequest = async (method = 'POST', url = '', params = {}, headers = []) => {
+  const options = {
+    method,
+  }
+
+  const token = getUserInfo() && getUserInfo().token
+
+  if (['GET', 'DELETE'].indexOf(method) !== -1) {
+    options.headers = assign(...merge(defaultHeaders, headers, [{ token }]))
+
+    url += `${ isEmpty(params) ? '' : `?${ stringify(params) }` }`
+  } else if (['POST', 'PUT'].indexOf(method) !== -1) {
+    options.headers = assign(...merge(defaultHeaders, headers, [{ token }]))
+
+    options.body = JSON.stringify(params)
+  } else if (!(params instanceof FormData)) {
+    options.headers = assign(...merge(headers))
+    const formData = new FormData()
+
+    /* eslint-disable-next-line */
+    for (let prop in params) {
+      formData.append(prop, params[prop])  
+    }
+
+    options.body = formData
+  }
+
+  /* eslint-disable-next-line */
+  console.info('REQUEST URL:    ', url)
+  /* eslint-disable-next-line */
+  console.info('REQUEST OPTIONS:', options)
+
   const response = await fetch(url, options)
 
-  return handleResponse(response, formType)
+  return handleResponse(response)
     .then(handleResult)
     .catch(handleError)
 }
 
-/**
- * 
- * @param {*} method 
- * @param {*} url 
- * @param {*} params 
- * @param {*} headers 
- */
-const handleOptions = (method = 'POST', url = '', params = {}, headers = {}) => {
-  const options = {
-    method,
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8',
-      ...headers,
-      token:          getUserInfo() && getUserInfo().token,
-    },
-  }
+const Get = (url, params, headers, ...rest) =>  SendRequest('GET', url, params, headers, ...rest)
+const Post = (url, params, headers, ...rest) => SendRequest('POST', url, params, headers, ...rest)
+const Put = (url, params, headers, ...rest) => SendRequest('PUT', url, params, headers, ...rest)
+const Delete = (url, params, headers, ...rest) => SendRequest('DELETE', url, params, headers, ...rest)
 
-  let formType = 'json'
-
-  if (!(params instanceof FormData)) {
-    if (['GET', 'DELETE'].indexOf(method) !== -1) {
-      url += `${ !isEmptyObject(params) ? `?${ object2Url(params) }` : '' }`
-    } else if (['POST', 'PUT'].indexOf(method) !== -1) {
-      options.body = JSON.stringify(params)
-    }
-  } else {
-    options.body = params
-    formType = 'blob'
-  }
-
-  return send(url, options, formType)
-}
-
-export const Get = (url, params, headers) => handleOptions('GET', url, params, headers)
-
-export const Post = (url, params, headers) => handleOptions('POST', url, params, headers)
-
-export const Put = (url, params, headers) => handleOptions('PUT', url, params, headers)
-
-export const Delete = (url, params, headers) => handleOptions('DELETE', url, params, headers)
-
-export const Upload = (url, params, headers) => {
-  const formData = new FormData()
-
-  /* eslint-disable-next-line */
-  for (const i in params) {
-    formData.append(i, params[i])
-  }
-
-  return handleOptions('POST', url, formData, headers)
+export {
+  Get,
+  Post,
+  Put,
+  Delete,
 }

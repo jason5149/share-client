@@ -1,0 +1,98 @@
+.address-list-container {
+  padding: px2rem(30);
+  @include position(absolute, 0, 0, 47px, 0);
+  .address-item-container {
+    border: 1px solid #e6e6e6;
+    background: #fff;
+    border-radius: px2rem(8);
+    margin-bottom: px2rem(20);
+    @extend [layout];
+    @extend [layout=column];
+    @extend [layout-align="center start"];
+    .address-item-content {
+      position: relative;
+      padding-top: px2rem(20);
+      padding-right: px2rem(20);
+      padding-bottom: px2rem(20);
+      padding-left: px2rem(20);
+      .checkbox-container {
+        @extend [layout];
+        @extend [layout=column];
+        @extend [layout-align="center center"];
+        @include position(absolute, 0, null, 0, 0);
+        .am-checkbox.am-checkbox-checked .am-checkbox-inner {
+          border-color: $theme-red!important;
+          background: $theme-red!important;
+        }
+      }
+      .item-desc {
+        color: $font-color-2;
+        font-size: px2rem(26);
+        line-height: px2rem(40);
+        padding-left: px2rem(120);
+        &.bold {
+          color: $font-color-1;
+        }
+      }
+    }
+    .address-item-actions {
+      width: 100%;
+      border-top: 1px solid #e6e6e6;
+      padding-top: px2rem(10);
+      padding-right: px2rem(20);
+      padding-bottom: px2rem(10);
+      padding-left: px2rem(20);
+      @extend [layout];
+      @extend [layout=row];
+      @extend [layout-align="end center"];
+      .actions-btn {
+        color: $font-color-2;
+        font-size: px2rem(24);
+        line-height: px2rem(40);
+        margin-left: px2rem(20);
+      }
+    }
+  }
+}
+
+.address-form-container {
+  padding: px2rem(20) 0;
+  .addres-item {
+    @extend [layout];
+    @extend [layout=row];
+    @extend [layout-align="space-between center"];
+    padding-left: px2rem(30);
+    .address-label {
+      color: #666;
+      flex-shrink: 0;
+      width: px2rem(120);
+      font-size: px2rem(30);
+    }
+    .am-list-item {
+      width: 100%;
+      .am-input-control {
+        input {
+          font-size: px2rem(30);
+        }
+      }
+    }
+    .address-picker-desc {
+      color: #B5B5B5;
+      font-size: px2rem(30);
+    }
+    &.address-switch {
+      height: 44px;
+      padding-right: px2rem(30);
+    }
+  }
+  
+  .address-form-btn {
+    margin-top: px2rem(100);
+    padding-left: px2rem(30);
+    padding-right: px2rem(30);
+  }
+}
+
+.address-bottom-container {
+  @include position(absolute, null, 0, 0, 0);
+}

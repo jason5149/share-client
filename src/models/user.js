@@ -17,13 +17,13 @@ class UserModel {
 
   @observable
   addressInfo = {
-    userName: '',
-    mobile:   '',
-    province: '',
-    city:     '',
-    area:     '',
-    address:  '',
-    default:  false,
+    userName:  '',
+    mobile:    '',
+    province:  '',
+    city:      '',
+    area:      '',
+    address:   '',
+    isDefault: false,
   }
 
   @observable
@@ -68,12 +68,10 @@ class UserModel {
       return false
     }
 
-    // return result.body
     this.addressInfo = result.body
   }
 
   changeAddressInfo = (field, value) => {
-    console.log(field, value)
     this.addressInfo[field] = value
   }
 
@@ -116,6 +114,28 @@ class UserModel {
   @action
   toggleAddressModel = () => {
     this.addressModalVisible = !this.addressModalVisible
+  }
+
+  @action
+  handleAddressPickAction = (type, address) => {
+    if (type === 'cancel') {
+      this.toggleAddressModel()
+    } else if (type === 'confirm') {
+      if (address.length === 3) {
+        /* eslint-disable-next-line */
+        for (let i = 0, len = address.length; i < len; i++) {
+          if (i === 0) {
+            this.changeAddressInfo('province', address[i])
+          } else if (i === 1) {
+            this.changeAddressInfo('city', address[i])
+          } else if (i === 2) {
+            this.changeAddressInfo('area', address[i])
+          }
+        }
+  
+        this.toggleAddressModel()
+      }
+    }
   }
 
   @action

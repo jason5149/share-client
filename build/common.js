@@ -35,25 +35,25 @@ const build = env => {
         test: /\.(js|jsx)$/, 
         use:  ['babel-loader', 'eslint-loader'], 
       },
-      // { 
-      //   test: /\.(sa|sc|c)ss$/, 
-      //   use:  [
-      //     MiniCssExtractPlugin.loader, 
-      //     { loader: 'css-loader' },
-      //     { loader: 'postcss-loader', options: { config: { path: 'postcss.config.js' } } },
-      //     { loader: 'sass-loader' },
-      //   ],
-      // },
-      {
-        test: /\.(le|c)ss$/,
-          use:  [
+      { 
+        test: /\.(sa|sc|c)ss$/, 
+        use:  [
           MiniCssExtractPlugin.loader, 
           { loader: 'css-loader' },
           { loader: 'postcss-loader', options: { config: { path: 'postcss.config.js' } } },
-          { loader: 'less-loader', options: { javascriptEnabled: true } },
-          // { loader: 'sass-loader' },
+          { loader: 'sass-loader' },
         ],
       },
+      // {
+      //   test: /\.(le|c)ss$/,
+      //     use:  [
+      //     MiniCssExtractPlugin.loader, 
+      //     { loader: 'css-loader' },
+      //     { loader: 'postcss-loader', options: { config: { path: 'postcss.config.js' } } },
+      //     { loader: 'less-loader', options: { javascriptEnabled: true } },
+      //     // { loader: 'sass-loader' },
+      //   ],
+      // },
       { 
         test: /\.(png|jpe?g|gif|svg)$/, 
         use:  { 

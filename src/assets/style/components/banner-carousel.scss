@@ -1,0 +1,16 @@
+.banner-carousel-container {
+  @include position(absolute, 0, 0, null, 0);
+  .banner-item-container {
+    width: 100%;
+    display: inline-block;
+    @include position;
+    .banner-item-title {
+      color: #fff;
+      font-size: px2rem(32);
+      @include position(absolute, null, null, px2rem(20), px2rem(20));
+    }
+    .banner-item-image {
+      @include size(100%, 156px);
+    }
+  }
+}

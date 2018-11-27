@@ -1,12 +1,6 @@
 import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
-import AsyncComponent from 'pms-saas-component/lib/async-component'
-
-const MyCenterPage = AsyncComponent(() => import('@pages/My/Center'))
-const MyNewsPage = AsyncComponent(() => import('@pages/My/News'))
-const MyPrizePage = AsyncComponent(() => import('@pages/My/Prize'))
-const MyAddressPage = AsyncComponent(() => import('@pages/My/Address'))
-const CreateAddressPage = AsyncComponent(() => import('@pages/My/CreateAddress'))
+import AsyncComponent from '@components/AsyncComponent'
 
 class MyPage extends Component {
   render() {
@@ -15,11 +9,10 @@ class MyPage extends Component {
 
     return (
       <Switch>
-        <Route path={ `${ url }/address/create` } component={ CreateAddressPage } />
-        <Route path={ `${ url }/address` } component={ MyAddressPage } />
-        <Route path={ `${ url }/prize` } component={ MyPrizePage } />
-        <Route path={ `${ url }/news` } component={ MyNewsPage } />
-        <Route exact path={ `${ url }` } component={ MyCenterPage } />
+        <Route path={ `${ url }/prize` } component={ AsyncComponent(() => import('@pages/My/Prize/Index')) } />
+        <Route path={ `${ url }/share` } component={ AsyncComponent(() => import('@pages/My/Share/Index')) } />
+        <Route path={ `${ url }/address` } component={ AsyncComponent(() => import('@pages/My/Address/Index')) } />
+        <Route path={ `${ url }` } component={ AsyncComponent(() => import('@pages/My/Profile')) } />
       </Switch>
     )
   }

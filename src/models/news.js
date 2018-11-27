@@ -16,15 +16,22 @@ class NewsModel {
   ]
 
   @observable
+  activedTab = '热门'
+
+  @observable
   newsListTotal = 0
+
+  @observable
+  newsListPageIndex = 1
 
   @observable
   newsDetail = null
 
   @action
-  getNewsList = async params => {
-    Toast.loading('加载中')
+  setActivedTab = tab => this.activedTab = tab
 
+  @action
+  getNewsList = async params => {
     const result = await getNewsList(params)
 
     if (result.code !== '10000') {
@@ -32,11 +39,17 @@ class NewsModel {
       return false
     }
 
-    if (result.body) {
-      this.newsListTotal = result.body.page.totalNum
+    if (!result.body) {
+      return false
     }
 
-    Toast.hide()
+    this.newsListPageIndex = params.currentPage
+    this.newsListTotal = result.body.page.totalNum
+    
+    if (params.currentPage >= result.body.page.totalPage) {
+      this.hasMore = false
+      return false
+    }
 
     return result.body.list
   }

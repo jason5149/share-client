@@ -1,0 +1,45 @@
+.container {
+  overflow: hidden;
+  @include size(100%, 100%);
+  @include position(relative);
+}
+
+.view-container {
+  overflow: auto;
+  @include size(100%, 100%);
+  // @include position(relative);
+}
+
+.list-footer {
+  padding: px2rem(20);
+  text-align: center;
+}
+
+.relatived {
+  @include position;
+}
+
+.absoluted {
+  @include position(absolute);
+}
+
+.wrap-small {
+  padding: 0 px2rem(10);
+}
+
+.wrap-middle {
+  padding: 0 px2rem(20);
+}
+
+.wrap-large {
+  padding: 0 px2rem(30);
+}
+
+.fade-appear {
+  opacity: 0.01;
+}
+
+.fade-appear.fade-appear-active {
+  opacity: 1;
+  transition: opacity .5s ease-in;
+}

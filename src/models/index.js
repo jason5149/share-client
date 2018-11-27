@@ -1,4 +1,4 @@
-import BasicModel from './basic'
+import GlobalModel from './global'
 import NewsModel from './news'
 import PrizeModel from './prize'
 import UserModel from './user'
@@ -6,7 +6,7 @@ import WxModel from './wx'
 
 
 export default {
-  BasicModel,
+  GlobalModel,
   NewsModel,
   PrizeModel,
   UserModel,
