@@ -17,7 +17,11 @@ class MyProfilePage extends Component {
 
     if (type === 'address') {
       history.push(`${ BASE_PATH }/my/address`)  
-    }
+    } else if (type === 'share') {
+      history.push(`${ BASE_PATH }/my/share`)  
+    } else if (type === 'prize') {
+      history.push(`${ BASE_PATH }/my/prize`)  
+    } 
   }
 
   render() {
@@ -28,8 +32,8 @@ class MyProfilePage extends Component {
         <ProfilePanel userInfo={ wxUserInfo } />
         <WhiteSpace />
         <List>
-          <Item arrow='horizontal' onClick={ () => this.handleItemClick('misson') }>
-            <ItemLabel text='我的任务' />
+          <Item arrow='horizontal' onClick={ () => this.handleItemClick('share') }>
+            <ItemLabel text='我的分享' />
           </Item>
           <Item arrow='horizontal' onClick={ () => this.handleItemClick('prize') }>
             <ItemLabel text='我的奖品' />

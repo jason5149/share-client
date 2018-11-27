@@ -122,7 +122,9 @@ class HomePage extends Component {
   }
 
   handleItemClick = id => {
-    console.log(id)
+    const { history } = this.props
+
+    history.push(`${ BASE_PATH }/news/${ id }`)
   }
 
   handleActionClick = () => {

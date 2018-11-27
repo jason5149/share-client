@@ -7,7 +7,7 @@ class ActionBtn extends Component {
     return (
       /* eslint-disable-next-line */
       <a className="action-btn" onClick={ onClick }>
-        查看任务
+        我的分享
       </a>
     )
   }

@@ -6,6 +6,7 @@
     @include position;
     .banner-item-title {
       color: #fff;
+      font-size: px2rem(32);
       @include position(absolute, null, null, px2rem(20), px2rem(20));
     }
     .banner-item-image {
