@@ -78,6 +78,7 @@ export const wxConfig = (appId, timestamp, nonceStr, signature, jsApiList = []) 
 
   return new Promise(resolve => {
     Wx.config({
+      debug: true,
       appId,
       timestamp,
       nonceStr,
