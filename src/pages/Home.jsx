@@ -43,7 +43,7 @@ class HomePage extends Component {
     getBannerList()
   }
 
-  handleSearchNewsList = async (currentPage = 1) => {
+  handleSearchNewsList = async (currentPage = 1, category = '热门') => {
     const { NewsModel } = this.props
     // const { activedTab, setActivedTab, getNewsList } = NewsModel
     const { getNewsList } = NewsModel
@@ -52,6 +52,7 @@ class HomePage extends Component {
     const params = {
       currentPage,
       pageSize: 10,
+      category,
     }
     const result = await getNewsList(params)
 
@@ -67,7 +68,7 @@ class HomePage extends Component {
 
   handleRefresh = async () => {
     const { NewsModel } = this.props
-    const { getNewsList } = NewsModel
+    const { activedTab, getNewsList } = NewsModel
     const { dataSource } = this.state
 
     this.setState({ refreshing: true, isLoading: true })
@@ -75,6 +76,7 @@ class HomePage extends Component {
     const params = {
       currentPage: 1,
       pageSize:    10,
+      category:    activedTab,
     }
     const result = await getNewsList(params)
   
@@ -93,7 +95,7 @@ class HomePage extends Component {
 
   handleEndReached = async () => {
     const { NewsModel } = this.props
-    const { newsListPageIndex, getNewsList } = NewsModel
+    const { activedTab, newsListPageIndex, getNewsList } = NewsModel
     const { dataSource } = this.state
 
     this.setState({ isLoading: true })
@@ -101,6 +103,7 @@ class HomePage extends Component {
     const params = {
       currentPage: newsListPageIndex + 1,
       pageSize:    10,
+      category:    activedTab,
     }
     const result = await getNewsList(params)
 
@@ -116,9 +119,9 @@ class HomePage extends Component {
     }
   }
 
-  handleTabChange = tab => {
+  handleTabChange = ({ title }) => {
     this.newsList = []
-    this.handleSearchNewsList(1, tab)
+    this.handleSearchNewsList(1, title)
   }
 
   handleItemClick = id => {

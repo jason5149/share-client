@@ -5,12 +5,15 @@ import AuthRoute from '@components/AuthRoute'
 import ErrorBoundary from '@components/ErrorBoundary'
 import AsyncComponent from '@components/AsyncComponent'
 import { BASE_PATH } from '@utils/const'
+import { JS_API_LIST } from '@utils/config'
+import { wxConfig } from '@utils/wx'
 import { getWxUserInfo, setUserInfo } from '@utils/cache'
 
 // const NewsPage = AsyncComponent(() => import('@pages/News/Index'))
 // const PrizePage = AsyncComponent(() => import('@pages/Prize/Index'))
 
 @inject(
+  'WxModel',
   'UserModel',
 )
 @observer
@@ -24,8 +27,9 @@ class App extends Component {
   }
 
   async init() {
-    const { UserModel } = this.props
+    const { WxModel, UserModel } = this.props
     const { wxUserInfo } = this.state
+    const { getWxConfig } = WxModel
     const { login } = UserModel
 
     if (wxUserInfo) {
@@ -35,6 +39,16 @@ class App extends Component {
 
       if (result) {
         setUserInfo(result)
+      }
+
+      const url = window.location.href
+
+      const wxConfigResult = await getWxConfig({ url })
+
+      if (wxConfigResult) {
+        const { appId, nonceStr, signature, timestamp  } = wxConfigResult
+        const configResult = await wxConfig(appId, timestamp * 1000, nonceStr, signature, JS_API_LIST)
+        console.log('wxConfig', configResult)
       }
     }
   }

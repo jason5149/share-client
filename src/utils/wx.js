@@ -1,4 +1,5 @@
 /* eslint no-undef: "off" */
+import Wx from 'weixin-js-sdk'
 
 /**
  *  微信第三方授权
@@ -71,14 +72,14 @@ export const wxAuth4Public = (appId, redirectUri, type = 'base', payload = null)
  *  @param    {Array}     apiList
  *  @returns  {Promise}
  */
-export const wxConfig = (appId, timeStamp, nonceStr, signature, jsApiList = []) => {
+export const wxConfig = (appId, timestamp, nonceStr, signature, jsApiList = []) => {
   if (!Wx) return
   if (!appId) return
 
   return new Promise(resolve => {
     Wx.config({
       appId,
-      timeStamp,
+      timestamp,
       nonceStr,
       signature,
       jsApiList,

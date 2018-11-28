@@ -5,18 +5,20 @@ import { getNewsList, getNewsDetail } from '@services/news'
 class NewsModel {
   @observable
   newsTabs = [
-    { title: '热门' },
+    { title: '头条' },
+    { title: '社会' },
+    { title: '国内' },
+    { title: '国际' },
     { title: '娱乐' },
-    { title: '段子' },
-    { title: '财经' },
     { title: '体育' },
-    { title: '时尚' },
     { title: '军事' },
-    { title: '汽车' },
+    { title: '科技' },
+    { title: '财经' },
+    { title: '时尚' },
   ]
 
   @observable
-  activedTab = '热门'
+  activedTab = '头条'
 
   @observable
   newsListTotal = 0
@@ -43,6 +45,7 @@ class NewsModel {
       return false
     }
 
+    this.activedTab = params.category
     this.newsListPageIndex = params.currentPage
     this.newsListTotal = result.body.page.totalNum
     
