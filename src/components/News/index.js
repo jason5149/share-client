@@ -5,6 +5,7 @@ import UserPanel from './UserPanel'
 import SharePanel from './SharePanel'
 import NewsContext from './Context'
 import Statement from './Statement'
+import ShareDirector from './ShareDirector'
 
 export default {
   NewsContainer,
@@ -14,4 +15,5 @@ export default {
   SharePanel,
   NewsContext,
   Statement,
+  ShareDirector,
 }

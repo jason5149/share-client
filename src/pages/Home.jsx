@@ -32,6 +32,8 @@ class HomePage extends Component {
   }
 
   init() {
+    document.title = '首页'
+    
     this.handleSearchBannerList()
     this.handleSearchNewsList()
   }

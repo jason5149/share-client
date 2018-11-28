@@ -17,6 +17,8 @@ class AddressListPage extends Component {
   }
 
   init() {
+    document.title = '我的地址'
+
     this.handleSearchAddressList()
   }
 

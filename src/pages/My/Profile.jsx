@@ -12,6 +12,14 @@ class MyProfilePage extends Component {
     wxUserInfo: getWxUserInfo(),
   }
 
+  componentDidMount() {
+    this.init()
+  }
+
+  init() {
+    document.title = '我的'
+  }
+
   handleItemClick = type => {
     const { history } = this.props
 

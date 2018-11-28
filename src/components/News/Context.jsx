@@ -9,10 +9,12 @@ class NewsContext extends Component {
         {context && <div dangerouslySetInnerHTML={{ __html: context }} />}
         <div className='news-context-actions'>
           <span>
+            <i className='read-icon' />
             阅读：
             {readCount}
           </span>
           <span>
+            <i className='share-icon' />
             转载：
             {shareCount}
           </span>

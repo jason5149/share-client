@@ -29,8 +29,14 @@ class NewsModel {
   @observable
   newsDetail = null
 
+  @observable
+  shareVisible = false
+
   @action
   setActivedTab = tab => this.activedTab = tab
+
+  @action
+  toggleShareVisible = () => this.shareVisible = !this.shareVisible
 
   @action
   getNewsList = async params => {
@@ -67,6 +73,8 @@ class NewsModel {
     }
 
     this.newsDetail = result.body
+
+    return true
   }
 
   @action

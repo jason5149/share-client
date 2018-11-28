@@ -35,9 +35,15 @@ class AddressList extends Component {
         </div>
         <div className='address-item-actions'>
           {/* eslint-disable-next-line */}
-          <a className='actions-btn' onClick={ () => onActionClick('edit', value) }>编辑</a>
+          <a className='actions-btn' onClick={ () => onActionClick('edit', value) }>
+            <i className='edit-icon' />
+            编辑
+          </a>
           {/* eslint-disable-next-line */}
-          <a className='actions-btn' onClick={ () => onActionClick('delete', value) }>删除</a>
+          <a className='actions-btn' onClick={ () => onActionClick('delete', value) }>
+            <i className='delete-icon' />
+            删除
+          </a>
         </div>
       </li>
     )

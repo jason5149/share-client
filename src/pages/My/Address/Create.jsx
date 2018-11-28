@@ -21,6 +21,8 @@ class CreateAddressPage extends Component {
   }
 
   init() {
+    document.title = '添加地址'
+
     const { location } = this.props
     const { search } = location
 

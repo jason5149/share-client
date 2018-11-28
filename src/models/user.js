@@ -2,16 +2,33 @@ import { observable, action } from 'mobx'
 import { Toast } from 'antd-mobile'
 import { 
   login,
+  recordReadAction,
+  getNewsList, 
+  getNewsDetail,
+  getPrizeList, 
   getAddressList, 
   getAddressInfo,
   createAddress,
   updateAddress,
   deleteAddress,
-  getNewsList, 
-  getPrizeList, 
 } from '@services/user'
 
 class UserModel {
+  @observable
+  newsTabs = [
+    { title: '进行中' },
+    { title: '已完成' },
+  ]
+
+  @observable
+  activedTab = '头条'
+
+  @observable
+  newsListTotal = 0
+
+  @observable
+  newsListPageIndex = 1
+
   @observable
   addressList = []
 
@@ -41,10 +58,65 @@ class UserModel {
 
     if (result.code !== '10000') {
       Toast.show(result.message, 1)
-      return false
+      return
     }
 
     return result.body
+  }
+
+  @action
+  setActivedTab = tab => this.activedTab = tab
+
+  @action
+  recordReadAction = async params => {
+    const result = await recordReadAction(params)
+
+    if (result.code !== '10000') {
+      Toast.show(result.message)
+      return
+    }
+
+    return true
+  }
+
+
+  @action
+  getNewsList = async params => {
+    const result = await getNewsList(params)
+
+    if (result.code !== '10000') {
+      Toast.show(result.message, 1)
+      return
+    }
+
+    if (!result.body) {
+      return false
+    }
+
+    this.activedTab = params.category
+    this.newsListPageIndex = params.currentPage
+    this.newsListTotal = result.body.page.totalNum
+    
+    if (params.currentPage >= result.body.page.totalPage) {
+      this.hasMore = false
+      return false
+    }
+
+    return result.body.list
+  }
+
+  @action
+  getNewsDetail = async params => {
+    const result = await getNewsDetail(params)
+
+    if (result.code !== '10000') {
+      Toast.show(result.message, 1)
+      return
+    }
+
+    this.newsDetail = result.body
+
+    return true
   }
 
   @action
@@ -53,7 +125,7 @@ class UserModel {
 
     if (result.code !== '10000') {
       Toast.show(result.message, 1)
-      return false
+      return
     }
 
     this.addressList = result.body
@@ -65,7 +137,7 @@ class UserModel {
 
     if (result.code !== '10000') {
       Toast.show(result.message, 1)
-      return false
+      return
     }
 
     this.addressInfo = result.body
@@ -81,7 +153,7 @@ class UserModel {
 
     if (result.code !== '10000') {
       Toast.show(result.message, 1)
-      return false
+      return
     }
 
     return true
@@ -93,7 +165,7 @@ class UserModel {
 
     if (result.code !== '10000') {
       Toast.show(result.message, 1)
-      return false
+      return
     }
 
     return true
@@ -105,7 +177,7 @@ class UserModel {
 
     if (result.code !== '10000') {
       Toast.show(result.message, 1)
-      return false
+      return
     }
 
     return true
@@ -146,7 +218,7 @@ class UserModel {
 
     if (result.code !== '10000') {
       Toast.show(result.message, 1)
-      return false
+      return
     }
 
     if (result.body) {
@@ -164,7 +236,7 @@ class UserModel {
 
     if (result.code !== '10000') {
       Toast.show(result.message, 1)
-      return false
+      return
     }
 
     if (result.body) {

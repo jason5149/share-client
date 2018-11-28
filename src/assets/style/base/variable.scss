@@ -1,5 +1,12 @@
+$base-path: '../img/';
 $theme-red: #e94f4f;
 
 $font-color-1: #333;
 $font-color-2: #666;
 $font-color-3: #999;
+
+$edit-icon: $base-path + 'edit-icon.png';
+$delete-icon: $base-path + 'delete-icon.png';
+$share-icon: $base-path + 'share-icon.png';
+$read-icon: $base-path + 'read-icon.png';
+$share-img: $base-path + 'share-img.png';

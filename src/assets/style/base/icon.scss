@@ -1,0 +1,15 @@
+.edit-icon {
+  @include bgSrc($edit-icon, px2rem(30), px2rem(30));
+}
+
+.delete-icon {
+  @include bgSrc($delete-icon, px2rem(30), px2rem(30));
+}
+
+.share-icon {
+  @include bgSrc($share-icon, px2rem(26), px2rem(26));
+}
+
+.read-icon {
+  @include bgSrc($read-icon, px2rem(26), px2rem(26));
+}
