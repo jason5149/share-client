@@ -47,7 +47,7 @@ class App extends Component {
 
       if (wxConfigResult) {
         const { appId, nonceStr, signature, timestamp  } = wxConfigResult
-        const configResult = await wxConfig(appId, timestamp * 1000, nonceStr, signature, JS_API_LIST)
+        const configResult = await wxConfig(appId, timestamp, nonceStr, signature, JS_API_LIST)
         console.log('wxConfig', configResult)
       }
     }

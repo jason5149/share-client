@@ -45,8 +45,8 @@ class HomePage extends Component {
 
   handleSearchNewsList = async (currentPage = 1, category = '头条') => {
     const { NewsModel } = this.props
-    const { getNewsList } = NewsModel
     const { dataSource } = this.state
+    const { getNewsList } = NewsModel
 
     const params = {
       currentPage,
@@ -67,8 +67,8 @@ class HomePage extends Component {
 
   handleRefresh = async () => {
     const { NewsModel } = this.props
-    const { activedTab, getNewsList } = NewsModel
     const { dataSource } = this.state
+    const { activedTab, getNewsList } = NewsModel
 
     this.setState({ refreshing: true, isLoading: true })
 
@@ -94,8 +94,8 @@ class HomePage extends Component {
 
   handleEndReached = async () => {
     const { NewsModel } = this.props
-    const { activedTab, newsListPageIndex, getNewsList } = NewsModel
     const { dataSource } = this.state
+    const { activedTab, newsListPageIndex, getNewsList } = NewsModel
 
     this.setState({ isLoading: true })
 
@@ -177,7 +177,7 @@ class HomePage extends Component {
             />
           </Tabs>
         </NewsContainer>
-        <ActionBtn onClick={ this.handleActionClick } />
+        <ActionBtn text='我的分享' onClick={ this.handleActionClick } />
       </Fragment>
     )
   }

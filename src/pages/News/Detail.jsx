@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
 import News from '@components/News'
+import ActionBtn from '@components/ActionBtn'
+import { BASE_PATH } from '@utils/const'
 import { getWxUserInfo } from '@utils/cache'
+import { wxShareTimeline, wxShareAppMessage } from '@utils/wx'
 
 const { 
   NewsTitle, 
@@ -29,8 +32,21 @@ class NewsDetailPage extends Component {
     this.handleSearchNewsDetail()
   }
 
-  handleWxShareConfig = () => {
-    
+  handleWxShareConfig = async () => {
+    const { NewsModel, match } = this.props
+    const { userInfo } = this.state
+    const { shareNews } = NewsModel
+    const { params } = match
+    const { id } = userInfo
+
+    const shareTimelineResult = await wxShareTimeline()
+    const shareAppMessageResult = await wxShareAppMessage()
+
+    if (shareTimelineResult || shareAppMessageResult) {
+      const result = await shareNews({ newsId: params.id, type: 0, userId: id })
+
+      console.log(result)
+    }
   }
 
   handleSearchNewsDetail = () => {
@@ -41,11 +57,14 @@ class NewsDetailPage extends Component {
     getNewsDetail(params)
   }
 
+  handleActionClick = () => {
+    console.log('share')
+  }
 
   render() {
     const { NewsModel } = this.props
-    const { newsDetail } = NewsModel
     const { userInfo } = this.state
+    const { newsDetail } = NewsModel
 
     if (!newsDetail) return null
 
@@ -58,6 +77,7 @@ class NewsDetailPage extends Component {
         <SharePanel userInfo={ userInfo } />
         <NewsContext context={ context } readCount={ readCount } shareCount={ shareCount } />
         <Statement />
+        <ActionBtn text='分享赚积分' onClick={ this.handleActionClick } />
       </div>
     )
   }
