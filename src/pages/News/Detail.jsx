@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
 import News from '@components/News'
 import ActionBtn from '@components/ActionBtn'
-import { BASE_PATH } from '@utils/const'
 import { getWxUserInfo } from '@utils/cache'
 import { wxShareTimeline, wxShareAppMessage } from '@utils/wx'
 
