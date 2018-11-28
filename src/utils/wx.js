@@ -104,7 +104,7 @@ export const wxConfig = (appId, timestamp, nonceStr, signature, jsApiList = []) 
 export const wxShareTimeline = (title, link, imgUrl) => {
   if (!Wx) return
 
-  return new Promsie(resolve => {
+  return new Promise(resolve => {
     Wx.onMenuShareTimeline({
       title,
       link,
