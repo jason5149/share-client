@@ -43,7 +43,7 @@ class HomePage extends Component {
     getBannerList()
   }
 
-  handleSearchNewsList = async (currentPage = 1, category = '热门') => {
+  handleSearchNewsList = async (currentPage = 1, category = '头条') => {
     const { NewsModel } = this.props
     // const { activedTab, setActivedTab, getNewsList } = NewsModel
     const { getNewsList } = NewsModel

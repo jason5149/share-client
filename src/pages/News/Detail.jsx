@@ -25,7 +25,12 @@ class NewsDetailPage extends Component {
   }
 
   init() {
+    this.handleWxShareConfig()
     this.handleSearchNewsDetail()
+  }
+
+  handleWxShareConfig = () => {
+    
   }
 
   handleSearchNewsDetail = () => {
