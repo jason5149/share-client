@@ -105,6 +105,10 @@ export const wxShareTimeline = (title, link, imgUrl) => {
   if (!Wx) return
 
   return new Promise(resolve => {
+    console.log(title)
+    console.log(link)
+    console.log(imgUrl)
+    
     Wx.onMenuShareTimeline({
       title,
       link,
