@@ -16,12 +16,12 @@ import {
 class UserModel {
   @observable
   newsTabs = [
-    { title: '进行中' },
-    { title: '已完成' },
+    { title: '进行中', status: 1 },
+    { title: '已完成', status: 2 },
   ]
 
   @observable
-  activedTab = '头条'
+  activedTab = 1
 
   @observable
   newsListTotal = 0
@@ -93,7 +93,7 @@ class UserModel {
       return false
     }
 
-    this.activedTab = params.category
+    this.activedTab = params.status
     this.newsListPageIndex = params.currentPage
     this.newsListTotal = result.body.page.totalNum
     
