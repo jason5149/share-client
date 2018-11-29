@@ -5,7 +5,8 @@ import News from '@components/News'
 import ActionBtn from '@components/ActionBtn'
 import { getUserInfo } from '@utils/cache'
 import { JS_API_LIST } from '@utils/config'
-import { wxConfig, wxShareTimeline, wxShareAppMessage } from '@utils/wx'
+import { wxConfig, wxShareTimeline } from '@utils/wx'
+// import { wxConfig, wxShareTimeline, wxShareAppMessage } from '@utils/wx'
 
 const { 
   NewsTitle, 
