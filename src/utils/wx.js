@@ -78,7 +78,7 @@ export const wxConfig = (appId, timestamp, nonceStr, signature, jsApiList = []) 
 
   return new Promise(resolve => {
     Wx.config({
-      debug: true,
+      // debug: true,
       appId,
       timestamp,
       nonceStr,
@@ -108,7 +108,7 @@ export const wxShareTimeline = (title, link, imgUrl) => {
     console.log(title)
     console.log(link)
     console.log(imgUrl)
-    
+
     Wx.onMenuShareTimeline({
       title,
       link,
