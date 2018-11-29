@@ -24,12 +24,17 @@ class AuthPage extends Component {
 
     Toast.loading('微信授权中', 10)
 
-    const search = parse(window.location.href)
-    const { code } = search
+    const url = window.location.href
+    let wxCode = ''
 
-    if (code) {
-      console.log('code')
-      this.handleCode(code)
+    if (url.indexOf('?') !== -1) {
+      const search = url.split('?')[1]
+      wxCode = search.code
+    }
+
+    if (wxCode) {
+      console.log('wxCode', wxCode)
+      this.handleCode(wxCode)
     } else {
       console.log('auth')
       this.handleAuth()
