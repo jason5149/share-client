@@ -110,11 +110,9 @@ export const wxShareTimeline = (title, link, imgUrl) => {
       link,
       imgUrl,
       success: () => {
-        console.log('wxShareTimeline success')
         resolve(true)
       },
       cancel: () => {
-        console.log('wxShareTimeline cancel')
         resolve(false)
       },
     })
@@ -143,11 +141,9 @@ export const wxShareAppMessage = (title, desc, link, imgUrl, type = 'link', data
       type,
       dataUrl,
       success: () => {
-        console.log('wxShareAppMessage success')
         resolve(true)
       },
       cancel: () => {
-        console.log('wxShareAppMessage cancel')
         resolve(false)
       },
     })

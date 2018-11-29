@@ -106,7 +106,7 @@ class NewsDetailPage extends Component {
           const result = await shareNews({ newsId, type: 0, userId })
 
           if (result) {
-            toggleShareVisible()
+            toggleShareVisible(false)
             Toast.show('分享成功')
           }
         }
@@ -134,7 +134,7 @@ class NewsDetailPage extends Component {
     const { NewsModel } = this.props
     const { toggleShareVisible } = NewsModel
 
-    toggleShareVisible()
+    toggleShareVisible(true)
   }
 
   render() {
@@ -154,7 +154,7 @@ class NewsDetailPage extends Component {
         <NewsContext context={ context } readCount={ readCount } shareCount={ shareCount } />
         <Statement />
         <ActionBtn text='分享赚积分' onClick={ this.handleActionClick } />
-        {shareVisible && <ShareDirector onClick={ toggleShareVisible } />}
+        {shareVisible && <ShareDirector onClick={ () => toggleShareVisible(false) } />}
       </div>
     )
   }

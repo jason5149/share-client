@@ -36,7 +36,7 @@ class NewsModel {
   setActivedTab = tab => this.activedTab = tab
 
   @action
-  toggleShareVisible = () => this.shareVisible = !this.shareVisible
+  toggleShareVisible = flag => this.shareVisible = flag
 
   @action
   getNewsList = async params => {
