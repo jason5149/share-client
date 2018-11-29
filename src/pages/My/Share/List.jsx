@@ -35,7 +35,7 @@ class MyShareListPage extends Component {
     this.handleSearchNewsList()
   }
 
-  handleSearchNewsList = async (currentPage = 1, category = '头条') => {
+  handleSearchNewsList = async (currentPage = 1) => {
     const { UserModel } = this.props
     const { dataSource } = this.state
     const { getNewsList } = UserModel
@@ -43,7 +43,6 @@ class MyShareListPage extends Component {
     const params = {
       currentPage,
       pageSize: 10,
-      category,
     }
     const result = await getNewsList(params)
 
@@ -67,7 +66,6 @@ class MyShareListPage extends Component {
     const params = {
       currentPage: 1,
       pageSize:    10,
-      category:    activedTab,
     }
     const result = await getNewsList(params)
   
@@ -94,7 +92,6 @@ class MyShareListPage extends Component {
     const params = {
       currentPage: newsListPageIndex + 1,
       pageSize:    10,
-      category:    activedTab,
     }
     const result = await getNewsList(params)
 

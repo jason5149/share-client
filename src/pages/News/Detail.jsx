@@ -76,7 +76,7 @@ class NewsDetailPage extends Component {
   handleWxShareConfig = async () => {
     const { NewsModel } = this.props
     const { userInfo } = this.state
-    const { shareNews, newsDetail } = NewsModel
+    const { shareNews, newsDetail, toggleShareVisible } = NewsModel
     const { id: userId } = userInfo
     const { id: newsId, title, thumbnail_pic_s } = newsDetail
     const desc = '麻烦帮我看下新闻，我要免费拿礼品，还包邮到家，爱你哟～'
@@ -89,6 +89,7 @@ class NewsDetailPage extends Component {
       const result = await shareNews({ newsId, type: 0, userId })
 
       if (result) {
+        toggleShareVisible()
         Toast.show('分享成功')
       }
     }
