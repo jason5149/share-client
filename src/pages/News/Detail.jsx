@@ -5,7 +5,6 @@ import News from '@components/News'
 import ActionBtn from '@components/ActionBtn'
 import { getUserInfo } from '@utils/cache'
 import { JS_API_LIST } from '@utils/config'
-// import { wxConfig, wxShareTimeline } from '@utils/wx'
 import { wxConfig, wxShareTimeline, wxShareAppMessage } from '@utils/wx'
 
 const { 
@@ -101,6 +100,8 @@ class NewsDetailPage extends Component {
       if (configResult) {
         const shareTimelineResult = await wxShareTimeline(title, url, thumbnail_pic_s)
         const shareAppMessageResult = await wxShareAppMessage(title, desc, url, thumbnail_pic_s)
+
+        console.log(shareTimelineResult, shareAppMessageResult)
 
         if (shareTimelineResult || shareAppMessageResult) {
           const result = await shareNews({ newsId, type: 0, userId })
