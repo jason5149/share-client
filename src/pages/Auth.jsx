@@ -25,9 +25,7 @@ class AuthPage extends Component {
     Toast.loading('微信授权中', 10)
 
     const search = parse(window.location.href)
-    /* eslint-disable-next-line */
-    const params = new URLSearchParams(search)
-    const code = params.get('code')
+    const { code } = search
 
     if (code) {
       console.log('code')
