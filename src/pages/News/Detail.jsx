@@ -94,25 +94,25 @@ class NewsDetailPage extends Component {
       const { appId, nonceStr, signature, timestamp  } = wxConfigResult
       const configResult = await wxConfig(appId, timestamp, nonceStr, signature, JS_API_LIST)
         
-      console.log('wxConfig', configResult)
+      if (configResult) {
+        console.log('title', title)
+        console.log('desc', desc)
+        console.log('imgUrl', thumbnail_pic_s)
 
-      console.log('title', title)
-      console.log('desc', desc)
-      console.log('imgUrl', thumbnail_pic_s)
+        const shareTimelineResult = await wxShareTimeline(title, window.location.href, thumbnail_pic_s)
+        const shareAppMessageResult = await wxShareAppMessage(title, desc, window.location.href, thumbnail_pic_s)
 
-      const shareTimelineResult = await wxShareTimeline(title, window.location.href, thumbnail_pic_s)
-      const shareAppMessageResult = await wxShareAppMessage(title, desc, window.location.href, thumbnail_pic_s)
+        console.log('shareTimelineResult', shareTimelineResult)
+        console.log('shareAppMessageResult', shareAppMessageResult)
 
-      console.log('shareTimelineResult', shareTimelineResult)
-      console.log('shareAppMessageResult', shareAppMessageResult)
+        if (shareTimelineResult || shareAppMessageResult) {
+          console.log({ newsId, type: 0, userId })
+          const result = await shareNews({ newsId, type: 0, userId })
 
-      if (shareTimelineResult || shareAppMessageResult) {
-        console.log({ newsId, type: 0, userId })
-        const result = await shareNews({ newsId, type: 0, userId })
-
-        if (result) {
-          toggleShareVisible()
-          Toast.show('分享成功')
+          if (result) {
+            toggleShareVisible()
+            Toast.show('分享成功')
+          }
         }
       }
     }
