@@ -40,7 +40,6 @@ class NewsDetailPage extends Component {
   init() {
     document.title = '热文详情'
 
-    this.startReadAction()
     this.handleSearchNewsDetail()
   }
 
@@ -68,9 +67,12 @@ class NewsDetailPage extends Component {
     const { getNewsDetail } = NewsModel
     const { params } = match
 
-    await getNewsDetail(params)
+    const result = await getNewsDetail(params)
 
-    this.handleWxShareConfig()
+    if (result) {
+      this.startReadAction()
+      this.handleWxShareConfig()
+    }
   }
 
   handleWxShareConfig = async () => {
@@ -80,6 +82,10 @@ class NewsDetailPage extends Component {
     const { id: userId } = userInfo
     const { id: newsId, title, thumbnail_pic_s } = newsDetail
     const desc = '麻烦帮我看下新闻，我要免费拿礼品，还包邮到家，爱你哟～'
+
+    console.log('title', title)
+    console.log('desc', desc)
+    console.log('imgUrl', thumbnail_pic_s)
 
     const shareTimelineResult = await wxShareTimeline(title, window.location.href, thumbnail_pic_s)
     const shareAppMessageResult = await wxShareAppMessage(title, desc, window.location.href, thumbnail_pic_s)
