@@ -11,14 +11,9 @@ import { getWxUserInfo, setUserInfo } from '@utils/cache'
 
 @inject(
   'WxModel',
-  'UserModel',
 )
 @observer
 class App extends Component {
-  state = {
-    wxUserInfo: getWxUserInfo(),
-  }
-
   componentDidMount() {
     this.init()
   }
@@ -28,30 +23,18 @@ class App extends Component {
   }
 
   async init() {
-    const { WxModel, UserModel } = this.props
-    const { wxUserInfo } = this.state
+    const { WxModel } = this.props
     const { getWxConfig } = WxModel
-    const { login } = UserModel
 
-    if (wxUserInfo) {
-      const { openId: openid } = wxUserInfo
+    const url = window.location.href
 
-      const result = await login({ openid })
+    const wxConfigResult = await getWxConfig({ url })
 
-      if (result) {
-        setUserInfo(result)
-      }
-
-      const url = window.location.href
-
-      const wxConfigResult = await getWxConfig({ url })
-
-      if (wxConfigResult) {
-        const { appId, nonceStr, signature, timestamp  } = wxConfigResult
-        const configResult = await wxConfig(appId, timestamp, nonceStr, signature, JS_API_LIST)
+    if (wxConfigResult) {
+      const { appId, nonceStr, signature, timestamp  } = wxConfigResult
+      const configResult = await wxConfig(appId, timestamp, nonceStr, signature, JS_API_LIST)
         
-        console.log('wxConfig', configResult)
-      }
+      console.log('wxConfig', configResult)
     }
   }
 

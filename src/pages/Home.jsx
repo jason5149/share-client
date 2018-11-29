@@ -1,10 +1,11 @@
 import React, { Component, Fragment } from 'react'
 import { inject, observer } from 'mobx-react'
-import { Tabs, ListView, PullToRefresh } from 'antd-mobile'
+import { Tabs, ListView, PullToRefresh, Toast } from 'antd-mobile'
 import News from '@components/News'
 import ActionBtn from '@components/ActionBtn'
 import BannerCarousel from '@components/BannerCarousel'
 import { BASE_PATH } from '@utils/const'
+import { getUserInfo, setUserInfo, getWxUserInfo } from '@utils/cache'
 
 const { DefaultTabBar } = Tabs
 const { NewsContainer, NewsItem } = News
@@ -12,10 +13,13 @@ const { NewsContainer, NewsItem } = News
 @inject(
   'GlobalModel',
   'NewsModel',
+  'UserModel',
 )
 @observer
 class HomePage extends Component {
   state = {
+    userInfo:   getUserInfo(),
+    wxUserInfo: getWxUserInfo(),
     dataSource: new ListView.DataSource({
       rowHasChanged: (row1, row2) => row1 !== row2,
     }),
@@ -31,9 +35,27 @@ class HomePage extends Component {
     this.init()
   }
 
-  init() {
+  async init() {
     document.title = '首页'
-    
+
+    const { UserModel } = this.props
+    const { userInfo, wxUserInfo } = this.state
+    const { login } = UserModel
+
+    if (!userInfo) {
+      Toast.loading('加载中')
+
+      const { openId: openid } = wxUserInfo
+
+      const result = await login({ openid })
+
+      Toast.hide()
+
+      if (result) {
+        setUserInfo(result)
+      }
+    }
+
     this.handleSearchBannerList()
     this.handleSearchNewsList()
   }
