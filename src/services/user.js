@@ -5,6 +5,8 @@ export const login = params => Post(`${ API }/user/login`, params)
 
 export const recordReadAction = params => Put(`${ API }/news/read`, params)
 
+export const shareNews = params => Post(`${ API }/news/share`, params)
+
 export const getNewsList = params => Get(`${ API }/news/myShare`, params)
 
 export const getPrizeList = params => Get(`${ API }/prize/list`, params)

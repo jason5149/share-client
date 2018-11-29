@@ -3,6 +3,7 @@ import { Toast } from 'antd-mobile'
 import { 
   login,
   recordReadAction,
+  shareNews,
   getNewsList, 
   getNewsDetail,
   getPrizeList, 
@@ -79,6 +80,17 @@ class UserModel {
     return true
   }
 
+  @action
+  shareNews = async params => {
+    const result = await shareNews(params)
+
+    if (result.code !== '10000') {
+      Toast.show(result.message)
+      return
+    }
+
+    return true
+  }
 
   @action
   getNewsList = async params => {
