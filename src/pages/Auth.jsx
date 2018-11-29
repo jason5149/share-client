@@ -30,8 +30,10 @@ class AuthPage extends Component {
     const code = params.get('code')
 
     if (code) {
+      console.log('code')
       this.handleCode(code)
     } else {
+      console.log('auth')
       this.handleAuth()
     }
   }
