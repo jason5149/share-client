@@ -9,21 +9,19 @@ const defaultHeaders = [
 
 const handleResponse = (response, formType = 'json') => {
   /* eslint-disable-next-line */
-  console.info('REQUEST RESPONSE', response)
+  // console.info('REQUEST RESPONSE', response)
   return response[formType]()
 }
 
 const handleResult = ({ code, message, body }) => {
   /* eslint-disable-next-line */
-  console.info('REQUEST RESULT  ', { code, message, body })
-
+  // console.info('REQUEST RESULT  ', { code, message, body })
   return { code, message, body }
 }
 
 const handleError = error => {
   /* eslint-disable-next-line */
-  console.error('REQUEST ERROR  ', error)
-  // return error
+  // console.error('REQUEST ERROR  ', error)
   return error
 }
 
@@ -55,9 +53,9 @@ const SendRequest = async (method = 'POST', url = '', params = {}, headers = [])
   }
 
   /* eslint-disable-next-line */
-  console.info('REQUEST URL:    ', url)
+  // console.info('REQUEST URL:    ', url)
   /* eslint-disable-next-line */
-  console.info('REQUEST OPTIONS:', options)
+  // console.info('REQUEST OPTIONS:', options)
 
   const response = await fetch(url, options)
 
