@@ -9,9 +9,6 @@ import { JS_API_LIST } from '@utils/config'
 import { wxConfig } from '@utils/wx'
 import { getWxUserInfo, setUserInfo } from '@utils/cache'
 
-// const NewsPage = AsyncComponent(() => import('@pages/News/Index'))
-// const PrizePage = AsyncComponent(() => import('@pages/Prize/Index'))
-
 @inject(
   'WxModel',
   'UserModel',
@@ -23,6 +20,10 @@ class App extends Component {
   }
 
   componentDidMount() {
+    this.init()
+  }
+
+  componentWillUpdate() {
     this.init()
   }
 
