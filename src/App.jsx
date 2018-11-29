@@ -7,7 +7,6 @@ import AsyncComponent from '@components/AsyncComponent'
 import { BASE_PATH } from '@utils/const'
 import { JS_API_LIST } from '@utils/config'
 import { wxConfig } from '@utils/wx'
-import { getWxUserInfo, setUserInfo } from '@utils/cache'
 
 @inject(
   'WxModel',
