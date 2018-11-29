@@ -28,7 +28,7 @@ class AuthPage extends Component {
     let wxCode = ''
 
     if (url.indexOf('?') !== -1) {
-      const search = url.split('?')[1]
+      const search = parse(url.split('?')[1])
       wxCode = search.code
     }
 
