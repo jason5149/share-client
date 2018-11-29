@@ -90,6 +90,9 @@ class NewsDetailPage extends Component {
     const shareTimelineResult = await wxShareTimeline(title, window.location.href, thumbnail_pic_s)
     const shareAppMessageResult = await wxShareAppMessage(title, desc, window.location.href, thumbnail_pic_s)
 
+    console.log('shareTimelineResult', shareTimelineResult)
+    console.log('shareAppMessageResult', shareAppMessageResult)
+    
     if (shareTimelineResult || shareAppMessageResult) {
       console.log({ newsId, type: 0, userId })
       const result = await shareNews({ newsId, type: 0, userId })
