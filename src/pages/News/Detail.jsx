@@ -4,7 +4,8 @@ import { Toast } from 'antd-mobile'
 import News from '@components/News'
 import ActionBtn from '@components/ActionBtn'
 import { getUserInfo } from '@utils/cache'
-import { wxShareTimeline, wxShareAppMessage } from '@utils/wx'
+import { JS_API_LIST } from '@utils/config'
+import { wxConfig, wxShareTimeline, wxShareAppMessage } from '@utils/wx'
 
 const { 
   NewsTitle, 
@@ -16,6 +17,7 @@ const {
 } = News
 
 @inject(
+  'WxModel',
   'NewsModel',
   'UserModel',
 )
@@ -71,35 +73,47 @@ class NewsDetailPage extends Component {
 
     if (result) {
       this.startReadAction()
+
+      setTimeout(() => {})
       this.handleWxShareConfig()
     }
   }
 
   handleWxShareConfig = async () => {
-    const { NewsModel } = this.props
+    const { WxModel, NewsModel } = this.props
     const { userInfo } = this.state
+    const { getWxConfig } = WxModel
     const { shareNews, newsDetail, toggleShareVisible } = NewsModel
     const { id: userId } = userInfo
     const { id: newsId, title, thumbnail_pic_s } = newsDetail
     const desc = '麻烦帮我看下新闻，我要免费拿礼品，还包邮到家，爱你哟～'
+    const url = window.location.href
+    const wxConfigResult = await getWxConfig({ url })
 
-    console.log('title', title)
-    console.log('desc', desc)
-    console.log('imgUrl', thumbnail_pic_s)
+    if (wxConfigResult) {
+      const { appId, nonceStr, signature, timestamp  } = wxConfigResult
+      const configResult = await wxConfig(appId, timestamp, nonceStr, signature, JS_API_LIST)
+        
+      console.log('wxConfig', configResult)
 
-    const shareTimelineResult = await wxShareTimeline(title, window.location.href, thumbnail_pic_s)
-    const shareAppMessageResult = await wxShareAppMessage(title, desc, window.location.href, thumbnail_pic_s)
+      console.log('title', title)
+      console.log('desc', desc)
+      console.log('imgUrl', thumbnail_pic_s)
 
-    console.log('shareTimelineResult', shareTimelineResult)
-    console.log('shareAppMessageResult', shareAppMessageResult)
-    
-    if (shareTimelineResult || shareAppMessageResult) {
-      console.log({ newsId, type: 0, userId })
-      const result = await shareNews({ newsId, type: 0, userId })
+      const shareTimelineResult = await wxShareTimeline(title, window.location.href, thumbnail_pic_s)
+      const shareAppMessageResult = await wxShareAppMessage(title, desc, window.location.href, thumbnail_pic_s)
 
-      if (result) {
-        toggleShareVisible()
-        Toast.show('分享成功')
+      console.log('shareTimelineResult', shareTimelineResult)
+      console.log('shareAppMessageResult', shareAppMessageResult)
+
+      if (shareTimelineResult || shareAppMessageResult) {
+        console.log({ newsId, type: 0, userId })
+        const result = await shareNews({ newsId, type: 0, userId })
+
+        if (result) {
+          toggleShareVisible()
+          Toast.show('分享成功')
+        }
       }
     }
   }

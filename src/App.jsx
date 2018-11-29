@@ -17,10 +17,6 @@ class App extends Component {
     this.init()
   }
 
-  componentWillUpdate() {
-    this.init()
-  }
-
   async init() {
     const { WxModel } = this.props
     const { getWxConfig } = WxModel
