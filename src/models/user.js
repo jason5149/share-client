@@ -54,6 +54,9 @@ class UserModel {
   @observable
   prizeListTotal = 0
 
+  @observable
+  userDetailInfo = null
+
   @action
   login = async params => {
     const result = await login(params)
@@ -78,7 +81,7 @@ class UserModel {
       return
     }
 
-    return result.body
+    this.userDetailInfo = result.body
   }
 
   @action

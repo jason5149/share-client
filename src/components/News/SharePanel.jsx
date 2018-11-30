@@ -4,17 +4,28 @@ import { Button } from 'antd-mobile'
 class SharePanel extends Component {
   render() {
     const { userInfo } = this.props
-    const { nickname } = userInfo
+
+    if (!userInfo) return null
+
+    const { nickName, shareReadCount, prizeCount } = userInfo
 
     return (
       <div className='share-panel-container'>
         <div className='share-username'>
-          {nickname}
+          {nickName}
         </div>
         <div className='share-info'>
           <div className='share-line-info'>
-            <span className='share-info-text'>分享热文：次</span>
-            <span className='share-info-text'>领取奖品：次</span>
+            <span className='share-info-text'>
+              分享热文：
+              {shareReadCount}
+              次
+            </span>
+            <span className='share-info-text'>
+              领取奖品：
+              {prizeCount}
+              次
+            </span>
           </div>
           <div className='share-info-text'>分享过的热文被1000人查看过</div>
         </div>

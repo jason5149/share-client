@@ -24,6 +24,7 @@ const {
 @observer
 class NewsDetailPage extends Component {
   state = {
+    isRead:   false,
     userInfo: getUserInfo(),
   }
 
@@ -52,7 +53,7 @@ class NewsDetailPage extends Component {
 
   startReadAction = () => {
     this.timer = setInterval(() => {
-      if (this.count !== 5) {
+      if (this.count < 5) {
         ++this.count
       } else {
         this.handleReadAction()
@@ -74,15 +75,17 @@ class NewsDetailPage extends Component {
 
   handleSearchNewsDetail = async() => {
     const { NewsModel, match } = this.props
+    const { isRead } = this.state
     const { getNewsDetail } = NewsModel
     const { params } = match
 
     const result = await getNewsDetail(params)
 
     if (result) {
-      this.startReadAction()
-
-      setTimeout(() => {})
+      if (!isRead) {
+        this.startReadAction()
+      }
+      
       this.handleWxShareConfig()
     }
   }
@@ -137,8 +140,12 @@ class NewsDetailPage extends Component {
     const result = await recordReadAction({ newsId, userId })
 
     if (result) {
-      this.handleSearchNewsDetail()
-      Toast.show('阅读+1')
+      this.setState({
+        isRead: true,
+      }, () => {
+        this.handleSearchNewsDetail()
+        Toast.show('阅读+1')
+      })
     }
   }
 
@@ -150,9 +157,10 @@ class NewsDetailPage extends Component {
   }
 
   render() {
-    const { NewsModel } = this.props
+    const { NewsModel, UserModel } = this.props
     const { userInfo } = this.state
     const { newsDetail, shareVisible, toggleShareVisible } = NewsModel
+    const { userDetailInfo } = UserModel
 
     if (!newsDetail) return null
 
@@ -162,7 +170,7 @@ class NewsDetailPage extends Component {
       <div className='view-container'>
         <NewsTitle title={ title } date={ date } author={ author_name } />
         <UserPanel userInfo={ userInfo } />
-        <SharePanel userInfo={ userInfo } />
+        <SharePanel userInfo={ userDetailInfo } />
         <NewsContext context={ context } readCount={ readCount } shareCount={ shareCount } />
         <Statement />
         <ActionBtn text='分享赚积分' onClick={ this.handleActionClick } />
