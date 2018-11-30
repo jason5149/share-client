@@ -55,7 +55,7 @@ class NewsModel {
     this.newsListPageIndex = params.currentPage
     this.newsListTotal = result.body.page.totalNum
     
-    if (params.currentPage >= result.body.page.totalPage) {
+    if (params.currentPage !== 1 && params.currentPage >= result.body.page.totalPage) {
       this.hasMore = false
       return false
     }

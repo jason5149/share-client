@@ -1,0 +1,56 @@
+.prize-container {
+  @include position(absolute, px2rem(88), 0, 0, 0);
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  .prize-list-container {
+    height: 100%;
+    overflow: auto;
+    background: #fff;
+    @include position;
+    .prize-item-container {
+      padding: px2rem(20);
+      box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.1);
+      border-radius: px2rem(8);
+      margin-bottom: px2rem(10);
+      @extend [layout];
+      @extend [layout=row];
+      @extend [layout-align="start center"];
+      @include size(100%, auto);
+      .prize-item-thumbnail {
+        flex-shrink: 0;
+        margin-right: px2rem(20);
+        @include size(px2rem(200), px2rem(200));
+      }
+      .prize-item-info {
+        @extend [layout];
+        @extend [layout=column];
+        @extend [layout-align="space-between start"];
+        @include size(100%, px2rem(200));
+        .prize-item-text {
+          color: $font-color-1;
+          font-size: px2rem(30);
+          line-height: px2rem(48);
+        }
+        .prize-item-spec {
+          color: $theme-red;
+          font-size: px2rem(30);
+          margin-right: px2rem(40);
+          line-height: px2rem(40);
+        }
+        .prize-item-sub {
+          color: $font-color-2;
+          font-size: px2rem(24);
+          line-height: px2rem(40);
+        }
+      }
+    }
+  }
+  .prize-list-indicator {
+    font-size: px2rem(26);
+    line-height: px2rem(42);
+    @extend [layout];
+    @extend [layout=row];
+    @extend [layout-align="center center"];
+  }
+}

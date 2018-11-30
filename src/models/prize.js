@@ -6,6 +6,9 @@ class PrizeModel {
   @observable
   prizeListTotal = 0
 
+  @observable
+  prizeListPageIndex = 1
+
   @action
   getPrizeList = async params => {
     const result = await getPrizeList(params)
@@ -15,17 +18,19 @@ class PrizeModel {
       return false
     }
 
-    if (result.body) {
-      this.prizeListTotal = result.body.list.totalNum
+    if (!result.body) {
+      return false
     }
 
-    // return result.body.list
-    return [
-      {
-        id:  1,
-        src: 'http://wanjia.sh1a.qingstor.com/tour-1.jpg',
-      },
-    ]
+    this.prizeListPageIndex = params.currentPage
+    this.prizeListTotal = result.body.page.totalNum
+
+    if (params.currentPage !== 1 && params.currentPage >= result.body.page.totalPage) {
+      this.hasMore = false
+      return false
+    }
+
+    return result.body.list
   }
 }
 
