@@ -42,6 +42,7 @@ class NewsDetailPage extends Component {
   init() {
     document.title = '热文详情'
 
+    this.handleSearchUserInfo()
     this.handleSearchNewsDetail()
   }
 
@@ -62,6 +63,13 @@ class NewsDetailPage extends Component {
 
   stopReadAction = () => {
     clearInterval(this.timer)
+  }
+
+  handleSearchUserInfo = () => {
+    const { UserModel } = this.props
+    const { getUserDetailInfo } = UserModel
+
+    getUserDetailInfo()
   }
 
   handleSearchNewsDetail = async() => {

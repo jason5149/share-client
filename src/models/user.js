@@ -2,6 +2,7 @@ import { observable, action } from 'mobx'
 import { Toast } from 'antd-mobile'
 import { 
   login,
+  getUserDetailInfo,
   recordReadAction,
   shareNews,
   getNewsList, 
@@ -67,6 +68,18 @@ class UserModel {
 
   @action
   setActivedTab = tab => this.activedTab = tab
+
+  @action
+  getUserDetailInfo = async params => {
+    const result = await getUserDetailInfo(params)
+
+    if (result.code !== '10000') {
+      Toast.show(result.message)
+      return
+    }
+
+    return result.body
+  }
 
   @action
   recordReadAction = async params => {
