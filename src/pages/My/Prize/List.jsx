@@ -109,6 +109,12 @@ class MyPrizeListPage extends Component {
     }
   }
 
+  handleItemClick = id => {
+    const { history } = this.props
+
+    history.push(`${ BASE_PATH }/prize/${ id }`)
+  }
+
   render() {
     const { dataSource, refreshing, isLoading } = this.state
 
