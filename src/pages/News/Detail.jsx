@@ -109,24 +109,27 @@ class NewsDetailPage extends Component {
       const configResult = await wxConfig(appId, timestamp, nonceStr, signature, JS_API_LIST)
         
       if (configResult) {
-        const shareAppMessageResult = await wxShareAppMessage(title, desc, url, thumbnail_pic_s)
-
-        console.log('wxShareAppMessage', shareAppMessageResult)
-
-        const shareTimelineResult = await wxShareTimeline(title, url, thumbnail_pic_s)
-
-        console.log('wxShareTimeline', shareTimelineResult)
-
-        console.log(shareTimelineResult || shareAppMessageResult)
-        if (shareTimelineResult || shareAppMessageResult) {
-          
-          const result = await shareNews({ newsId, type: 0, userId })
-
+        wxShareAppMessage(title, desc, url, thumbnail_pic_s).then(async result => {
           if (result) {
-            toggleShareVisible(false)
-            Toast.show('分享成功')
+            const shareResult = await shareNews({ newsId, type: 0, userId })
+
+            if (shareResult) {
+              toggleShareVisible(false)
+              Toast.show('分享成功')
+            }
           }
-        }
+        })
+
+        wxShareTimeline(title, url, thumbnail_pic_s).then(async result => {
+          if (result) {
+            const shareResult = await shareNews({ newsId, type: 0, userId })
+
+            if (shareResult) {
+              toggleShareVisible(false)
+              Toast.show('分享成功')
+            }
+          }
+        })
       }
     }
   }
