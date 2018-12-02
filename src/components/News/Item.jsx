@@ -6,6 +6,7 @@ class NewsItem extends Component {
       id, 
       title, 
       date,
+      integral,
       shareCount,
       readCount,
       author_name,
@@ -19,7 +20,13 @@ class NewsItem extends Component {
       /* eslint-disable-next-line */
       <div className='news-item-container' onClick={ () => onClick(id) }>
         <div className='news-item-content'>
-          <div className='news-item-title'>{ title }</div>
+          <div className='news-item-title'>
+            <span className='news-item-integral'>
+              +
+              {integral || 1}
+            </span>
+            { title }
+          </div>
           <ul className='news-item-thumbnails'>
             <li>
               <img src={ thumbnail_pic_s } alt='' />

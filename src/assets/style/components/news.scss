@@ -33,9 +33,21 @@
         border-top-right-radius: px2rem(18);
         .news-item-title {
           color: $font-color-1;
+          padding: px2rem(5) 0;
           font-size: px2rem(32);
           font-weight: bold;
           line-height: px2rem(44);
+          .news-item-integral {
+            color: $theme-red;
+            height: px2rem(34);
+            border: 1px solid $theme-red;
+            padding: 0 px2rem(10);
+            display: inline-block;
+            font-size: px2rem(24);
+            line-height: px2rem(32);
+            margin-right: px2rem(10);
+            border-radius: px2rem(12);
+          }
         }
         .news-item-thumbnails {
           padding-top: px2rem(10);
@@ -232,5 +244,15 @@
     @include size(100%, px2rem(280));
     @include bgSrc($share-img, 100%, px2rem(280));
     @include position(absolute, 0, 0);
+  }
+}
+
+.qrcode-area-container {
+  margin-top: px2rem(20);
+  padding: px2rem(40);
+  img {
+    margin: auto;
+    display: block;
+    @include size(px2rem(300), px2rem(300));
   }
 }

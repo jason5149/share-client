@@ -1,6 +1,6 @@
 import { observable, action } from 'mobx'
 import { Toast } from 'antd-mobile'
-import { getWxUserInfoByCode, getWxConfig } from '@services/wx'
+import { getWxUserInfoByCode, getWxConfig, getTemporaryQrcode } from '@services/wx'
 
 class WxModel {
   @observable
@@ -27,6 +27,18 @@ class WxModel {
       return false
     }
 
+    return result.body
+  }
+
+  @action
+  getTemporaryQrcode = async params => {
+    const result = await getTemporaryQrcode(params)
+
+    if (result.code !== '10000') {
+      Toast.show(result.message)
+      return
+    }
+    
     return result.body
   }
 }

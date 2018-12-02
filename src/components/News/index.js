@@ -6,6 +6,7 @@ import SharePanel from './SharePanel'
 import NewsContext from './Context'
 import Statement from './Statement'
 import ShareDirector from './ShareDirector'
+import QrcodeArea from './QrcodeArea'
 
 export default {
   NewsContainer,
@@ -16,4 +17,5 @@ export default {
   NewsContext,
   Statement,
   ShareDirector,
+  QrcodeArea,
 }

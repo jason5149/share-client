@@ -7,7 +7,7 @@ class SharePanel extends Component {
 
     if (!userInfo) return null
 
-    const { nickName, shareReadCount, prizeCount } = userInfo
+    const { nickName, shareCount, shareReadCount, prizeCount } = userInfo
 
     return (
       <div className='share-panel-container'>
@@ -18,7 +18,7 @@ class SharePanel extends Component {
           <div className='share-line-info'>
             <span className='share-info-text'>
               分享热文：
-              {shareReadCount}
+              {shareCount}
               次
             </span>
             <span className='share-info-text'>
@@ -27,7 +27,11 @@ class SharePanel extends Component {
               次
             </span>
           </div>
-          <div className='share-info-text'>分享过的热文被1000人查看过</div>
+          <div className='share-info-text'>
+            分享过的热文被
+            {shareReadCount}
+            人查看过
+          </div>
         </div>
         <div className='share-desc'>
           <span>分享越多礼品越多，亿分享“壕”礼不停送</span>

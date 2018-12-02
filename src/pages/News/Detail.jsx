@@ -14,6 +14,7 @@ const {
   NewsContext, 
   Statement, 
   ShareDirector,
+  QrcodeArea,
 } = News
 
 @inject(
@@ -26,6 +27,7 @@ class NewsDetailPage extends Component {
   state = {
     isRead:   false,
     userInfo: getUserInfo(),
+    qrcode:   '',
   }
 
   count = 0
@@ -43,6 +45,7 @@ class NewsDetailPage extends Component {
   init() {
     document.title = '热文详情'
 
+    this.handleSearchQrcode()
     this.handleSearchUserInfo()
     this.handleSearchNewsDetail()
   }
@@ -64,6 +67,21 @@ class NewsDetailPage extends Component {
 
   stopReadAction = () => {
     clearInterval(this.timer)
+  }
+
+  handleSearchQrcode = async () => {
+    const { WxModel } = this.props
+    const { userInfo } = this.state
+    const { getTemporaryQrcode } = WxModel
+    const { id: userId } = userInfo
+
+    const result = await getTemporaryQrcode({ userId })
+
+    if (result) {
+      this.setState({
+        qrcode: result.ticket,
+      })
+    }
   }
 
   handleSearchUserInfo = () => {
@@ -163,7 +181,7 @@ class NewsDetailPage extends Component {
 
   render() {
     const { NewsModel, UserModel } = this.props
-    const { userInfo } = this.state
+    const { userInfo, qrcode } = this.state
     const { newsDetail, shareVisible, toggleShareVisible } = NewsModel
     const { userDetailInfo } = UserModel
 
@@ -178,6 +196,7 @@ class NewsDetailPage extends Component {
         <SharePanel userInfo={ userDetailInfo } />
         <NewsContext context={ context } readCount={ readCount } shareCount={ shareCount } />
         <Statement />
+        <QrcodeArea qrcode={ qrcode } />
         <ActionBtn text='分享赚积分' onClick={ this.handleActionClick } />
         {shareVisible && <ShareDirector onClick={ () => toggleShareVisible(false) } />}
       </div>
