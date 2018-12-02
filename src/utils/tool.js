@@ -45,6 +45,7 @@ export const base64encode = item => {
   if (typeof item === 'string') {
     return Base64.encode(item)
   } else if (typeof item === 'object') {
+    console.log(Base64)
     return encodeURIComponent(Base64.encode(JSON.stringify(item)))
   }
 }
