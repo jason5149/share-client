@@ -3,9 +3,10 @@ import { inject, observer } from 'mobx-react'
 import { Toast } from 'antd-mobile'
 import News from '@components/News'
 import ActionBtn from '@components/ActionBtn'
+import { BASE_PATH } from '@utils/const'
 import { getUserInfo } from '@utils/cache'
-import { JS_API_LIST } from '@utils/config'
 import { base64encode } from '@utils/tool'
+import { JS_API_LIST } from '@utils/config'
 import { wxConfig, wxShareTimeline, wxShareAppMessage } from '@utils/wx'
 
 const { 
@@ -128,7 +129,7 @@ class NewsDetailPage extends Component {
       const configResult = await wxConfig(appId, timestamp, nonceStr, signature, JS_API_LIST)
         
       if (configResult) {
-        const shareUrl = `${ window.location.host }/activity/news/${ newsId }?params=${ base64encode(userInfo) }`
+        const shareUrl = `${ window.location.host }${ BASE_PATH }/activity/news/${ newsId }?params=${ base64encode(userInfo) }`
 
         console.log('shareUrl: ', shareUrl)
 

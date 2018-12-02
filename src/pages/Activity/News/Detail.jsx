@@ -192,7 +192,7 @@ class NewsDetailPage extends Component {
 
   render() {
     const { NewsModel, UserModel } = this.props
-    const { userInfo, qrcode } = this.state
+    const { params: userInfo, qrcode } = this.state
     const { newsDetail, shareVisible, toggleShareVisible } = NewsModel
     const { userDetailInfo } = UserModel
 
