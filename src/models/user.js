@@ -52,6 +52,12 @@ class UserModel {
   newsListTotal = 0
 
   @observable
+  newsListPageIndex = 1
+
+  @observable
+  hasMore = true
+
+  @observable
   prizeListTotal = 0
 
   @observable
@@ -127,10 +133,17 @@ class UserModel {
     
     if (params.currentPage >= result.body.page.totalPage) {
       this.hasMore = false
-      return false
-    }
 
-    return result.body.list
+      if (params.currentPage === 1) {
+        return result.body.list
+      } else {
+        return false
+      }
+    } else {
+      this.hasMore = true
+
+      return result.body.list
+    }
   }
 
   @action
@@ -145,6 +158,22 @@ class UserModel {
     this.newsDetail = result.body
 
     return true
+  }
+
+  @action
+  getPrizeList = async params => {
+    const result = await getPrizeList(params)
+
+    if (result.code !== '10000') {
+      Toast.show(result.message, 1)
+      return
+    }
+
+    if (result.body) {
+      this.prizeListTotal = result.body.page.totalNum
+    }
+
+    return result.body.list
   }
 
   @action
@@ -171,6 +200,7 @@ class UserModel {
     this.addressInfo = result.body
   }
 
+  @action
   changeAddressInfo = (field, value) => {
     this.addressInfo[field] = value
   }
@@ -236,42 +266,6 @@ class UserModel {
         this.toggleAddressModel()
       }
     }
-  }
-
-  @action
-  getNewsList = async params => {
-    Toast.loading('加载中')
-
-    const result = await getNewsList(params)
-
-    if (result.code !== '10000') {
-      Toast.show(result.message, 1)
-      return
-    }
-
-    if (result.body) {
-      this.newsListTotal = result.body.page.totalNum
-    }
-
-    Toast.hide()
-
-    return result.body.list
-  }
-
-  @action
-  getPrizeList = async params => {
-    const result = await getPrizeList(params)
-
-    if (result.code !== '10000') {
-      Toast.show(result.message, 1)
-      return
-    }
-
-    if (result.body) {
-      this.prizeListTotal = result.body.page.totalNum
-    }
-
-    return result.body.list
   }
 }
 

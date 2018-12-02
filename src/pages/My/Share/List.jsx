@@ -19,6 +19,7 @@ class MyShareListPage extends Component {
     }),
     refreshing: true,
     isLoading:  true,
+    isEmpty:    true,
   }
 
   newsList = []
@@ -49,10 +50,12 @@ class MyShareListPage extends Component {
 
     if (result) {
       this.newsList = this.newsList.concat(result)
+
       this.setState({
         dataSource: dataSource.cloneWithRows(result),
         refreshing: false,
         isLoading:  false,
+        isEmpty:    this.newsList.length === 0,
       })
     }
   }
@@ -87,8 +90,10 @@ class MyShareListPage extends Component {
   handleEndReached = async () => {
     const { UserModel } = this.props
     const { dataSource } = this.state
-    const { activedTab, newsListPageIndex, getNewsList } = UserModel
+    const { activedTab, hasMore, newsListPageIndex, getNewsList } = UserModel
 
+    if (!hasMore) return
+    
     this.setState({ isLoading: true })
 
     const params = {
@@ -116,9 +121,10 @@ class MyShareListPage extends Component {
   }
 
   handleItemClick = id => {
-    const { history } = this.props
+    const { UserModel, history } = this.props
+    const { activedTab } = UserModel
 
-    history.push(`${ BASE_PATH }/news/${ id }`)
+    history.push(`${ BASE_PATH }/my/share/${ id }?status=${ activedTab }`)
   }
 
   handleActionClick = () => {
@@ -129,7 +135,7 @@ class MyShareListPage extends Component {
 
   render() {
     const { UserModel } = this.props
-    const { dataSource, refreshing, isLoading } = this.state
+    const { dataSource, refreshing, isLoading, isEmpty } = this.state
     const { newsTabs } = UserModel
 
     return (
@@ -141,30 +147,47 @@ class MyShareListPage extends Component {
             renderTabBar={ props => <DefaultTabBar { ...props } /> }
             onChange={ this.handleTabChange }
           >
-            <ListView
-              ref={ el => this.list = el }
-              className='news-list-container'
-              dataSource={ dataSource }
-              renderRow={ rowData => <NewsItem { ...rowData } onClick={ this.handleItemClick } /> }
-              useBodyScroll={ false }
-              pullToRefresh={ (
-                <PullToRefresh
-                  refreshing={ refreshing } 
-                  indicator={{
-                      activate:   <span className='news-list-indicator'>松开立即刷新</span>,
-                      deactivate: <span className='news-list-indicator'>下拉刷新</span>,
-                      finish:     <span className='news-list-indicator'>完成刷新</span>,
-                    }} 
-                  onRefresh={ this.handleRefresh }
-                />
-                ) }
-              renderBodyComponent={ () => <div /> }
-              renderFooter={ () => isLoading ? <div className='list-footer'>加载中</div> : <div className='list-footer'>底线</div> }
-              scrollRenderAheadDistance={ 500 }
-              scrollEventThrottle={ 20 }
-              onEndReached={ this.handleEndReached }
-              onEndReachedThreshold={ 10 }
-            />
+            {isEmpty ? (
+              <div className='empty-container'>无数据</div>
+            ) : (
+              <ListView
+                ref={ el => this.list = el }
+                className='news-list-container'
+                dataSource={ dataSource }
+                renderRow={ rowData => {
+                  const { readCount, shareCount, reprintCount, jhNews } = rowData
+
+                  return (
+                    <NewsItem 
+                      { ...jhNews } 
+                      readCount={ readCount } 
+                      shareCount={ shareCount } 
+                      reprintCount={ reprintCount }
+                      onClick={ this.handleItemClick }
+                    />
+                  ) 
+                } }
+                useBodyScroll={ false }
+                pullToRefresh={ (
+                  <PullToRefresh
+                    refreshing={ refreshing } 
+                    indicator={{
+                        activate:   <span className='news-list-indicator'>松开立即刷新</span>,
+                        deactivate: <span className='news-list-indicator'>下拉刷新</span>,
+                        finish:     <span className='news-list-indicator'>完成刷新</span>,
+                      }} 
+                    onRefresh={ this.handleRefresh }
+                  />
+                  ) }
+                renderBodyComponent={ () => <div /> }
+                renderFooter={ () => isLoading ? <div className='list-footer'>加载中</div> : <div className='list-footer'>底线</div> }
+                scrollRenderAheadDistance={ 500 }
+                scrollEventThrottle={ 20 }
+                onEndReached={ this.handleEndReached }
+                onEndReachedThreshold={ 10 }
+              />
+            )
+            }
           </Tabs>
         </NewsContainer>
       </div>

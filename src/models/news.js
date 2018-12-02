@@ -27,6 +27,9 @@ class NewsModel {
   newsListPageIndex = 1
 
   @observable
+  hasMore = true
+
+  @observable
   newsDetail = null
 
   @observable
@@ -44,7 +47,7 @@ class NewsModel {
 
     if (result.code !== '10000') {
       Toast.show(result.message, 1)
-      return false
+      return
     }
 
     if (!result.body) {
@@ -55,12 +58,19 @@ class NewsModel {
     this.newsListPageIndex = params.currentPage
     this.newsListTotal = result.body.page.totalNum
     
-    if (params.currentPage !== 1 && params.currentPage >= result.body.page.totalPage) {
+    if (params.currentPage >= result.body.page.totalPage) {
       this.hasMore = false
-      return false
-    }
 
-    return result.body.list
+      if (params.currentPage === 1) {
+        return result.body.list
+      } else {
+        return false
+      }
+    } else {
+      this.hasMore = true
+
+      return result.body.list
+    }
   }
 
   @action
@@ -69,7 +79,7 @@ class NewsModel {
 
     if (result.code !== '10000') {
       Toast.show(result.message, 1)
-      return false
+      return
     }
 
     this.newsDetail = result.body

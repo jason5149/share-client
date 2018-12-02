@@ -27,7 +27,8 @@ class GlobalModel {
     }
 
     Toast.hide()
-    // this.bannerList = result.body
+    
+    this.bannerList = result.body
   }
 }
 

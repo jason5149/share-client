@@ -256,3 +256,23 @@
     @include size(px2rem(300), px2rem(300));
   }
 }
+
+.empty-container {
+  color: $font-color-2;
+  font-size: px2rem(32);
+  @extend [layout];
+  @extend [layout=row];
+  @extend [layout-align="center center"];
+  @include size(100%, 100%);
+}
+
+.news-status {
+  @include size(px2rem(250), px2rem(200));
+  @include position(absolute, px2rem(150), px2rem(20));
+  &.process {
+    @include bgSrc($new-status-process)
+  }
+  &.complete {
+    @include bgSrc($new-status-complete)
+  }
+}

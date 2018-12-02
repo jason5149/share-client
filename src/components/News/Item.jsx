@@ -4,12 +4,13 @@ class NewsItem extends Component {
   render() {
     const { 
       id, 
-      title, 
       date,
+      title, 
       integral,
+      // readCount,
       shareCount,
-      readCount,
       author_name,
+      reprintCount,
       thumbnail_pic_s,
       thumbnail_pic_s02,
       thumbnail_pic_s03, 
@@ -55,7 +56,7 @@ class NewsItem extends Component {
                 </span>
                 <span className='news-integral-desc'>
                   目标阅读数：
-                  {readCount}
+                  {reprintCount}
                 </span>
               </div>
             </div>

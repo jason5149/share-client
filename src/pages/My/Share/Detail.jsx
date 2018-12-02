@@ -3,7 +3,8 @@ import { inject, observer } from 'mobx-react'
 import { Toast } from 'antd-mobile'
 import News from '@components/News'
 import { getUserInfo } from '@utils/cache'
-import { wxShareTimeline, wxShareAppMessage } from '@utils/wx'
+import { JS_API_LIST } from '@utils/config'
+import { wxConfig, wxShareTimeline, wxShareAppMessage } from '@utils/wx'
 
 const { 
   NewsTitle, 
@@ -11,9 +12,11 @@ const {
   SharePanel, 
   NewsContext, 
   Statement, 
+  QrcodeArea,
 } = News
 
 @inject(
+  'WxModel',
   'NewsModel',
   'UserModel',
 )
@@ -21,6 +24,9 @@ const {
 class MyShareDetailPage extends Component {
   state = {
     userInfo: getUserInfo(),
+    qrcode:   '',
+    /* eslint-disable-next-line */
+    status:   new URLSearchParams(this.props.location.search).get('status'),
   }
 
   componentDidMount() {
@@ -28,14 +34,38 @@ class MyShareDetailPage extends Component {
   }
 
   init() {
-    document.title = '热文详情'
+    document.title = '我的热文'
 
+    this.handleSearchQrcode()
+    this.handleSearchUserInfo()
     this.handleSearchNewsDetail()
   }
 
+  handleSearchQrcode = async () => {
+    const { WxModel } = this.props
+    const { userInfo } = this.state
+    const { getTemporaryQrcode } = WxModel
+    const { id: userId } = userInfo
+
+    const result = await getTemporaryQrcode({ userId })
+
+    if (result) {
+      this.setState({
+        qrcode: result.ticket,
+      })
+    }
+  }
+
+  handleSearchUserInfo = () => {
+    const { UserModel } = this.props
+    const { getUserDetailInfo } = UserModel
+
+    getUserDetailInfo()
+  }
+
   handleSearchNewsDetail = async() => {
-    const { UserModel, match } = this.props
-    const { getNewsDetail } = UserModel
+    const { NewsModel, match } = this.props
+    const { getNewsDetail } = NewsModel
     const { params } = match
 
     const result = await getNewsDetail(params)
@@ -46,50 +76,71 @@ class MyShareDetailPage extends Component {
   }
 
   handleWxShareConfig = async () => {
-    const { NewsModel, UserModel } = this.props
+    const { WxModel, NewsModel, UserModel } = this.props
     const { userInfo } = this.state
-    const { shareNews } = NewsModel
-    const { newsDetail } = UserModel
+    const { getWxConfig } = WxModel
+    const { shareNews } = UserModel
+    const { newsDetail, toggleShareVisible } = NewsModel
+    
     const { id: userId } = userInfo
     const { id: newsId, title, thumbnail_pic_s } = newsDetail
+    
     const desc = '麻烦帮我看下新闻，我要免费拿礼品，还包邮到家，爱你哟～'
+    const url = window.location.href
+    const wxConfigResult = await getWxConfig({ url })
 
-    console.log('title', title)
-    console.log('desc', desc)
-    console.log('imgUrl', thumbnail_pic_s)
+    if (wxConfigResult) {
+      const { appId, nonceStr, signature, timestamp  } = wxConfigResult
+      const configResult = await wxConfig(appId, timestamp, nonceStr, signature, JS_API_LIST)
+        
+      if (configResult) {
+        wxShareAppMessage(title, desc, url, thumbnail_pic_s).then(async result => {
+          if (result) {
+            const shareResult = await shareNews({ newsId, type: 0, userId })
 
-    const shareTimelineResult = await wxShareTimeline(title, window.location.href, thumbnail_pic_s)
-    const shareAppMessageResult = await wxShareAppMessage(title, desc, window.location.href, thumbnail_pic_s)
+            if (shareResult) {
+              toggleShareVisible(false)
+              Toast.show('分享成功')
+            }
+          }
+        })
 
-    console.log('shareTimelineResult', shareTimelineResult)
-    console.log('shareAppMessageResult', shareAppMessageResult)
+        wxShareTimeline(title, url, thumbnail_pic_s).then(async result => {
+          if (result) {
+            const shareResult = await shareNews({ newsId, type: 0, userId })
 
-    if (shareTimelineResult || shareAppMessageResult) {
-      console.log({ newsId, type: 0, userId })
-      const result = await shareNews({ newsId, type: 1, userId })
-
-      if (result) {
-        Toast.show('转载成功')
+            if (shareResult) {
+              toggleShareVisible(false)
+              Toast.show('分享成功')
+            }
+          }
+        })
       }
     }
   }
 
   render() {
-    const { UserModel } = this.props
-    const { userInfo } = this.state
-    const { newsDetail } = UserModel
+    const { NewsModel, UserModel } = this.props
+    const { userInfo, qrcode, status } = this.state
+    const { newsDetail } = NewsModel
+    const { userDetailInfo } = UserModel
 
     if (!newsDetail) return null
 
     const { title, date, author_name, context, readCount, shareCount } = newsDetail
-
+    // const { jhNews } = newsDetail
+    // const { title, date, author_name, context, readCount, shareCount } = jhNews
+    console.log(status)
+    
     return (
-      <div className='view-container'>
+      <div className='view-container relatived'>
+        <i className={ `news-status ${ status ? 'process' : 'complete' }` } />
         <NewsTitle title={ title } date={ date } author={ author_name } />
         <UserPanel userInfo={ userInfo } />
-        <SharePanel userInfo={ userInfo } />
+        <SharePanel userInfo={ userDetailInfo } />
         <NewsContext context={ context } readCount={ readCount } shareCount={ shareCount } />
         <Statement />
+        <QrcodeArea qrcode={ qrcode } />
       </div>
     )
   }

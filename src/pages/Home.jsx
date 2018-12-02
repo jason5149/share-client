@@ -105,10 +105,12 @@ class HomePage extends Component {
   
     if (result) {
       this.newsList = []
-      
+
+      this.newsList = this.newsList.concat(result)
+
       setTimeout(() => {
         this.setState({
-          dataSource: dataSource.cloneWithRows(result),
+          dataSource: dataSource.cloneWithRows(this.newsList),
           refreshing: false,
           isLoading:  false,
         })
@@ -119,7 +121,9 @@ class HomePage extends Component {
   handleEndReached = async () => {
     const { NewsModel } = this.props
     const { dataSource } = this.state
-    const { activedTab, newsListPageIndex, getNewsList } = NewsModel
+    const { activedTab, hasMore, newsListPageIndex, getNewsList } = NewsModel
+
+    if (!hasMore) return
 
     this.setState({ isLoading: true })
 
@@ -132,6 +136,8 @@ class HomePage extends Component {
 
     if (result) {
       this.newsList = this.newsList.concat(result)
+
+      console.log(this.newsList)
 
       setTimeout(() => {
         this.setState({
@@ -147,6 +153,12 @@ class HomePage extends Component {
     this.handleSearchNewsList(1, title)
   }
 
+  handleBannerClick = url => {
+    if (!url) return
+
+    window.location.href = url
+  }
+
   handleItemClick = id => {
     const { history } = this.props
 
@@ -156,7 +168,7 @@ class HomePage extends Component {
   handleActionClick = () => {
     const { history } = this.props
 
-    history.push(`${ BASE_PATH }/my`)
+    history.push(`${ BASE_PATH }/my/share`)
   }
 
   render() {
@@ -167,7 +179,7 @@ class HomePage extends Component {
 
     return (
       <Fragment>
-        <BannerCarousel list={ bannerList } />
+        <BannerCarousel list={ bannerList } onClick={ this.handleBannerClick } />
         <NewsContainer>
           <Tabs
             style={{ height: '100%' }}

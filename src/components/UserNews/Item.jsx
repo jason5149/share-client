@@ -4,11 +4,12 @@ class NewsItem extends Component {
   render() {
     const { 
       id, 
-      title, 
       date,
-      shareCount,
+      title, 
       readCount,
+      shareCount,
       author_name,
+      reprintCount,
       thumbnail_pic_s,
       thumbnail_pic_s02,
       thumbnail_pic_s03, 
@@ -41,15 +42,21 @@ class NewsItem extends Component {
                   {date}
                 </span>
               </div>
-              <div layout='row' layout-align='start center'>
-                <span className='news-integral-desc'>
-                  赠送阅读数：
-                  {shareCount}
-                </span>
+              <div layout='column' layout-align='center start'>
                 <span className='news-integral-desc'>
                   目标阅读数：
-                  {readCount}
+                  {reprintCount}
                 </span>
+                <div layout='row' layout-align='start center'>
+                  <span className='news-integral-desc'>
+                    阅读数：
+                    {readCount}
+                  </span>
+                  <span className='news-integral-desc'>
+                    赠送阅读数：
+                    {shareCount}
+                  </span>
+                </div>
               </div>
             </div>
           </div>

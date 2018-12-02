@@ -4,18 +4,21 @@ import { Carousel } from 'antd-mobile'
 const IMG_HEIGHT = 156
 
 class BannerCarousel extends Component {
-  renderBannerItem = ({ id, title, src }) => {
+  renderBannerItem = ({ id, title, image, url }) => {
+    const { onClick } = this.props
+    
     return (
       /* eslint-disable-next-line */
       <a 
         key={ id } 
         className='banner-item-container'
         style={{ height: IMG_HEIGHT }}
+        onClick={ () => onClick(url) }
       >
         <span className='banner-item-title'>{ title }</span>
         <img 
           className='banner-item-image'
-          src={ src } 
+          src={ image } 
           alt={ title } 
           onLoad={ () => {
             // fire window resize event to change height
