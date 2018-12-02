@@ -27,7 +27,7 @@ class NewsDetailPage extends Component {
   state = {
     isRead: false,
     qrcode: '',
-    // params: null,
+    params: null,
   }
 
   count = 0
@@ -49,14 +49,13 @@ class NewsDetailPage extends Component {
     const search = new URLSearchParams(window.location.search)
     const params = search.get('params') ? base64decode(search.get('params')) : ''
 
-    console.log(params)
-
-    // this.setState({
-    //   params,
-    // })
-    // this.handleSearchQrcode()
-    // this.handleSearchUserInfo()
-    // this.handleSearchNewsDetail()
+    this.setState({
+      params,
+    }, () => {
+      this.handleSearchQrcode()
+      this.handleSearchUserInfo()
+      this.handleSearchNewsDetail()
+    })
   }
 
   destroy() {
@@ -80,8 +79,9 @@ class NewsDetailPage extends Component {
 
   handleSearchQrcode = async () => {
     const { WxModel } = this.props
-    const { userId } = this.state
+    const { params } = this.state
     const { getTemporaryQrcode } = WxModel
+    const { id: userId } = params
 
     const result = await getTemporaryQrcode({ userId })
 
@@ -94,8 +94,9 @@ class NewsDetailPage extends Component {
 
   handleSearchUserInfo = () => {
     const { UserModel } = this.props
-    const { userId } = this.state
+    const { params } = this.state
     const { getUserDetailInfo } = UserModel
+    const { id: userId } = params
 
     getUserDetailInfo({ userId })
   }
@@ -165,10 +166,10 @@ class NewsDetailPage extends Component {
 
   handleReadAction = async () => {
     const { UserModel, match } = this.props
-    const { userId } = this.state
+    const { params } = this.state
     const { recordReadAction } = UserModel
-    const { params } = match
-    const { id: newsId } = params
+    const { id: userId } = params
+    const { id: newsId } = match.params
 
     const result = await recordReadAction({ newsId, userId })
 
