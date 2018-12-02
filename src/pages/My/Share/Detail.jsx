@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
 import { Toast } from 'antd-mobile'
 import News from '@components/News'
+import { BASE_PATH } from '@utils/const'
 import { getUserInfo } from '@utils/cache'
+import { base64encode } from '@utils/tool'
 import { JS_API_LIST } from '@utils/config'
 import { wxConfig, wxShareTimeline, wxShareAppMessage } from '@utils/wx'
 
@@ -94,6 +96,10 @@ class MyShareDetailPage extends Component {
       const configResult = await wxConfig(appId, timestamp, nonceStr, signature, JS_API_LIST)
         
       if (configResult) {
+        const shareUrl = `${ window.location.host }${ BASE_PATH }/activity/news/${ newsId }?params=${ base64encode(userInfo) }`
+
+        console.log('shareUrl: ', shareUrl)
+        
         wxShareAppMessage(title, desc, url, thumbnail_pic_s).then(async result => {
           if (result) {
             const shareResult = await shareNews({ newsId, type: 0, userId })
@@ -130,7 +136,6 @@ class MyShareDetailPage extends Component {
     const { title, date, author_name, context, readCount, shareCount } = newsDetail
     // const { jhNews } = newsDetail
     // const { title, date, author_name, context, readCount, shareCount } = jhNews
-    console.log(status)
     
     return (
       <div className='view-container relatived'>
