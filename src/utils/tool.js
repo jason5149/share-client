@@ -45,13 +45,13 @@ export const base64encode = item => {
   if (typeof item === 'string') {
     return Base64.encode(item)
   } else if (typeof item === 'object') {
-    console.log(Base64)
+    console.log(Base64.encode(JSON.stringify(item)))
     return encodeURIComponent(Base64.encode(JSON.stringify(item)))
   }
 }
 
 export const base64decode = (item, type = 'json') => {
-  const itemDecode=decodeURIComponent(item)
+  const itemDecode = decodeURIComponent(item)
   if (type === 'json') {
     return JSON.parse(Base64.decode(itemDecode))
   } else if (type === 'string') {
