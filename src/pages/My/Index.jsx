@@ -11,6 +11,7 @@ class MyPage extends Component {
       <Switch>
         <Route path={ `${ url }/prize` } component={ AsyncComponent(() => import('@pages/My/Prize/Index')) } />
         <Route path={ `${ url }/share` } component={ AsyncComponent(() => import('@pages/My/Share/Index')) } />
+        <Route path={ `${ url }/integral` } component={ AsyncComponent(() => import('@pages/My/Integral/Index')) } />
         <Route path={ `${ url }/address` } component={ AsyncComponent(() => import('@pages/My/Address/Index')) } />
         <Route path={ `${ url }` } component={ AsyncComponent(() => import('@pages/My/Profile')) } />
       </Switch>

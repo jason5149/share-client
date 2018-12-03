@@ -178,7 +178,6 @@ class NewsDetailPage extends Component {
         isRead: true,
       }, () => {
         this.handleSearchNewsDetail()
-        Toast.show('阅读+1')
       })
     }
   }

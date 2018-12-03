@@ -1,0 +1,9 @@
+.integral-overview-container {
+  color: $font-color-1;
+  padding: 0 px2rem(30);
+  font-size: px2rem(30);
+  @extend [layout];
+  @extend [layout=row];
+  @extend [layout-align="space-between center"];
+  @include size(100%, px2rem(88));
+}

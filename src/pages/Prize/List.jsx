@@ -2,12 +2,14 @@ import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
 import { ListView, PullToRefresh } from 'antd-mobile'
 import Prize from '@components/Prize'
+import IntegralOverview from '@components/IntegralOverview'
 import { BASE_PATH } from '@utils/const'
 
 const { PrizeItem } = Prize
 
 @inject(
-  'PrizeModel'
+  'UserModel',
+  'PrizeModel',
 )
 @observer
 class PrizeListPage extends Component {
@@ -29,8 +31,16 @@ class PrizeListPage extends Component {
 
   init() {
     document.title = '奖品列表'
-    
+
+    this.handleSearchUserInfo()
     this.handleSearchPrizeList()
+  }
+
+  handleSearchUserInfo = () => {
+    const { UserModel } = this.props
+    const { getUserDetailInfo } = UserModel
+
+    getUserDetailInfo()
   }
 
   handleSearchPrizeList = async (currentPage = 1) => {
@@ -44,8 +54,6 @@ class PrizeListPage extends Component {
     }
     const result = await getPrizeList(params)
 
-    console.log(result)
-
     if (result) {
       this.prizeList = this.prizeList.concat(result)
       this.setState({
@@ -57,18 +65,17 @@ class PrizeListPage extends Component {
   }
 
   handleRefresh = async () => {
-    const { UserModel } = this.props
+    const { PrizeModel } = this.props
     const { dataSource } = this.state
-    const { activedTab, getNewsList } = UserModel
+    const { getPrizeList } = PrizeModel
 
     this.setState({ refreshing: true, isLoading: true })
 
     const params = {
       currentPage: 1,
       pageSize:    10,
-      status:      activedTab,
     }
-    const result = await getNewsList(params)
+    const result = await getPrizeList(params)
   
     if (result) {
       this.prizeList = []
@@ -84,18 +91,17 @@ class PrizeListPage extends Component {
   }
 
   handleEndReached = async () => {
-    const { UserModel } = this.props
+    const { PrizeModel } = this.props
     const { dataSource } = this.state
-    const { activedTab, newsListPageIndex, getNewsList } = UserModel
+    const { prizeListPageIndex, getPrizeList } = PrizeModel
 
     this.setState({ isLoading: true })
 
     const params = {
-      currentPage: newsListPageIndex + 1,
+      currentPage: prizeListPageIndex + 1,
       pageSize:    10,
-      status:      activedTab,
     }
-    const result = await getNewsList(params)
+    const result = await getPrizeList(params)
 
     if (result) {
       this.prizeList = this.prizeList.concat(result)
@@ -115,11 +121,20 @@ class PrizeListPage extends Component {
     history.push(`${ BASE_PATH }/prize/${ id }`)
   }
 
+  handleIntegralClick = () => {
+    const { history } = this.props
+
+    history.push(`${ BASE_PATH }/my/integral`)
+  }
+
   render() {
+    const { UserModel } = this.props
     const { dataSource, refreshing, isLoading } = this.state
+    const { userDetailInfo } = UserModel
 
     return (
       <div className='view-container'>
+        <IntegralOverview integral={ userDetailInfo && userDetailInfo.integral } onClick={ this.handleIntegralClick } />
         <div className='prize-container'>
           <ListView
             ref={ el => this.list = el }
@@ -138,7 +153,7 @@ class PrizeListPage extends Component {
                 onRefresh={ this.handleRefresh }
               />
             ) }
-            renderBodyComponent={ () => <div /> }
+            renderBodyComponent={ () => <div style={{ height: '100%' }} /> }
             renderFooter={ () => isLoading ? <div className='list-footer'>加载中</div> : <div className='list-footer'>底线</div> }
             scrollRenderAheadDistance={ 500 }
             scrollEventThrottle={ 20 }

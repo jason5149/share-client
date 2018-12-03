@@ -1,0 +1,20 @@
+.mobile-verify-container {
+  z-index: 999;
+  background: rgba(0, 0, 0, 0.5);
+  @extend [layout];
+  @extend [layout=row];
+  @extend [layout-align="center center"];
+  @include position(fixed, 0, 0, 0, 0);
+  .mobile-modal-container {
+    padding: px2rem(20);
+    background: #fff;
+    border-radius: px2rem(8);
+    @extend [layout];
+    @extend [layout=column];
+    @extend [layout-align="center center"];
+    .mobile-modal-title {
+      color: $font-color-1;
+      font-size: px2rem(30);
+    }
+  }
+}

@@ -213,7 +213,7 @@ class HomePage extends Component {
             />
           </Tabs>
         </NewsContainer>
-        <ActionBtn text='我的分享' onClick={ this.handleActionClick } />
+        <ActionBtn text='我的分享' type={ 1 } onClick={ this.handleActionClick } />
       </Fragment>
     )
   }

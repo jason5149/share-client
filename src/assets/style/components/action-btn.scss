@@ -1,7 +1,6 @@
 .action-btn {
   color: #fff;
   z-index: 1000;
-  padding: px2rem(10);
   font-size: px2rem(28);
   text-align: center;
   background: $theme-red;
@@ -14,4 +13,10 @@
   @extend [layout-align="center center"];
   @include size(px2rem(128), px2rem(128));
   @include position(fixed, null, px2rem(50), px2rem(50));
+  &.type-1 {
+    padding: px2rem(25);
+  }
+  &.type-2 {
+    padding: px2rem(10);
+  }
 }

@@ -174,7 +174,6 @@ class NewsDetailPage extends Component {
         isRead: true,
       }, () => {
         this.handleSearchNewsDetail()
-        Toast.show('阅读+1')
       })
     }
   }
@@ -220,7 +219,7 @@ class NewsDetailPage extends Component {
         <NewsContext context={ context } readCount={ readCount } shareCount={ shareCount } />
         <Statement />
         <QrcodeArea qrcode={ qrcode } />
-        <ActionBtn text='分享赚积分' onClick={ this.handleActionClick } />
+        <ActionBtn text='分享赚积分' type={ 2 } onClick={ this.handleActionClick } />
         {shareVisible && <ShareDirector onClick={ () => toggleShareVisible(false) } />}
       </div>
     )

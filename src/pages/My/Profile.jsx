@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { inject, observer } from 'mobx-react'
 import { WhiteSpace, List } from 'antd-mobile'
 import ItemLabel from '@components/ItemLabel'
 import ProfilePanel from '@components/ProfilePanel'
@@ -7,6 +8,10 @@ import { BASE_PATH } from '@utils/const'
 
 const { Item } = List
 
+@inject(
+  'UserModel',
+)
+@observer
 class MyProfilePage extends Component {
   state = {
     wxUserInfo: getWxUserInfo(),
@@ -18,6 +23,15 @@ class MyProfilePage extends Component {
 
   init() {
     document.title = '我的'
+
+    this.handleSearchUserInfo()
+  }
+
+  handleSearchUserInfo = () => {
+    const { UserModel } = this.props
+    const { getUserDetailInfo } = UserModel
+
+    getUserDetailInfo()
   }
 
   handleItemClick = type => {
@@ -33,11 +47,13 @@ class MyProfilePage extends Component {
   }
 
   render() {
+    const { UserModel } = this.props
     const { wxUserInfo } = this.state
+    const { userDetailInfo } = UserModel
 
     return (
       <div className='view-container'>
-        <ProfilePanel userInfo={ wxUserInfo } />
+        <ProfilePanel userInfo={ wxUserInfo } integral={ userDetailInfo && userDetailInfo.integral } shareReadCount={ userDetailInfo && userDetailInfo.shareReadCount } />
         <WhiteSpace />
         <List>
           <Item arrow='horizontal' onClick={ () => this.handleItemClick('share') }>

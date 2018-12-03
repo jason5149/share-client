@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 
 class ActionBtn extends Component {
   render() {
-    const { text, onClick } = this.props
+    const { text, type, onClick } = this.props
     
     return (
       /* eslint-disable-next-line */
-      <a className="action-btn" onClick={ onClick }>
+      <a className={ `action-btn type-${type}` } onClick={ onClick }>
         {text}
       </a>
     )

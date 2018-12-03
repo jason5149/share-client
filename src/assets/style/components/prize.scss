@@ -3,6 +3,12 @@
   &::-webkit-scrollbar {
     display: none;
   }
+  .am-list {
+    height: 100%;
+    .am-pull-to-refresh-content-wrapper {
+      height: 100%;
+    }
+  }
   .prize-list-container {
     height: 100%;
     overflow: auto;
@@ -52,5 +58,107 @@
     @extend [layout];
     @extend [layout=row];
     @extend [layout-align="center center"];
+  }
+}
+
+.prize-detail-container {
+  overflow-y: auto;
+  overflow-x: hidden;
+  @include position(absolute, 0, 0, px2rem(98), 0);
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.prize-panel-container {
+  padding: px2rem(20);
+  background: #fff;
+  box-shadow: 0 1px 5px 2px rgba(0, 0, 0, 0.1);
+  margin-bottom: px2rem(20);
+  @include size(100%, auto);
+  .prize-name {
+    color: $font-color-1;
+    font-size: px2rem(32);
+  }
+  .prize-integrals {
+    color: $font-color-2;
+    margin: px2rem(20) 0;
+    font-size: px2rem(28);
+    @extend [layout];
+    @extend [layout=row];
+    @extend [layout-align="space-between center"];
+    @include size(100%, auto);
+  }
+  .prize-value {
+    color: $font-color-2;
+    font-size: px2rem(28);
+  }
+}
+
+.price-desc-container {
+  padding: px2rem(20);
+  background: #fff;
+  @extend [layout];
+  @extend [layout=column];
+  @extend [layout-align="center start"];
+  @include size(100%, auto);
+  .price-desc-title {
+    color: $font-color-1;
+    font-size: px2rem(30);
+    line-height: px2rme(40);
+  }
+  .price-spec-container {
+    padding: px2rem(20) 0 0;
+    flex-wrap: wrap;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: px2rem(20);
+    @extend [layout];
+    @extend [layout=row];
+    @extend [layout-align="start center"];
+    @include size(100%, auto);
+    li {
+      color: $font-color-2;
+      font-size: px2rem(26);
+      margin-bottom: px2rem(20);
+      @include size(50%, auto);
+    }
+  }
+}
+
+.price-image-container {
+  padding: 0 px2rem(20);
+  background: #fff;
+  @include size(100%, auto);
+  li,
+  li img {
+    @include size(100%, auto);
+  }
+  li {
+    margin-bottom: px2rem(20);
+  }
+}
+
+.price-actions-container {
+  @extend [layout];
+  @extend [layout=row];
+  @extend [layout-align="space-between center"];
+  @include size(100%, px2rem(98));
+  @include position(absolute, null, 0, 0, 0);
+  .price-actions-text {
+    border: 1px solid #fff;
+    color: #fff;
+    font-size: px2rem(28);
+    background: #108ee9;
+    padding-left: px2rem(20);
+    border-radius: px2rem(8);
+    @extend [layout];
+    @extend [layout=row];
+    @extend [layout-align="start center"];
+    @include size(100%, px2rem(98));
+  }
+  .am-button {
+    font-size: px2rem(30);
+    flex-shrink: 0;
+    @include size(px2rem(200), auto);
   }
 }

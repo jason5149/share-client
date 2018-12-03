@@ -1,6 +1,6 @@
 import { observable, action } from 'mobx'
 import { Toast } from 'antd-mobile'
-import { getPrizeList } from '@services/prize'
+import { getPrizeList, getPrizeDetail } from '@services/prize'
 
 class PrizeModel {
   @observable
@@ -9,13 +9,16 @@ class PrizeModel {
   @observable
   prizeListPageIndex = 1
 
+  @observable
+  prizeDetail = null
+
   @action
   getPrizeList = async params => {
     const result = await getPrizeList(params)
 
     if (result.code !== '10000') {
       Toast.show(result.message, 1)
-      return false
+      return
     }
 
     if (!result.body) {
@@ -31,6 +34,19 @@ class PrizeModel {
     }
 
     return result.body.list
+  }
+
+  @action
+  getPrizeDetail = async params => {
+    const result = await getPrizeDetail(params)
+
+    if (result.code !== '10000') {
+      Toast.show(result.message, 1)
+      return
+    }
+
+    console.log(result.body)
+    this.prizeDetail = result.body
   }
 }
 
