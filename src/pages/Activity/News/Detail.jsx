@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
-import { Toast } from 'antd-mobile'
 import News from '@components/News'
 import { base64decode } from '@utils/tool'
 // import ActionBtn from '@components/ActionBtn'
