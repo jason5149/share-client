@@ -182,6 +182,8 @@ class NewsDetailPage extends Component {
   handleToggleClick = () => {
     const { panelVisible } = this.state
 
+    console.log(panelVisible)
+
     this.setState({
       panelVisible: !panelVisible,
     })
