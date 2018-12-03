@@ -27,9 +27,10 @@ const {
 @observer
 class NewsDetailPage extends Component {
   state = {
-    isRead:   false,
-    userInfo: getUserInfo(),
-    qrcode:   '',
+    isRead:       false,
+    userInfo:     getUserInfo(),
+    panelVisible: false,
+    qrcode:       '',
   }
 
   count = 0
@@ -178,6 +179,20 @@ class NewsDetailPage extends Component {
     }
   }
 
+  handleToggleClick = () => {
+    const { panelVisible } = this.state
+
+    this.setState({
+      panelVisible: !panelVisible,
+    })
+  }
+
+  handleShareClick = () => {
+    const { history } = this.props
+
+    history.push(`${ BASE_PATH }/follow`)
+  }
+
   handleActionClick = () => {
     const { NewsModel } = this.props
     const { toggleShareVisible } = NewsModel
@@ -187,7 +202,7 @@ class NewsDetailPage extends Component {
 
   render() {
     const { NewsModel, UserModel } = this.props
-    const { userInfo, qrcode } = this.state
+    const { userInfo, qrcode, panelVisible } = this.state
     const { newsDetail, shareVisible, toggleShareVisible } = NewsModel
     const { userDetailInfo } = UserModel
 
@@ -198,8 +213,8 @@ class NewsDetailPage extends Component {
     return (
       <div className='view-container'>
         <NewsTitle title={ title } date={ date } author={ author_name } />
-        <UserPanel userInfo={ userInfo } />
-        <SharePanel userInfo={ userDetailInfo } />
+        <UserPanel userInfo={ userInfo } onClick={ this.handleToggleClick } />
+        {panelVisible && <SharePanel userInfo={ userDetailInfo } onClick={ this.handleShareClick } />}
         <NewsContext context={ context } readCount={ readCount } shareCount={ shareCount } />
         <Statement />
         <QrcodeArea qrcode={ qrcode } />
