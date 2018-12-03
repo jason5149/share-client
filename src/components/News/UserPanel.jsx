@@ -11,10 +11,10 @@ class UserPanel extends Component {
         <a className='thumbnail'>
           <img src={ headImgUrl } alt='' />
         </a>
-        <div layout='row' layout-align='center center'>
-          <span>广告语</span>
+        <div style={{ width: '100%' }} layout='column' layout-align='center space-around'>
+          <span className='advertisting-text'>广告语</span>
           {/* eslint-disable-next-line */}
-          <a onClick={ onClick }>引导语</a>
+          <a className='director-text' onClick={ onClick }>引导语</a>
         </div>
       </div>
     )

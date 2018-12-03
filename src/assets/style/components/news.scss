@@ -146,6 +146,16 @@
       @include size(px2rem(108), px2rem(108));
     }
   }
+  .advertisting-text {
+    color: $font-color-2;
+    font-size: px2rem(30);
+    line-height: px2rem(40);
+  }
+  .director-text {
+    color: #108ee9;
+    font-size: px2rem(28);
+    line-height: px2rem(40);
+  }
 }
 
 .share-panel-container {

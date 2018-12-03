@@ -29,7 +29,7 @@ class NewsDetailPage extends Component {
   state = {
     isRead:       false,
     userInfo:     getUserInfo(),
-    panelVisible: false,
+    panelVisible: true,
     qrcode:       '',
   }
 
