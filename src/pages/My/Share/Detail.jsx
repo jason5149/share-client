@@ -25,8 +25,9 @@ const {
 @observer
 class MyShareDetailPage extends Component {
   state = {
-    userInfo: getUserInfo(),
-    qrcode:   '',
+    userInfo:     getUserInfo(),
+    qrcode:       '',
+    panelVisible: true,
     /* eslint-disable-next-line */
     status:   new URLSearchParams(this.props.location.search).get('status'),
   }
@@ -125,9 +126,25 @@ class MyShareDetailPage extends Component {
     }
   }
 
+  handleToggleClick = () => {
+    const { panelVisible } = this.state
+
+    console.log(panelVisible)
+
+    this.setState({
+      panelVisible: !panelVisible,
+    })
+  }
+
+  handleShareClick = () => {
+    const { history } = this.props
+
+    history.push(`${ BASE_PATH }/follow`)
+  }
+
   render() {
     const { NewsModel, UserModel } = this.props
-    const { userInfo, qrcode, status } = this.state
+    const { userInfo, qrcode, status, panelVisible } = this.state
     const { newsDetail } = NewsModel
     const { userDetailInfo } = UserModel
 
@@ -141,8 +158,8 @@ class MyShareDetailPage extends Component {
       <div className='view-container relatived'>
         <i className={ `news-status ${ status ? 'process' : 'complete' }` } />
         <NewsTitle title={ title } date={ date } author={ author_name } />
-        <UserPanel userInfo={ userInfo } />
-        <SharePanel userInfo={ userDetailInfo } />
+        <UserPanel userInfo={ userInfo } onClick={ this.handleToggleClick } />
+        {panelVisible && <SharePanel userInfo={ userDetailInfo } onClick={ this.handleShareClick } />}
         <NewsContext context={ context } readCount={ readCount } shareCount={ shareCount } />
         <Statement />
         <QrcodeArea qrcode={ qrcode } />
