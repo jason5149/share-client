@@ -6,6 +6,7 @@
   @extend [layout-align="center center"];
   @include position(fixed, 0, 0, 0, 0);
   .mobile-modal-container {
+    margin: 0 px2rem(40);
     padding: px2rem(20);
     background: #fff;
     border-radius: px2rem(8);
@@ -14,7 +15,51 @@
     @extend [layout-align="center center"];
     .mobile-modal-title {
       color: $font-color-1;
-      font-size: px2rem(30);
+      font-size: px2rem(34);
+      line-height: px2rem(50);
+    }
+    .mobile-modal-form {
+      padding: px2rem(20);
+      @include size(100%, auto);
+      li {
+        padding: px2rem(10);
+        margin-bottom: px2rem(20);
+        @extend [layout];
+        @extend [layout=row];
+        @extend [layout-align="space-around center"];
+        @include size(100%, auto);
+        .label {
+          color: $font-color-2;
+          font-size: px2rem(32);
+          flex-shrink: 0;
+          @include size(px2rem(150), auto)
+        }
+        .input {
+          width: 100%;
+          border-bottom: 1px solid #e5e5e5;
+        }
+        .am-button {
+          flex-shrink: 0;
+        }
+        .modal-btn {
+          color: #fff;
+          border: 1px solid $theme-red;
+          font-size: px2rem(28);
+          text-align: center;
+          line-height: px2rem(60);
+          border-radius: px2rem(8);
+          @include size(px2rem(200), px2rem(60));
+          &.disabled {
+            opacity: 0.7;
+          }
+          &.cancel {
+            color: $theme-red;
+          }
+          &.confirm {
+            background: $theme-red;
+          }
+        }
+      }
     }
   }
 }
