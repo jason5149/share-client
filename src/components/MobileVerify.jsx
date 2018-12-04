@@ -1,20 +1,122 @@
 import React, { Component } from 'react'
-import { InputItem, Button } from 'antd-mobile'
+import { inject, observer } from 'mobx-react'
+import { InputItem, Button, Toast } from 'antd-mobile'
+import REGEX from '@utils/regex'
 
+@inject(
+  'UserModel'
+)
+@observer
 class MobileVerify extends Component {
   state = {
-    mobile: '',
-    vcode:  '',
+    mobile:    '',
+    vcode:     '',
+    vcodeDesc: '获取验证码',
+    isSent:    false,
   }
 
-  handleSendVcode = () => {}
+  timer = null
 
-  handleCancel = () => {}
+  componentDidMount() {
+    this.init()
+  }
+
+  componentWillUnmount() {
+    this.destroy()
+  }
+
+  init() {
+    
+  }
+
+  destroy() {
+    this.handleStopCountDown()
+  }
+
+  handleStartCounDown = () => {
+    let count = 60
+
+    this.timer = setInterval(() => {
+      if (count > 0) {
+        --count
+
+        this.setState({
+          vcodeDesc: `${ count }秒`,
+        })
+      } else {
+        this.handleStopCountDown()
+      }
+    }, 1000)
+  }
+
+  handleStopCountDown = () => {
+    clearInterval(this.timer)
+    this.timer = null
+    this.setState({
+      vcodeDesc: '获取验证码',
+    })
+  }
+
+  handleSendVcode = async () => {
+    const { UserModel } = this.props
+    const { mobile, isSent } = this.state
+    const { sendVcode } = UserModel
+
+    if (isSent) {
+      Toast.show('验证码已发送', 1)
+      return
+    }
+
+    if (!mobile) {
+      Toast.show('请输入手机号', 1)
+      return
+    } else if (!REGEX.MOBILE.test(mobile)) {
+      Toast.show('手机号码不正确', 1)
+      return
+    }
+
+    const result = await sendVcode({ mobile })
+
+    if (result) {
+      Toast.show('发送成功', 1)
+      this.setState({
+        isSent: true,
+      })
+      this.handleStartCounDown()
+    }
+  }
+
+  handleCancel = () => {
+    const { onCancel } = this.props
+
+    onCancel()
+  }
   
-  handleConfirm = () => {}
+  handleConfirm = () => {
+    const { onConfirm } = this.props
+    const { mobile, vcode } = this.state
+
+    if (!mobile) {
+      Toast.show('请输入手机号', 1)
+      return
+    } else if (!REGEX.MOBILE.test(mobile)) {
+      Toast.show('手机号码不正确', 1)
+      return
+    }
+
+    if (!vcode) {
+      Toast.show('请输入验证码', 1)
+      return
+    } else if (!REGEX.VCODE.test(vcode)) {
+      Toast.show('验证码不正确', 1)
+      return
+    }
+
+    onConfirm({ mobile, vcode })
+  }
 
   render() {
-    const { mobile, vcode } = this.state
+    const { mobile, vcode, vcodeDesc } = this.state
 
     return (
       <div className='mobile-verify-container'>
@@ -32,7 +134,7 @@ class MobileVerify extends Component {
               <div className='input'>
                 <InputItem value={ vcode } onChange={ value => this.setState({ vcode: value }) } />
               </div>
-              <Button type='warning' size='small' onClick={ this.handleSendVcode }>获取验证码</Button>
+              <Button type='warning' size='small' onClick={ this.handleSendVcode }>{vcodeDesc}</Button>
             </li>
             <li>
               {/* eslint-disable-next-line */}

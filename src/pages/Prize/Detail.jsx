@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
+import { Toast } from 'antd-mobile'
 import BannerCarousel from '@components/BannerCarousel'
 import MobileVerify from '@components/MobileVerify'
 import Prize from '@components/Prize'
+import { BASE_PATH } from '@utils/const'
 
 const { PrizePanel, PrizeDesc, PrizeImage, PrizeActions } = Prize
 
@@ -13,7 +15,7 @@ const { PrizePanel, PrizeDesc, PrizeImage, PrizeActions } = Prize
 @observer
 class PrizeDetailPage extends Component {
   state = {
-    mobileModal: true,
+    mobileModal: false,
   }
 
   componentDidMount() {
@@ -45,22 +47,35 @@ class PrizeDetailPage extends Component {
   }
 
   handleActionClick = () => {
-    const { UserModel } = this.props
+    const { history, UserModel } = this.props
     const { userDetailInfo } = UserModel
 
     if (!userDetailInfo) return
 
     const { integral, mobile } = userDetailInfo
 
-    console.log(integral)
+    if (!integral) {
+      Toast.show('您的积分不足', 1)
+      return
+    }
     if (!mobile) {
       this.setState({
-        mobileModal: false,
+        mobileModal: true,
       })
-
-      
+      return
     }
 
+    history.push(`${ BASE_PATH }/exchange`)
+  }
+
+  handleBindConfirm = params => {
+    console.log(params)
+  }
+
+  handleBindCancel = () => {
+    this.setState({
+      mobileModal: false,
+    })
   }
 
   render() {
@@ -89,7 +104,7 @@ class PrizeDetailPage extends Component {
           <PrizeDesc { ...prizeDetail } />
           <PrizeImage { ...prizeDetail } />
         </div>
-        {mobileModal && <MobileVerify />}
+        {mobileModal && <MobileVerify onConfirm={ this.handleBindConfirm } onCancel={ this.handleBindCancel } />}
         <PrizeActions 
           integral={ userDetailInfo && userDetailInfo.integral } 
           onClick={ this.handleActionClick } 

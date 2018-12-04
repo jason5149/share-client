@@ -2,6 +2,7 @@ import { observable, action } from 'mobx'
 import { Toast } from 'antd-mobile'
 import { 
   login,
+  sendVcode,
   getUserDetailInfo,
   recordReadAction,
   shareNews,
@@ -88,6 +89,18 @@ class UserModel {
     }
 
     this.userDetailInfo = result.body
+  }
+
+  @action
+  sendVcode = async params => {
+    const result = await sendVcode(params)
+
+    if (result.code !== '10000') {
+      Toast.show(result.message, 1)
+      return
+    }
+
+    return true
   }
 
   @action

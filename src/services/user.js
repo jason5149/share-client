@@ -3,6 +3,8 @@ import { API } from '@utils/const'
 
 export const login = params => Post(`${ API }/user/login`, params)
 
+export const sendVcode = params => Get(`${ API }/common/send`, params)
+
 export const getUserDetailInfo = params => Post(`${ API }/user/getUserById`, params)
 
 export const recordReadAction = params => Post(`${ API }/news/read`, params)
