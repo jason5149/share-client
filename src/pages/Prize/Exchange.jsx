@@ -98,6 +98,7 @@ class PrizeExchangePage extends Component {
     }
 
     if (!result) {
+      /* eslint-disable-next-line */
       result = list[0]
     }
     
