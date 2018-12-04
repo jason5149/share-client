@@ -9,6 +9,7 @@ class PrizePage extends Component {
 
     return (
       <Switch>
+        <Route path={ `${ url }/:id/exchange` } component={ AsyncComponent(() => import('@pages/Prize/Exchange')) } />
         <Route path={ `${ url }/:id` } component={ AsyncComponent(() => import('@pages/Prize/Detail')) } />
         <Route path={ `${ url }` } component={ AsyncComponent(() => import('@pages/Prize/List')) } />
       </Switch>

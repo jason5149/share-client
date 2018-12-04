@@ -19,19 +19,24 @@ class AddressList extends Component {
               onChange={ () => onDefaultChange(value) }
             />
           </div>
-          <div className='item-desc'>
+          {/* eslint-disable-next-line */}
+          <div className='item-desc' onClick={ () => onActionClick('check', value) }>
             {value.userName}
             &nbsp;
             {value.mobile}
           </div>
-          <div className='item-desc'>
+          {/* eslint-disable-next-line */}
+          <div className='item-desc' onClick={ () => onActionClick('check', value) }>
             {value.province}
             &nbsp;
             {value.city}
             &nbsp;
             {value.area}
           </div>
-          <div className='item-desc'>{value.address}</div>
+          {/* eslint-disable-next-line */}
+          <div className='item-desc' onClick={ () => onActionClick('check', value) }>
+            {value.address}
+          </div>
         </div>
         <div className='address-item-actions'>
           {/* eslint-disable-next-line */}
@@ -50,10 +55,11 @@ class AddressList extends Component {
   }
 
   render() {
-    const { list } = this.props
+    const { mode, list } = this.props
 
     return (
-      <ul className='address-list-container'>
+      // <ul className='address-list-container'>
+      <ul className={ `address-list-container mode-${ mode }` }>
         {list.map(this.renderAddressItem)}
       </ul>
     )

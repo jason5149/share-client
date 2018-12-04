@@ -1,6 +1,11 @@
 .address-list-container {
   padding: px2rem(30);
-  @include position(absolute, 0, 0, 47px, 0);
+  &.mode-1 {
+    @include position(absolute, 0, 0, 47px, 0);
+  }
+  &.mode-2 {
+    @include position(absolute, 0, 0, 0, 0);
+  }
   .address-item-container {
     border: 1px solid #e6e6e6;
     background: #fff;
@@ -98,6 +103,46 @@
     margin-top: px2rem(100);
     padding-left: px2rem(30);
     padding-right: px2rem(30);
+  }
+}
+
+.address-picker-container {
+  padding: px2rem(20) px2rem(30);
+  box-shadow: 0 1px 5px 3px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  margin-bottom: px2rem(20);
+  @extend [layout];
+  @extend [layout=row];
+  @extend [layout-align="space-between center"];
+  @include size(100%, auto);
+  .address-icon,
+  .arrow-right-icon {
+    flex-shrink: 0;
+    @include size(px2rem(40), px2rem(40));
+  }
+  .address-icon {
+    margin-right: px2rem(30);
+  }
+  .arrow-right-icon {
+    margin-left: px2rem(30);
+  }
+  .address-desc {
+    padding: px2rem(10);
+    @extend [layout];
+    @extend [layout=column];
+    @extend [layout-align="center start"];
+    @include size(100%, auto);
+    .address-name {
+      color: $font-color-1;
+      font-size: px2rem(30);
+      margin-bottom: px2rem(30);
+    }
+    .address-detail {
+      color: $font-color-3;
+      font-size: px2rem(28);
+      white-space: normal;
+      line-height: px2rem(44);
+    }
   }
 }
 

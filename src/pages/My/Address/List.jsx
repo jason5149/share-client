@@ -3,6 +3,7 @@ import { inject, observer } from 'mobx-react'
 import { Modal, Toast } from 'antd-mobile'
 import Address from '@components/Address'
 import { BASE_PATH } from '@utils/const'
+import { base64encode } from '@utils/tool'
 
 const { alert } = Modal
 const { AddressList, AddressBottom } = Address
@@ -12,12 +13,36 @@ const { AddressList, AddressBottom } = Address
 )
 @observer
 class AddressListPage extends Component {
+  state = {
+    chooseAddress: false,
+    fromTarget:    '',
+  }
+
   componentDidMount() {
     this.init()
   }
 
   init() {
     document.title = '我的地址'
+
+    const { history } = this.props
+    const { location } = history
+    const { search } = location
+
+    console.log(this.props)
+
+    if (search) {
+      /* eslint-disable-next-line */
+      const params = new URLSearchParams(search)
+      const chooseAddress = params.get('chooseAddress')
+      const fromTarget = params.get('fromTarget')
+
+      this.setState({
+        chooseAddress,
+        fromTarget,
+      })
+    }
+    
 
     this.handleSearchAddressList()
   }
@@ -48,12 +73,19 @@ class AddressListPage extends Component {
     }
   }
 
-  handleActionClick = (type, { id }) => {
+  handleActionClick = (type, item) => {
     const { UserModel, history } = this.props
+    const { chooseAddress, fromTarget } = this.state
     const { deleteAddress } = UserModel
+    const { id } = item
 
     if (type === 'create') {
       history.push(`${ BASE_PATH }/my/address/create`)
+    } else if (type === 'check') {
+      console.log(this.state)
+      if (chooseAddress) {
+        history.push(`${ fromTarget }?address=${ base64encode(item) }`)
+      }
     } else if (type === 'edit') {
       history.push(`${ BASE_PATH }/my/address/create?id=${ id }`)
     } else if (type === 'delete') {
@@ -78,16 +110,18 @@ class AddressListPage extends Component {
 
   render() {
     const { UserModel } = this.props
+    const { chooseAddress } = this.state
     const { addressList } = UserModel
 
     return (
       <div className='view-container relatived'>
         <AddressList 
+          mode={ chooseAddress ? 2 : 1 }
           list={ addressList } 
           onActionClick={ this.handleActionClick }
           onDefaultChange={ this.handleDefaultChange }
         />
-        <AddressBottom onActionClick={ () => this.handleActionClick('create') } />
+        {!chooseAddress && <AddressBottom onActionClick={ () => this.handleActionClick('create') } />}
       </div>
     )
   }

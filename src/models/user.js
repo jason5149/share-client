@@ -9,6 +9,7 @@ import {
   getNewsList, 
   getNewsDetail,
   getPrizeList, 
+  getIntegralList,
   getAddressList, 
   getAddressInfo,
   createAddress,
@@ -190,6 +191,18 @@ class UserModel {
   }
 
   @action
+  getIntegralList = async params => {
+    const result = await getIntegralList(params)
+
+    if (result.code !== '10000') {
+      Toast.show(result.message, 1)
+      return
+    }
+
+    console.log(result.body)
+  }
+
+  @action
   getAddressList = async () => {
     const result = await getAddressList()
 
@@ -199,6 +212,8 @@ class UserModel {
     }
 
     this.addressList = result.body
+
+    return result.body
   }
 
   @action

@@ -41,8 +41,6 @@ class PrizeDetailPage extends Component {
     const { getPrizeDetail } = PrizeModel
     const { params } = match
 
-    console.log(params)
-
     getPrizeDetail(params)
   }
 

@@ -3,6 +3,7 @@ import PrizePanel from './Panel'
 import PrizeDesc from './Desc'
 import PrizeImage from './Image'
 import PrizeActions from './Actions'
+import PrizeConfirmation from './Confirmation'
 
 export default {
   PrizeItem,
@@ -10,4 +11,5 @@ export default {
   PrizeDesc,
   PrizeImage,
   PrizeActions,
+  PrizeConfirmation,
 }
