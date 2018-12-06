@@ -73,6 +73,8 @@ class PrizeDetailPage extends Component {
     const result = await bindUserMobile(params)
 
     if (result) {
+      this.handleBindCancel()
+      this.handleSearchUserInfo()
       Toast.show('绑定成功', 1)
 
       setTimeout(() => {
