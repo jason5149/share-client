@@ -45,8 +45,10 @@ class PrizeDetailPage extends Component {
   }
 
   handleActionClick = () => {
-    const { history, UserModel } = this.props
+    const { history, match, UserModel } = this.props
+    const { params } = match
     const { userDetailInfo } = UserModel
+    const { id } = params
 
     if (!userDetailInfo) return
 
@@ -63,7 +65,7 @@ class PrizeDetailPage extends Component {
       return
     }
 
-    history.push(`${ BASE_PATH }/exchange`)
+    history.push(`${ BASE_PATH }/prize/${ id }/exchange`)
   }
 
   handleBindConfirm = async params => {
