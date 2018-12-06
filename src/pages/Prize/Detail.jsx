@@ -66,8 +66,19 @@ class PrizeDetailPage extends Component {
     history.push(`${ BASE_PATH }/exchange`)
   }
 
-  handleBindConfirm = params => {
-    console.log(params)
+  handleBindConfirm = async params => {
+    const { UserModel } = this.props
+    const { bindUserMobile } = UserModel
+
+    const result = await bindUserMobile(params)
+
+    if (result) {
+      Toast.show('绑定成功', 1)
+
+      setTimeout(() => {
+        this.handleActionClick()
+      }, 500)
+    }
   }
 
   handleBindCancel = () => {

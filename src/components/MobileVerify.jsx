@@ -112,7 +112,7 @@ class MobileVerify extends Component {
       return
     }
 
-    onConfirm({ mobile, vcode })
+    onConfirm({ mobile, code: vcode })
   }
 
   render() {
