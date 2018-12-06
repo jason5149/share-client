@@ -114,6 +114,10 @@ class PrizeExchangePage extends Component {
     const { id: prizeId, convertibility } = prizeDetail
     const { id: userAddressId } = defaultAddress
 
+    if (count <= 0) {
+      Toast.show('请确认兑换的商品数量')
+      return
+    }
     if (convertibility < (integral * count)) {
       Toast.show('您的积分不够兑换')
       return
