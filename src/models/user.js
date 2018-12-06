@@ -3,6 +3,7 @@ import { Toast } from 'antd-mobile'
 import { 
   login,
   sendVcode,
+  bindUserMobile,
   getUserDetailInfo,
   recordReadAction,
   shareNews,
@@ -95,6 +96,18 @@ class UserModel {
   @action
   sendVcode = async params => {
     const result = await sendVcode(params)
+
+    if (result.code !== '10000') {
+      Toast.show(result.message, 1)
+      return
+    }
+
+    return true
+  }
+
+  @action
+  bindUserMobile = async params => {
+    const result = await bindUserMobile(params)
 
     if (result.code !== '10000') {
       Toast.show(result.message, 1)
