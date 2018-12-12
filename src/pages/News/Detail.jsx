@@ -27,7 +27,7 @@ const {
 @observer
 class NewsDetailPage extends Component {
   state = {
-    isRead:       false,
+    // isRead:       false,
     userInfo:     getUserInfo(),
     panelVisible: true,
     qrcode:       '',
@@ -57,20 +57,20 @@ class NewsDetailPage extends Component {
     this.stopReadAction()
   }
 
-  startReadAction = () => {
-    this.timer = setInterval(() => {
-      if (this.count < 5) {
-        ++this.count
-      } else {
-        this.handleReadAction()
-        this.stopReadAction()
-      }
-    }, 1000)
-  }
+  // startReadAction = () => {
+  //   this.timer = setInterval(() => {
+  //     if (this.count < 5) {
+  //       ++this.count
+  //     } else {
+  //       this.handleReadAction()
+  //       this.stopReadAction()
+  //     }
+  //   }, 1000)
+  // }
 
-  stopReadAction = () => {
-    clearInterval(this.timer)
-  }
+  // stopReadAction = () => {
+  //   clearInterval(this.timer)
+  // }
 
   handleSearchQrcode = async () => {
     const { WxModel } = this.props
@@ -96,16 +96,16 @@ class NewsDetailPage extends Component {
 
   handleSearchNewsDetail = async() => {
     const { NewsModel, match } = this.props
-    const { isRead } = this.state
+    // const { isRead } = this.state
     const { getNewsDetail } = NewsModel
     const { params } = match
 
     const result = await getNewsDetail(params)
 
     if (result) {
-      if (!isRead) {
-        this.startReadAction()
-      }
+      // if (!isRead) {
+      //   this.startReadAction()
+      // }
       
       this.handleWxShareConfig()
     }
@@ -159,24 +159,24 @@ class NewsDetailPage extends Component {
     }
   }
 
-  handleReadAction = async () => {
-    const { UserModel, match } = this.props
-    const { userInfo } = this.state
-    const { recordReadAction } = UserModel
-    const { params } = match
-    const { id: newsId } = params
-    const { id: userId } = userInfo
+  // handleReadAction = async () => {
+  //   const { UserModel, match } = this.props
+  //   const { userInfo } = this.state
+  //   const { recordReadAction } = UserModel
+  //   const { params } = match
+  //   const { id: newsId } = params
+  //   const { id: userId } = userInfo
 
-    const result = await recordReadAction({ newsId, userId })
+  //   const result = await recordReadAction({ newsId, userId })
 
-    if (result) {
-      this.setState({
-        isRead: true,
-      }, () => {
-        this.handleSearchNewsDetail()
-      })
-    }
-  }
+  //   if (result) {
+  //     this.setState({
+  //       isRead: true,
+  //     }, () => {
+  //       this.handleSearchNewsDetail()
+  //     })
+  //   }
+  // }
 
   handleToggleClick = () => {
     const { panelVisible } = this.state
