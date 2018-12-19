@@ -6,3 +6,5 @@ export const getWxConfig = params => Get(`${ API }/wx/createJsapiSignature`, par
 export const getWxUserInfoByCode = params => Get(`${ API }/wx/getWxUserInfoByCode`, params)
 
 export const getTemporaryQrcode = params => Get(`${ API }/wx/getJsapiTicket`, params)
+
+export const getStaticQrcode = params => Get(`${ API }/wx/qrCodeCreateLastTicket`, params)

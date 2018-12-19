@@ -3,7 +3,7 @@ import { inject, observer } from 'mobx-react'
 import { Toast } from 'antd-mobile'
 import News from '@components/News'
 import ActionBtn from '@components/ActionBtn'
-import { BASE_PATH } from '@utils/const'
+import { BASE_PATH, FOLLOW_PAGE_URL } from '@utils/const'
 import { getUserInfo } from '@utils/cache'
 import { base64encode } from '@utils/tool'
 import { JS_API_LIST } from '@utils/config'
@@ -72,25 +72,44 @@ class NewsDetailPage extends Component {
   //   clearInterval(this.timer)
   // }
 
+  // handleSearchQrcode = async () => {
+  //   const { WxModel } = this.props
+  //   const { userInfo } = this.state
+  //   const { getTemporaryQrcode } = WxModel
+  //   const { id: userId } = userInfo
+
+  //   const result = await getTemporaryQrcode({ userId })
+
+  //   if (result) {
+  //     this.setState({
+  //       qrcode: result.ticket,
+  //     })
+  //   }
+  // }
+
   handleSearchQrcode = async () => {
-    const { WxModel } = this.props
     const { userInfo } = this.state
-    const { getTemporaryQrcode } = WxModel
-    const { id: userId } = userInfo
-
-    const result = await getTemporaryQrcode({ userId })
-
-    if (result) {
-      this.setState({
-        qrcode: result.ticket,
-      })
+    const { id } = userInfo
+    const params = {
+      type: 1,
+      id,
     }
+    const baseUrl = 'https://tool.oschina.net/action/qrcode/generate'
+    const followPageUrl = `${ FOLLOW_PAGE_URL }?params=${ base64encode(params) }`
+    // const followPageUrl = `${ FOLLOW_PAGE_URL }`
+
+    this.setState({
+      qrcode: `${ baseUrl }?data=${ followPageUrl }&output=image%2Fjpeg&error=L&type=0&margin=0&size=4&${ new Date().getTime() }`,
+    })
   }
 
   handleSearchUserInfo = () => {
     const { UserModel } = this.props
+    // const { userInfo } = this.state
+    // const { id } = userInfo
     const { getUserDetailInfo } = UserModel
 
+    // getUserDetailInfo({ userId: id })
     getUserDetailInfo()
   }
 
@@ -206,6 +225,9 @@ class NewsDetailPage extends Component {
     const { userInfo, qrcode, panelVisible } = this.state
     const { newsDetail, shareVisible, toggleShareVisible } = NewsModel
     const { userDetailInfo } = UserModel
+
+    console.log(userInfo)
+    console.log(qrcode)
 
     if (!newsDetail) return null
 

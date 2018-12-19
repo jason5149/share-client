@@ -6,7 +6,8 @@ class QrcodeArea extends Component {
 
     return (
       <div className='qrcode-area-container'>
-        {qrcode && <img src={ `https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=${ encodeURIComponent(qrcode) }` } alt='' />}
+        {/* {qrcode && <img src={ `https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=${ encodeURIComponent(qrcode) }` } alt='' />} */}
+        {qrcode && <img src={ qrcode } alt='' />}
       </div>
     )
   }

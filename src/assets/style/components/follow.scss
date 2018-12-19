@@ -1,0 +1,7 @@
+.follow-qrcode-container {
+  img {
+    margin: auto;
+    display: block;
+    @include size(px2rem(300), px2rem(300));
+  }
+}
