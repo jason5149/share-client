@@ -59,7 +59,7 @@ class FollowPage extends Component {
     return (
       <div style={{ width: '100%', height: '100%' }} layout='row' layout-align='center center'>
         <div className='follow-qrcode-container'>
-          <img src={ `https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=${ qrcodeTicket }` } alt='' />
+          {qrcodeTicket && <img src={ `https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=${ qrcodeTicket }` } alt='' />}
           关注二维码
         </div>
       </div>

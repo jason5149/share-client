@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 class UserPanel extends Component {
   render() {
-    const { userInfo, onClick } = this.props
+    const { userInfo, templateInfo, onClick } = this.props
     const { headImgUrl } = userInfo
 
     return (
@@ -12,9 +12,9 @@ class UserPanel extends Component {
           <img src={ headImgUrl } alt='' />
         </a>
         <div style={{ width: '100%' }} layout='column' layout-align='center space-around'>
-          <span className='advertisting-text'>广告语</span>
+          <span className='advertisting-text'>{templateInfo && templateInfo.platAd}</span>
           {/* eslint-disable-next-line */}
-          <a className='director-text' onClick={ onClick }>引导语</a>
+          <a className='director-text' onClick={ onClick }>{templateInfo && templateInfo.guideAd}</a>
         </div>
       </div>
     )

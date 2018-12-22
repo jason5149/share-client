@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
 import { Toast } from 'antd-mobile'
 import News from '@components/News'
-import { BASE_PATH } from '@utils/const'
+import { BASE_PATH, FOLLOW_PAGE_URL } from '@utils/const'
 import { getUserInfo } from '@utils/cache'
 import { base64encode } from '@utils/tool'
 import { JS_API_LIST } from '@utils/config'
@@ -41,22 +41,24 @@ class MyShareDetailPage extends Component {
 
     this.handleSearchQrcode()
     this.handleSearchUserInfo()
+    this.handleSearchTemplate()
     this.handleSearchNewsDetail()
   }
 
   handleSearchQrcode = async () => {
-    const { WxModel } = this.props
     const { userInfo } = this.state
-    const { getTemporaryQrcode } = WxModel
-    const { id: userId } = userInfo
-
-    const result = await getTemporaryQrcode({ userId })
-
-    if (result) {
-      this.setState({
-        qrcode: result.ticket,
-      })
+    const { id } = userInfo
+    const params = {
+      type: 1,
+      id,
     }
+    const baseUrl = 'https://tool.oschina.net/action/qrcode/generate'
+    const followPageUrl = `${ FOLLOW_PAGE_URL }?params=${ base64encode(params) }`
+    // const followPageUrl = `${ FOLLOW_PAGE_URL }`
+
+    this.setState({
+      qrcode: `${ baseUrl }?data=${ followPageUrl }&output=image%2Fjpeg&error=L&type=0&margin=4&size=4&${ new Date().getTime() }`,
+    })
   }
 
   handleSearchUserInfo = () => {
@@ -64,6 +66,13 @@ class MyShareDetailPage extends Component {
     const { getUserDetailInfo } = UserModel
 
     getUserDetailInfo()
+  }
+
+  handleSearchTemplate = () => {
+    const { NewsModel } = this.props
+    const { getNewsTemplate } = NewsModel
+    
+    getNewsTemplate()
   }
 
   handleSearchNewsDetail = async() => {
@@ -129,8 +138,6 @@ class MyShareDetailPage extends Component {
   handleToggleClick = () => {
     const { panelVisible } = this.state
 
-    console.log(panelVisible)
-
     this.setState({
       panelVisible: !panelVisible,
     })
@@ -138,14 +145,20 @@ class MyShareDetailPage extends Component {
 
   handleShareClick = () => {
     const { history } = this.props
-
-    history.push(`${ BASE_PATH }/follow`)
+    const { userInfo } = this.state
+    const { id } = userInfo
+    const params = {
+      type: 1,
+      id,
+    }
+    
+    history.push(`${ BASE_PATH }/follow?params=${ base64encode(params) }`)
   }
 
   render() {
     const { NewsModel, UserModel } = this.props
     const { userInfo, qrcode, status, panelVisible } = this.state
-    const { newsDetail } = NewsModel
+    const { newsTemplate, newsDetail } = NewsModel
     const { userDetailInfo } = UserModel
 
     if (!newsDetail) return null
@@ -158,11 +171,11 @@ class MyShareDetailPage extends Component {
       <div className='view-container relatived'>
         <i className={ `news-status ${ status ? 'process' : 'complete' }` } />
         <NewsTitle title={ title } date={ date } author={ author_name } />
-        <UserPanel userInfo={ userInfo } onClick={ this.handleToggleClick } />
-        {panelVisible && <SharePanel userInfo={ userDetailInfo } onClick={ this.handleShareClick } />}
+        <UserPanel userInfo={ userInfo } templateInfo={ newsTemplate } onClick={ this.handleToggleClick } />
+        {panelVisible && <SharePanel userInfo={ userDetailInfo } templateInfo={ newsTemplate } onClick={ this.handleShareClick } />}
         <NewsContext context={ context } readCount={ readCount } shareCount={ shareCount } />
-        <Statement />
-        <QrcodeArea qrcode={ qrcode } />
+        <Statement context={ newsTemplate && newsTemplate.exemption } />
+        <QrcodeArea qrcode={ qrcode } desc={ newsTemplate && newsTemplate.qrCodeGuide } />
       </div>
     )
   }

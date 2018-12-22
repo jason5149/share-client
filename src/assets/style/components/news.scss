@@ -148,13 +148,13 @@
   }
   .advertisting-text {
     color: $font-color-2;
-    font-size: px2rem(30);
-    line-height: px2rem(40);
+    font-size: px2rem(26);
+    line-height: 1.5;
   }
   .director-text {
     color: #108ee9;
-    font-size: px2rem(28);
-    line-height: px2rem(40);
+    font-size: px2rem(24);
+    line-height: 1.5;
   }
 }
 
@@ -194,6 +194,10 @@
     @extend [layout=column];
     @extend [layout-align="center start"];
     @include size(100%, auto);
+    img {
+      margin: px2rem(20) 0;
+      @include size(100%, px2rem(100));
+    }
   }
 }
 
@@ -264,6 +268,12 @@
     margin: auto;
     display: block;
     @include size(px2rem(300), px2rem(300));
+  }
+  .qrcode-desc {
+    margin-top: px2rem(20);
+    color: $font-color-2;
+    font-size: px2rem(26);
+    text-align: center;
   }
 }
 

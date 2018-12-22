@@ -24,7 +24,7 @@ class NewsItem extends Component {
           <div className='news-item-title'>
             <span className='news-item-integral'>
               +
-              {integral || 1}
+              {integral || 0}
             </span>
             { title }
           </div>

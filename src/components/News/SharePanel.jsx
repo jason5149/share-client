@@ -3,7 +3,7 @@ import { Button } from 'antd-mobile'
 
 class SharePanel extends Component {
   render() {
-    const { userInfo, onClick } = this.props
+    const { userInfo, templateInfo, onClick } = this.props
 
     if (!userInfo) return null
 
@@ -34,10 +34,10 @@ class SharePanel extends Component {
           </div>
         </div>
         <div className='share-desc'>
-          <span>分享越多礼品越多，亿分享“壕”礼不停送</span>
-          <img src='' alt='' />
+          <span>{templateInfo && templateInfo.shareAd}</span>
+          <img src={ templateInfo && templateInfo.businessFlow } alt='' />
           <div style={{ width: '100%' }} layout='row' layout-align='end center'>
-            <Button type='warning' size='small' onClick={ onClick }>我来分享</Button>
+            <Button type='warning' size='small' onClick={ onClick }>{templateInfo && templateInfo.buttonName}</Button>
           </div>
         </div>
       </div>

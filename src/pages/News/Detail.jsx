@@ -50,11 +50,12 @@ class NewsDetailPage extends Component {
 
     this.handleSearchQrcode()
     this.handleSearchUserInfo()
+    this.handleSearchTemplate()
     this.handleSearchNewsDetail()
   }
 
   destroy() {
-    this.stopReadAction()
+    // this.stopReadAction()
   }
 
   // startReadAction = () => {
@@ -99,7 +100,7 @@ class NewsDetailPage extends Component {
     // const followPageUrl = `${ FOLLOW_PAGE_URL }`
 
     this.setState({
-      qrcode: `${ baseUrl }?data=${ followPageUrl }&output=image%2Fjpeg&error=L&type=0&margin=0&size=4&${ new Date().getTime() }`,
+      qrcode: `${ baseUrl }?data=${ followPageUrl }&output=image%2Fjpeg&error=L&type=0&margin=4&size=4&${ new Date().getTime() }`,
     })
   }
 
@@ -111,6 +112,13 @@ class NewsDetailPage extends Component {
 
     // getUserDetailInfo({ userId: id })
     getUserDetailInfo()
+  }
+
+  handleSearchTemplate = () => {
+    const { NewsModel } = this.props
+    const { getNewsTemplate } = NewsModel
+    
+    getNewsTemplate()
   }
 
   handleSearchNewsDetail = async() => {
@@ -200,8 +208,6 @@ class NewsDetailPage extends Component {
   handleToggleClick = () => {
     const { panelVisible } = this.state
 
-    console.log(panelVisible)
-
     this.setState({
       panelVisible: !panelVisible,
     })
@@ -209,8 +215,14 @@ class NewsDetailPage extends Component {
 
   handleShareClick = () => {
     const { history } = this.props
+    const { userInfo } = this.state
+    const { id } = userInfo
+    const params = {
+      type: 1,
+      id,
+    }
 
-    history.push(`${ BASE_PATH }/follow`)
+    history.push(`${ BASE_PATH }/follow?params=${ base64encode(params) }`)
   }
 
   handleActionClick = () => {
@@ -223,11 +235,8 @@ class NewsDetailPage extends Component {
   render() {
     const { NewsModel, UserModel } = this.props
     const { userInfo, qrcode, panelVisible } = this.state
-    const { newsDetail, shareVisible, toggleShareVisible } = NewsModel
+    const { newsTemplate, newsDetail, shareVisible, toggleShareVisible } = NewsModel
     const { userDetailInfo } = UserModel
-
-    console.log(userInfo)
-    console.log(qrcode)
 
     if (!newsDetail) return null
 
@@ -236,11 +245,11 @@ class NewsDetailPage extends Component {
     return (
       <div className='view-container'>
         <NewsTitle title={ title } date={ date } author={ author_name } />
-        <UserPanel userInfo={ userInfo } onClick={ this.handleToggleClick } />
-        {panelVisible && <SharePanel userInfo={ userDetailInfo } onClick={ this.handleShareClick } />}
+        <UserPanel userInfo={ userInfo } templateInfo={ newsTemplate } onClick={ this.handleToggleClick } />
+        {panelVisible && <SharePanel templateInfo={ newsTemplate } userInfo={ userDetailInfo } onClick={ this.handleShareClick } />}
         <NewsContext context={ context } readCount={ readCount } shareCount={ shareCount } />
-        <Statement />
-        <QrcodeArea qrcode={ qrcode } />
+        <Statement context={ newsTemplate && newsTemplate.exemption } />
+        <QrcodeArea qrcode={ qrcode } desc={ newsTemplate && newsTemplate.qrCodeGuide } />
         <ActionBtn text='分享赚积分' type={ 2 } onClick={ this.handleActionClick } />
         {shareVisible && <ShareDirector onClick={ () => toggleShareVisible(false) } />}
       </div>
