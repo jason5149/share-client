@@ -159,9 +159,7 @@ class NewsDetailPage extends Component {
       if (configResult) {
         const shareUrl = `${ window.location.host }${ BASE_PATH }/activity/news/${ newsId }?params=${ base64encode(userInfo) }`
 
-        console.log('shareUrl: ', shareUrl)
-
-        wxShareAppMessage(title, desc, shareUrl, thumbnail_pic_s).then(async result => {
+        wxShareTimeline(title, url, thumbnail_pic_s).then(async result => {
           if (result) {
             const shareResult = await shareNews({ newsId, type: 0, userId })
 
@@ -172,7 +170,7 @@ class NewsDetailPage extends Component {
           }
         })
 
-        wxShareTimeline(title, url, thumbnail_pic_s).then(async result => {
+        wxShareAppMessage(title, desc, shareUrl, thumbnail_pic_s).then(async result => {
           if (result) {
             const shareResult = await shareNews({ newsId, type: 0, userId })
 

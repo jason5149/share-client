@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
+import { Toast } from 'antd-mobile'
 import News from '@components/News'
-import { base64encode, base64decode } from '@utils/tool'
 // import ActionBtn from '@components/ActionBtn'
-import { FOLLOW_PAGE_URL } from '@utils/config'
-// import { wxConfig, wxShareTimeline, wxShareAppMessage } from '@utils/wx'
+import { FOLLOW_PAGE_URL } from '@utils/const'
+import { base64encode, base64decode } from '@utils/tool'
+import { JS_API_LIST } from '@utils/config'
+import { wxConfig, wxShareTimeline, wxShareAppMessage } from '@utils/wx'
 
 const { 
   NewsTitle, 
@@ -123,55 +125,55 @@ class NewsDetailPage extends Component {
         this.startReadAction()
       }
       
-      // this.handleWxShareConfig()
+      this.handleWxShareConfig()
     }
   }
 
-  // handleWxShareConfig = async () => {
-  //   const { WxModel, NewsModel, UserModel } = this.props
-  //   const { userInfo } = this.state
-  //   const { getWxConfig } = WxModel
-  //   const { shareNews } = UserModel
-  //   const { newsDetail, toggleShareVisible } = NewsModel
+  handleWxShareConfig = async () => {
+    const { WxModel, NewsModel, UserModel } = this.props
+    const { userInfo } = this.state
+    const { getWxConfig } = WxModel
+    const { shareNews } = UserModel
+    const { newsDetail, toggleShareVisible } = NewsModel
     
-  //   const { id: userId } = userInfo
-  //   const { id: newsId, title, thumbnail_pic_s } = newsDetail
+    const { id: userId } = userInfo
+    const { id: newsId, title, thumbnail_pic_s } = newsDetail
     
-  //   const desc = '麻烦帮我看下新闻，我要免费拿礼品，还包邮到家，爱你哟～'
-  //   const url = window.location.href
-  //   const wxConfigResult = await getWxConfig({ url })
+    const desc = '麻烦帮我看下新闻，我要免费拿礼品，还包邮到家，爱你哟～'
+    const url = window.location.href
+    const wxConfigResult = await getWxConfig({ url })
 
-  //   if (wxConfigResult) {
-  //     const { appId, nonceStr, signature, timestamp  } = wxConfigResult
-  //     const configResult = await wxConfig(appId, timestamp, nonceStr, signature, JS_API_LIST)
+    if (wxConfigResult) {
+      const { appId, nonceStr, signature, timestamp  } = wxConfigResult
+      const configResult = await wxConfig(appId, timestamp, nonceStr, signature, JS_API_LIST)
         
-  //     if (configResult) {
-  //       const shareUrl = `${ url }?userId=${ userId }`
+      if (configResult) {
+        const shareUrl = `${ url }?userId=${ userId }`
+
+        wxShareTimeline(title, url, thumbnail_pic_s).then(async result => {
+          if (result) {
+            const shareResult = await shareNews({ newsId, type: 0, userId })
+
+            if (shareResult) {
+              toggleShareVisible(false)
+              Toast.show('分享成功')
+            }
+          }
+        })
         
-  //       wxShareAppMessage(title, desc, shareUrl, thumbnail_pic_s).then(async result => {
-  //         if (result) {
-  //           const shareResult = await shareNews({ newsId, type: 0, userId })
+        wxShareAppMessage(title, desc, shareUrl, thumbnail_pic_s).then(async result => {
+          if (result) {
+            const shareResult = await shareNews({ newsId, type: 0, userId })
 
-  //           if (shareResult) {
-  //             toggleShareVisible(false)
-  //             Toast.show('分享成功')
-  //           }
-  //         }
-  //       })
-
-  //       wxShareTimeline(title, url, thumbnail_pic_s).then(async result => {
-  //         if (result) {
-  //           const shareResult = await shareNews({ newsId, type: 0, userId })
-
-  //           if (shareResult) {
-  //             toggleShareVisible(false)
-  //             Toast.show('分享成功')
-  //           }
-  //         }
-  //       })
-  //     }
-  //   }
-  // }
+            if (shareResult) {
+              toggleShareVisible(false)
+              Toast.show('分享成功')
+            }
+          }
+        })
+      }
+    }
+  }
 
   handleReadAction = async () => {
     const { UserModel, match } = this.props
