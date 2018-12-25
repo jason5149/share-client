@@ -131,7 +131,7 @@ class NewsDetailPage extends Component {
 
   handleWxShareConfig = async () => {
     const { WxModel, NewsModel, UserModel } = this.props
-    const { userInfo } = this.state
+    const { params: userInfo } = this.state
     const { getWxConfig } = WxModel
     const { shareNews } = UserModel
     const { newsDetail, toggleShareVisible } = NewsModel
