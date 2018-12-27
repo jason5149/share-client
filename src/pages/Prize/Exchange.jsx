@@ -118,7 +118,7 @@ class PrizeExchangePage extends Component {
       Toast.show('请确认兑换的商品数量')
       return
     }
-    if (convertibility < (integral * count)) {
+    if (convertibility > (integral * count)) {
       Toast.show('您的积分不够兑换')
       return
     }
