@@ -30,7 +30,10 @@ class PrizeModel {
 
     if (params.currentPage !== 1 && params.currentPage >= result.body.page.totalPage) {
       this.hasMore = false
-      return false
+      
+      if (result.body.list.length <= 0) {
+        return false
+      }
     }
 
     return result.body.list

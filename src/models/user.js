@@ -66,6 +66,15 @@ class UserModel {
   @observable
   userDetailInfo = null
 
+  @observable
+  integralListTotal = 0
+
+  @observable
+  integralListPageIndex = 1
+
+  @observable
+  hasMore = true
+
   @action
   login = async params => {
     const result = await login(params)
@@ -158,19 +167,17 @@ class UserModel {
     this.newsListPageIndex = params.currentPage
     this.newsListTotal = result.body.page.totalNum
     
-    if (params.currentPage >= result.body.page.totalPage) {
+    if (params.currentPage !== 1 && params.currentPage >= result.body.page.totalPage) {
       this.hasMore = false
 
-      if (params.currentPage === 1) {
-        return result.body.list
-      } else {
+      if (result.body.list.length <= 0) {
         return false
       }
-    } else {
+    } else if (params.currentPage === 1 && params.currentPage < result.body.page.totalPage) {
       this.hasMore = true
-
-      return result.body.list
     }
+
+    return result.body.list
   }
 
   @action
@@ -212,7 +219,24 @@ class UserModel {
       return
     }
 
-    console.log(result.body)
+    if (!result.body) {
+      return false
+    }
+
+    this.integralListPageIndex = params.currentPage
+    this.integralListTotal = result.body.page.totalNum
+    
+    if (params.currentPage !== 1 && params.currentPage >= result.body.page.totalPage) {
+      this.hasMore = false
+
+      if (result.body.list.length <= 0) {
+        return false
+      }
+    } else if (params.currentPage === 1 && params.currentPage < result.body.page.totalPage) {
+      this.hasMore = true
+    }
+
+    return result.body.list
   }
 
   @action

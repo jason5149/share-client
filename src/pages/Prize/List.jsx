@@ -78,7 +78,7 @@ class PrizeListPage extends Component {
     const result = await getPrizeList(params)
   
     if (result) {
-      this.prizeList = []
+      this.prizeList = [].concat(result)
       
       setTimeout(() => {
         this.setState({

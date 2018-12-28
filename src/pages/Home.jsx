@@ -104,9 +104,7 @@ class HomePage extends Component {
     const result = await getNewsList(params)
   
     if (result) {
-      this.newsList = []
-
-      this.newsList = this.newsList.concat(result)
+      this.newsList = [].concat(result)
 
       setTimeout(() => {
         this.setState({

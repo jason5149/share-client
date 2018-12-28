@@ -61,19 +61,17 @@ class NewsModel {
     this.newsListPageIndex = params.currentPage
     this.newsListTotal = result.body.page.totalNum
     
-    if (params.currentPage >= result.body.page.totalPage) {
+    if (params.currentPage !== 1 && params.currentPage >= result.body.page.totalPage) {
       this.hasMore = false
 
-      if (params.currentPage === 1) {
-        return result.body.list
-      } else {
+      if (result.body.list.length <= 0) {
         return false
       }
-    } else {
+    } else if (params.currentPage === 1 && params.currentPage < result.body.page.totalPage) {
       this.hasMore = true
-
-      return result.body.list
     }
+
+    return result.body.list
   }
 
   @action

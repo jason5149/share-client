@@ -75,7 +75,7 @@ class MyShareListPage extends Component {
     const result = await getNewsList(params)
   
     if (result) {
-      this.newsList = []
+      this.newsList = [].concat(result)
       
       setTimeout(() => {
         this.setState({
