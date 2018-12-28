@@ -120,7 +120,7 @@ class MyPrizeListPage extends Component {
 
     return (
       <div className='view-container'>
-        <div className='prize-container'>
+        <div className='prize-container' style={{ top: 0 }}>
           <ListView
             ref={ el => this.list = el }
             className='prize-list-container'
@@ -139,7 +139,7 @@ class MyPrizeListPage extends Component {
               />
             ) }
             renderBodyComponent={ () => <div /> }
-            renderFooter={ () => isLoading ? <div className='list-footer'>加载中</div> : <div className='list-footer'>底线</div> }
+            renderFooter={ () => isLoading ? <div className='list-footer'>加载中</div> : <div className='list-footer'>-----我是底线-----</div> }
             scrollRenderAheadDistance={ 500 }
             scrollEventThrottle={ 20 }
             onEndReached={ this.handleEndReached }

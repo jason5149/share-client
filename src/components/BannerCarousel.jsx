@@ -15,7 +15,7 @@ class BannerCarousel extends Component {
         style={{ height: IMG_HEIGHT }}
         onClick={ () => onClick(url) }
       >
-        <span className='banner-item-title'>{ title }</span>
+        {/* <span className='banner-item-title'>{ title }</span> */}
         <img 
           className='banner-item-image'
           src={ image } 
