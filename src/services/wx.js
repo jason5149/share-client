@@ -8,3 +8,5 @@ export const getWxUserInfoByCode = params => Get(`${ API }/wx/getWxUserInfoByCod
 export const getTemporaryQrcode = params => Get(`${ API }/wx/getJsapiTicket`, params)
 
 export const getStaticQrcode = params => Get(`${ API }/wx/qrCodeCreateLastTicket`, params)
+
+export const getFollowConfig = () => Get(`${ API }/wx/follow/context`)

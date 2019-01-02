@@ -102,7 +102,7 @@ class HomePage extends Component {
       category:    activedTab,
     }
     const result = await getNewsList(params)
-  
+
     if (result) {
       this.newsList = [].concat(result)
 
@@ -193,15 +193,15 @@ class HomePage extends Component {
               useBodyScroll={ false }
               pullToRefresh={ (
                 <PullToRefresh
-                  refreshing={ refreshing } 
+                  refreshing={ refreshing }
                   indicator={{
-                      activate:   <span className='news-list-indicator'>松开立即刷新</span>,
-                      deactivate: <span className='news-list-indicator'>下拉刷新</span>,
-                      finish:     <span className='news-list-indicator'>完成刷新</span>,
-                    }} 
+                    activate:   <span className='news-list-indicator'>松开立即刷新</span>,
+                    deactivate: <span className='news-list-indicator'>下拉刷新</span>,
+                    finish:     <span className='news-list-indicator'>完成刷新</span>,
+                  }}
                   onRefresh={ this.handleRefresh }
                 />
-                ) }
+              ) }
               renderBodyComponent={ () => <div /> }
               renderFooter={ () => isLoading ? <div className='list-footer'>加载中</div> : <div className='list-footer'>底线</div> }
               scrollRenderAheadDistance={ 500 }

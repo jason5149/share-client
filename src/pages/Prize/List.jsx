@@ -30,7 +30,7 @@ class PrizeListPage extends Component {
   }
 
   init() {
-    document.title = '奖品列表'
+    document.title = '积分兑奖'
 
     this.handleSearchUserInfo()
     this.handleSearchPrizeList()
@@ -76,10 +76,10 @@ class PrizeListPage extends Component {
       pageSize:    10,
     }
     const result = await getPrizeList(params)
-  
+
     if (result) {
       this.prizeList = [].concat(result)
-      
+
       setTimeout(() => {
         this.setState({
           dataSource: dataSource.cloneWithRows(result),
@@ -140,21 +140,25 @@ class PrizeListPage extends Component {
             ref={ el => this.list = el }
             className='prize-list-container'
             dataSource={ dataSource }
-            renderRow={ rowData => <PrizeItem { ...rowData } onClick={ this.handleItemClick } /> }
+            renderRow={ rowData => {
+              return (
+                <PrizeItem prizeType={ 1 } { ...rowData } onClick={ this.handleItemClick } />
+              )
+            } }
             useBodyScroll={ false }
             pullToRefresh={ (
               <PullToRefresh
-                refreshing={ refreshing } 
+                refreshing={ refreshing }
                 indicator={{
                   activate:   <span className='prize-list-indicator'>松开立即刷新</span>,
                   deactivate: <span className='prize-list-indicator'>下拉刷新</span>,
                   finish:     <span className='prize-list-indicator'>完成刷新</span>,
-                }} 
+                }}
                 onRefresh={ this.handleRefresh }
               />
             ) }
             renderBodyComponent={ () => <div style={{ height: '100%' }} /> }
-            renderFooter={ () => isLoading ? <div className='list-footer'>加载中</div> : <div className='list-footer'>底线</div> }
+            renderFooter={ () => isLoading ? <div className='list-footer'>加载中</div> : <div className='list-footer'>-----我是底线-----</div> }
             scrollRenderAheadDistance={ 500 }
             scrollEventThrottle={ 20 }
             onEndReached={ this.handleEndReached }

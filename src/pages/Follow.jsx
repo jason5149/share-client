@@ -21,13 +21,15 @@ class FollowPage extends Component {
   init() {
     const { location } = this.props
     const { search } = location
-    const result = base64decode(parse(search.split('?')[1]).params) 
+    const result = base64decode(parse(search.split('?')[1]).params)
 
     if (result) {
       const { type, id } = result
 
       this.handleGenerateQrcode(type, id)
     }
+
+    this.handleSearchFollowConfig()
   }
 
   handleGenerateQrcode = async (type, id) => {
@@ -52,10 +54,17 @@ class FollowPage extends Component {
       }
     }
   }
-  
+
+  handleSearchFollowConfig = () => {
+    const { WxModel } = this.props
+    const { getFollowConfig } = WxModel
+
+    getFollowConfig()
+  }
+
   render() {
     const { qrcodeTicket } = this.state
-    
+
     return (
       <div style={{ width: '100%', height: '100%' }} layout='row' layout-align='center center'>
         <div className='follow-qrcode-container'>

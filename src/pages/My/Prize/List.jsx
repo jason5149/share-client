@@ -7,7 +7,7 @@ import { BASE_PATH } from '@utils/const'
 const { PrizeItem } = Prize
 
 @inject(
-  'PrizeModel'
+  'UserModel',
 )
 @observer
 class MyPrizeListPage extends Component {
@@ -28,23 +28,21 @@ class MyPrizeListPage extends Component {
   }
 
   init() {
-    document.title = '我的分享'
-    
+    document.title = '我的奖品'
+
     this.handleSearchPrizeList()
   }
 
   handleSearchPrizeList = async (currentPage = 1) => {
-    const { PrizeModel } = this.props
+    const { UserModel } = this.props
     const { dataSource } = this.state
-    const { getPrizeList } = PrizeModel
+    const { getPrizeList } = UserModel
 
     const params = {
       currentPage,
       pageSize: 10,
     }
     const result = await getPrizeList(params)
-
-    console.log(result)
 
     if (result) {
       this.prizeList = this.prizeList.concat(result)
@@ -59,20 +57,19 @@ class MyPrizeListPage extends Component {
   handleRefresh = async () => {
     const { UserModel } = this.props
     const { dataSource } = this.state
-    const { activedTab, getNewsList } = UserModel
+    const { getPrizeList } = UserModel
 
     this.setState({ refreshing: true, isLoading: true })
 
     const params = {
       currentPage: 1,
       pageSize:    10,
-      status:      activedTab,
     }
-    const result = await getNewsList(params)
-  
+    const result = await getPrizeList(params)
+
     if (result) {
       this.prizeList = [].concat(result)
-      
+
       setTimeout(() => {
         this.setState({
           dataSource: dataSource.cloneWithRows(result),
@@ -86,16 +83,16 @@ class MyPrizeListPage extends Component {
   handleEndReached = async () => {
     const { UserModel } = this.props
     const { dataSource } = this.state
-    const { activedTab, newsListPageIndex, getNewsList } = UserModel
+    const { prizeListPageIndex, getPrizeList } = UserModel
 
+    console.log(this.state)
     this.setState({ isLoading: true })
 
     const params = {
-      currentPage: newsListPageIndex + 1,
+      currentPage: prizeListPageIndex + 1,
       pageSize:    10,
-      status:      activedTab,
     }
-    const result = await getNewsList(params)
+    const result = await getPrizeList(params)
 
     if (result) {
       this.prizeList = this.prizeList.concat(result)
@@ -125,16 +122,22 @@ class MyPrizeListPage extends Component {
             ref={ el => this.list = el }
             className='prize-list-container'
             dataSource={ dataSource }
-            renderRow={ rowData => <PrizeItem { ...rowData } onClick={ this.handleItemClick } /> }
+            renderRow={ rowData => {
+              const { prize, userAddress } = rowData
+
+              return (
+                <PrizeItem prizeType={ 2 } { ...userAddress } { ...prize } onClick={ this.handleItemClick } />
+              )
+            } }
             useBodyScroll={ false }
             pullToRefresh={ (
               <PullToRefresh
-                refreshing={ refreshing } 
+                refreshing={ refreshing }
                 indicator={{
                   activate:   <span className='prize-list-indicator'>松开立即刷新</span>,
                   deactivate: <span className='prize-list-indicator'>下拉刷新</span>,
                   finish:     <span className='prize-list-indicator'>完成刷新</span>,
-                }} 
+                }}
                 onRefresh={ this.handleRefresh }
               />
             ) }

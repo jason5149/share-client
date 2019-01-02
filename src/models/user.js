@@ -1,17 +1,17 @@
 import { observable, action } from 'mobx'
 import { Toast } from 'antd-mobile'
-import { 
+import {
   login,
   sendVcode,
   bindUserMobile,
   getUserDetailInfo,
   recordReadAction,
   shareNews,
-  getNewsList, 
+  getNewsList,
   getNewsDetail,
-  getPrizeList, 
+  getPrizeList,
   getIntegralList,
-  getAddressList, 
+  getAddressList,
   getAddressInfo,
   createAddress,
   updateAddress,
@@ -52,19 +52,19 @@ class UserModel {
   addressModalVisible = false
 
   @observable
+  userDetailInfo = null
+
+  @observable
   newsListTotal = 0
 
   @observable
   newsListPageIndex = 1
 
   @observable
-  hasMore = true
-
-  @observable
   prizeListTotal = 0
 
   @observable
-  userDetailInfo = null
+  prizeListPageIndex = 1
 
   @observable
   integralListTotal = 0
@@ -166,7 +166,7 @@ class UserModel {
     this.activedTab = params.status
     this.newsListPageIndex = params.currentPage
     this.newsListTotal = result.body.page.totalNum
-    
+
     if (params.currentPage !== 1 && params.currentPage >= result.body.page.totalPage) {
       this.hasMore = false
 
@@ -206,6 +206,19 @@ class UserModel {
     if (result.body) {
       this.prizeListTotal = result.body.page.totalNum
     }
+    this.newsListPageIndex = params.currentPage
+    this.prizeListPageIndex = params.currentPage
+    this.prizeListTotal = result.body.page.totalNum
+
+    if (params.currentPage !== 1 && params.currentPage >= result.body.page.totalPage) {
+      this.hasMore = false
+
+      if (result.body.list.length <= 0) {
+        return false
+      }
+    } else if (params.currentPage === 1 && params.currentPage < result.body.page.totalPage) {
+      this.hasMore = true
+    }
 
     return result.body.list
   }
@@ -225,7 +238,7 @@ class UserModel {
 
     this.integralListPageIndex = params.currentPage
     this.integralListTotal = result.body.page.totalNum
-    
+
     if (params.currentPage !== 1 && params.currentPage >= result.body.page.totalPage) {
       this.hasMore = false
 
@@ -327,7 +340,7 @@ class UserModel {
             this.changeAddressInfo('area', address[i])
           }
         }
-  
+
         this.toggleAddressModel()
       }
     }

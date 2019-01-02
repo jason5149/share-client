@@ -1,10 +1,11 @@
 import { observable, action } from 'mobx'
 import { Toast } from 'antd-mobile'
-import { 
-  getWxUserInfoByCode, 
-  getWxConfig, 
+import {
+  getWxUserInfoByCode,
+  getWxConfig,
   getTemporaryQrcode,
   getStaticQrcode,
+  getFollowConfig,
 } from '@services/wx'
 
 class WxModel {
@@ -43,7 +44,7 @@ class WxModel {
       Toast.show(result.message)
       return
     }
-    
+
     return result.body
   }
 
@@ -55,8 +56,20 @@ class WxModel {
       Toast.show(result.message)
       return
     }
-    
+
     return result.body
+  }
+
+  @action
+  getFollowConfig = async () => {
+    const result = await getFollowConfig()
+
+    if (result.code !== '10000') {
+      Toast.show(result.message)
+      return
+    }
+
+    console.log(result.body)
   }
 }
 
