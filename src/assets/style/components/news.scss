@@ -212,7 +212,11 @@
   .article-content .txt {
     color: $font-color-2;
     font-size: px2rem(28);
-  } 
+  }
+  .append-ad-img {
+    padding: 0 16px px2rem(20);
+    @include size(100%, auto);
+  }
   .news-context-actions {
     color: #333;
     font-size: px2rem(28);

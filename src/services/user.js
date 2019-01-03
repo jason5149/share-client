@@ -16,6 +16,8 @@ export const shareNews = params => Post(`${ API }/news/share`, params)
 
 export const getNewsList = params => Get(`${ API }/news/myShare`, params)
 
+export const getNewsDetail = params => Get(`${ API }/news/getNewsById`, params)
+
 export const getPrizeList = params => Get(`${ API }/prize/exchange/list`, params)
 
 export const getIntegralList = params => Get(`${ API }/user/intergra/list`, params)

@@ -20,9 +20,8 @@ class PrizeModel {
       Toast.show(result.message, 1)
       return
     }
-
     if (!result.body) {
-      return false
+      return
     }
 
     this.prizeListPageIndex = params.currentPage
@@ -30,10 +29,12 @@ class PrizeModel {
 
     if (params.currentPage !== 1 && params.currentPage >= result.body.page.totalPage) {
       this.hasMore = false
-      
+
       if (result.body.list.length <= 0) {
         return false
       }
+    } else if (params.currentPage === 1 && params.currentPage <= result.body.page.totalPage) {
+      this.hasMore = false
     }
 
     return result.body.list
@@ -48,7 +49,6 @@ class PrizeModel {
       return
     }
 
-    console.log(result.body)
     this.prizeDetail = result.body
   }
 

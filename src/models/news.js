@@ -60,15 +60,15 @@ class NewsModel {
     this.activedTab = params.category
     this.newsListPageIndex = params.currentPage
     this.newsListTotal = result.body.page.totalNum
-    
+
     if (params.currentPage !== 1 && params.currentPage >= result.body.page.totalPage) {
       this.hasMore = false
 
       if (result.body.list.length <= 0) {
         return false
       }
-    } else if (params.currentPage === 1 && params.currentPage < result.body.page.totalPage) {
-      this.hasMore = true
+    } else if (params.currentPage === 1 && params.currentPage <= result.body.page.totalPage) {
+      this.hasMore = false
     }
 
     return result.body.list

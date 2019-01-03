@@ -17,6 +17,7 @@ class MyPrizeListPage extends Component {
     }),
     refreshing: true,
     isLoading:  true,
+    isEmpty:    true,
   }
 
   prizeList = []
@@ -50,6 +51,7 @@ class MyPrizeListPage extends Component {
         dataSource: dataSource.cloneWithRows(this.prizeList),
         refreshing: false,
         isLoading:  false,
+        isEmpty:    this.prizeList.length === 0,
       })
     }
   }
@@ -83,9 +85,10 @@ class MyPrizeListPage extends Component {
   handleEndReached = async () => {
     const { UserModel } = this.props
     const { dataSource } = this.state
-    const { prizeListPageIndex, getPrizeList } = UserModel
+    const { prizeListPageIndex, getPrizeList, hasMore } = UserModel
 
-    console.log(this.state)
+    if (!hasMore) return
+    
     this.setState({ isLoading: true })
 
     const params = {
@@ -99,7 +102,7 @@ class MyPrizeListPage extends Component {
 
       setTimeout(() => {
         this.setState({
-          dataSource: dataSource.cloneWithRows(this.newsList),
+          dataSource: dataSource.cloneWithRows(this.prizeList),
           isLoading:  false,
         })
       }, 1000)
@@ -113,42 +116,46 @@ class MyPrizeListPage extends Component {
   }
 
   render() {
-    const { dataSource, refreshing, isLoading } = this.state
+    const { dataSource, refreshing, isLoading, isEmpty } = this.state
 
     return (
       <div className='view-container'>
-        <div className='prize-container' style={{ top: 0 }}>
-          <ListView
-            ref={ el => this.list = el }
-            className='prize-list-container'
-            dataSource={ dataSource }
-            renderRow={ rowData => {
-              const { prize, userAddress } = rowData
+        {isEmpty ? (
+          <div className='empty-container'>无数据</div>
+        ) : (
+          <div className='prize-container' style={{ top: 0 }}>
+            <ListView
+              ref={ el => this.list = el }
+              className='prize-list-container'
+              dataSource={ dataSource }
+              renderRow={ rowData => {
+                const { prize, userAddress } = rowData
 
-              return (
-                <PrizeItem prizeType={ 2 } { ...userAddress } { ...prize } onClick={ this.handleItemClick } />
-              )
-            } }
-            useBodyScroll={ false }
-            pullToRefresh={ (
-              <PullToRefresh
-                refreshing={ refreshing }
-                indicator={{
-                  activate:   <span className='prize-list-indicator'>松开立即刷新</span>,
-                  deactivate: <span className='prize-list-indicator'>下拉刷新</span>,
-                  finish:     <span className='prize-list-indicator'>完成刷新</span>,
-                }}
-                onRefresh={ this.handleRefresh }
-              />
-            ) }
-            renderBodyComponent={ () => <div /> }
-            renderFooter={ () => isLoading ? <div className='list-footer'>加载中</div> : <div className='list-footer'>-----我是底线-----</div> }
-            scrollRenderAheadDistance={ 500 }
-            scrollEventThrottle={ 20 }
-            onEndReached={ this.handleEndReached }
-            onEndReachedThreshold={ 10 }
-          />
-        </div>
+                return (
+                  <PrizeItem prizeType={ 2 } { ...userAddress } { ...prize } onClick={ this.handleItemClick } />
+                )
+              } }
+              useBodyScroll={ false }
+              pullToRefresh={ (
+                <PullToRefresh
+                  refreshing={ refreshing }
+                  indicator={{
+                    activate:   <span className='prize-list-indicator'>松开立即刷新</span>,
+                    deactivate: <span className='prize-list-indicator'>下拉刷新</span>,
+                    finish:     <span className='prize-list-indicator'>完成刷新</span>,
+                  }}
+                  onRefresh={ this.handleRefresh }
+                />
+              ) }
+              renderBodyComponent={ () => <div /> }
+              renderFooter={ () => isLoading ? <div className='list-footer'>加载中</div> : <div className='list-footer'>-----我是底线-----</div> }
+              scrollRenderAheadDistance={ 500 }
+              scrollEventThrottle={ 20 }
+              onEndReached={ this.handleEndReached }
+              onEndReachedThreshold={ 10 }
+            />
+          </div>
+        )}
       </div>
     )
   }

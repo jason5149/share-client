@@ -66,10 +66,10 @@ class MyIntegralListPage extends Component {
       pageSize:    10,
     }
     const result = await getIntegralList(params)
-  
+
     if (result) {
       this.integralList = [].concat(result)
-      
+
       setTimeout(() => {
         this.setState({
           dataSource: dataSource.cloneWithRows(result),
@@ -86,7 +86,7 @@ class MyIntegralListPage extends Component {
     const { hasMore, integralListPageIndex, getIntegralList } = UserModel
 
     if (!hasMore) return
-    
+
     this.setState({ isLoading: true })
 
     const params = {
@@ -122,22 +122,16 @@ class MyIntegralListPage extends Component {
               ref={ el => this.list = el }
               className='integral-list-container'
               dataSource={ dataSource }
-              renderRow={ rowData => {
-                console.log(rowData)
-
-                return (
-                  <IntegralItem { ...rowData } />
-                ) 
-              } }
+              renderRow={ rowData => <IntegralItem { ...rowData } /> }
               useBodyScroll={ false }
               pullToRefresh={ (
                 <PullToRefresh
-                  refreshing={ refreshing } 
+                  refreshing={ refreshing }
                   indicator={{
-                  activate:   <span className='integral-list-indicator'>松开立即刷新</span>,
-                  deactivate: <span className='integral-list-indicator'>下拉刷新</span>,
-                  finish:     <span className='integral-list-indicator'>完成刷新</span>,
-                }} 
+                    activate:   <span className='integral-list-indicator'>松开立即刷新</span>,
+                    deactivate: <span className='integral-list-indicator'>下拉刷新</span>,
+                    finish:     <span className='integral-list-indicator'>完成刷新</span>,
+                  }}
                   onRefresh={ this.handleRefresh }
                 />
               ) }

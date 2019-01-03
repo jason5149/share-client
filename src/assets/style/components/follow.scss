@@ -1,7 +1,27 @@
 .follow-qrcode-container {
+  z-index: 1;
+  @extend [layout];
+  @extend [layout=column];
+  @extend [layout-align="center center"];
+  @include position;
   img {
     margin: auto;
     display: block;
+    margin-bottom: px2rem(20);
     @include size(px2rem(300), px2rem(300));
   }
+  span {
+    color: $font-color-1;
+    font-size: px2rem(30);
+    line-height: 1.5;
+    text-align: center;
+  }
+}
+
+.follow-bg {
+  background-position: center center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  @include size(100%, 100%);
+  @include position(absolute, 0, 0, 0, 0);
 }

@@ -63,14 +63,17 @@ class FollowPage extends Component {
   }
 
   render() {
+    const { WxModel } = this.props
     const { qrcodeTicket } = this.state
+    const { followConfig } = WxModel
 
     return (
-      <div style={{ width: '100%', height: '100%' }} layout='row' layout-align='center center'>
+      <div style={{ width: '100%', height: '100%', position: 'relative' }} layout='row' layout-align='center center'>
         <div className='follow-qrcode-container'>
           {qrcodeTicket && <img src={ `https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=${ qrcodeTicket }` } alt='' />}
-          关注二维码
+          <span>{followConfig && followConfig.context}</span>
         </div>
+        {followConfig && <div className='follow-bg' style={{ backgroundImage: `url(${ followConfig.backImage })` }} />}
       </div>
     )
   }

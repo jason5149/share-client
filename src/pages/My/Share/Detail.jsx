@@ -8,12 +8,12 @@ import { base64encode } from '@utils/tool'
 import { JS_API_LIST } from '@utils/config'
 import { wxConfig, wxShareTimeline, wxShareAppMessage } from '@utils/wx'
 
-const { 
-  NewsTitle, 
-  UserPanel, 
-  SharePanel, 
-  NewsContext, 
-  Statement, 
+const {
+  NewsTitle,
+  UserPanel,
+  SharePanel,
+  NewsContext,
+  Statement,
   QrcodeArea,
 } = News
 
@@ -71,7 +71,7 @@ class MyShareDetailPage extends Component {
   handleSearchTemplate = () => {
     const { NewsModel } = this.props
     const { getNewsTemplate } = NewsModel
-    
+
     getNewsTemplate()
   }
 
@@ -93,10 +93,10 @@ class MyShareDetailPage extends Component {
     const { getWxConfig } = WxModel
     const { shareNews } = UserModel
     const { newsDetail, toggleShareVisible } = NewsModel
-    
+
     const { id: userId } = userInfo
     const { id: newsId, title, thumbnail_pic_s } = newsDetail
-    
+
     const desc = '麻烦帮我看下新闻，我要免费拿礼品，还包邮到家，爱你哟～'
     const url = window.location.href
     const wxConfigResult = await getWxConfig({ url })
@@ -104,12 +104,10 @@ class MyShareDetailPage extends Component {
     if (wxConfigResult) {
       const { appId, nonceStr, signature, timestamp  } = wxConfigResult
       const configResult = await wxConfig(appId, timestamp, nonceStr, signature, JS_API_LIST)
-        
-      if (configResult) {
-        const shareUrl = `${ window.location.host }${ BASE_PATH }/activity/news/${ newsId }?params=${ base64encode(userInfo) }`
 
-        console.log('shareUrl: ', shareUrl)
-        
+      if (configResult) {
+        // const shareUrl = `${ window.location.host }${ BASE_PATH }/activity/news/${ newsId }?params=${ base64encode(userInfo) }`
+
         wxShareAppMessage(title, desc, url, thumbnail_pic_s).then(async result => {
           if (result) {
             const shareResult = await shareNews({ newsId, type: 0, userId })
@@ -151,7 +149,7 @@ class MyShareDetailPage extends Component {
       type: 1,
       id,
     }
-    
+
     history.push(`${ BASE_PATH }/follow?params=${ base64encode(params) }`)
   }
 
@@ -166,7 +164,7 @@ class MyShareDetailPage extends Component {
     const { title, date, author_name, context, readCount, shareCount } = newsDetail
     // const { jhNews } = newsDetail
     // const { title, date, author_name, context, readCount, shareCount } = jhNews
-    
+
     return (
       <div className='view-container relatived'>
         <i className={ `news-status ${ status ? 'process' : 'complete' }` } />

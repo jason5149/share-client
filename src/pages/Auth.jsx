@@ -33,10 +33,8 @@ class AuthPage extends Component {
     }
 
     if (wxCode) {
-      console.log('wxCode', wxCode)
       this.handleCode(wxCode)
     } else {
-      console.log('auth')
       this.handleAuth()
     }
   }
@@ -50,7 +48,7 @@ class AuthPage extends Component {
     const url = 'https://open.weixin.qq.com/connect/oauth2/authorize'
     const redirectUrl = window.location.href.split('?')[0]
     const authParams = wxAuth4Public(appId, redirectUrl, 'userInfo')
-    
+
     window.location.replace(`${ url }?${ stringify(authParams) }#wechat_redirect`)
   }
 

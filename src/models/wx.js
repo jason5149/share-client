@@ -12,6 +12,9 @@ class WxModel {
   @observable
   wxUserInfo = null
 
+  @observable
+  followConfig = null
+
   @action
   getWxUserInfoByCode = async params => {
     const result = await getWxUserInfoByCode(params)
@@ -69,7 +72,7 @@ class WxModel {
       return
     }
 
-    console.log(result.body)
+    this.followConfig = result.body
   }
 }
 

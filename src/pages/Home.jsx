@@ -135,8 +135,6 @@ class HomePage extends Component {
     if (result) {
       this.newsList = this.newsList.concat(result)
 
-      console.log(this.newsList)
-
       setTimeout(() => {
         this.setState({
           dataSource: dataSource.cloneWithRows(this.newsList),

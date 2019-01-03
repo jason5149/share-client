@@ -29,8 +29,6 @@ class AddressListPage extends Component {
     const { location } = history
     const { search } = location
 
-    console.log(this.props)
-
     if (search) {
       /* eslint-disable-next-line */
       const params = new URLSearchParams(search)
@@ -42,7 +40,7 @@ class AddressListPage extends Component {
         fromTarget,
       })
     }
-    
+
 
     this.handleSearchAddressList()
   }
@@ -59,7 +57,7 @@ class AddressListPage extends Component {
     const { updateAddress } = UserModel
 
     if (item.isDefault) return
-    
+
     item.isDefault = !item.isDefault
 
     const result = await updateAddress({
@@ -82,7 +80,6 @@ class AddressListPage extends Component {
     if (type === 'create') {
       history.push(`${ BASE_PATH }/my/address/create`)
     } else if (type === 'check') {
-      console.log(this.state)
       if (chooseAddress) {
         history.push(`${ fromTarget }?address=${ base64encode(item) }`)
       }
@@ -90,19 +87,19 @@ class AddressListPage extends Component {
       history.push(`${ BASE_PATH }/my/address/create?id=${ id }`)
     } else if (type === 'delete') {
       alert('删除收货地址', '您是否要删除该收货地址？', [
-        { text: '取消', onPress: () => console.log('cancel') },
-        { 
-          text:    '确认', 
+        { text: '取消' },
+        {
+          text:    '确认',
           style:   { color: '#e94f4f' },
           onPress: async () => {
             const result = await deleteAddress({ id })
-  
+
             if (result) {
               Toast.show('删除地址成功')
-        
+
               this.handleSearchAddressList()
-            }    
-          }, 
+            }
+          },
         },
       ])
     }
@@ -115,9 +112,9 @@ class AddressListPage extends Component {
 
     return (
       <div className='view-container relatived'>
-        <AddressList 
+        <AddressList
           mode={ chooseAddress ? 2 : 1 }
-          list={ addressList } 
+          list={ addressList }
           onActionClick={ this.handleActionClick }
           onDefaultChange={ this.handleDefaultChange }
         />

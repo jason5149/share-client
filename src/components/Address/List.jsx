@@ -1,21 +1,21 @@
 import React, { Component } from 'react'
 import { Checkbox } from 'antd-mobile'
 
-const { CheckboxItem } = Checkbox 
+const { CheckboxItem } = Checkbox
 
 class AddressList extends Component {
   renderAddressItem = value => {
     const { onActionClick, onDefaultChange } = this.props
 
     return (
-      <li 
+      <li
         key={ value.id }
         className='address-item-container'
       >
         <div className='address-item-content'>
           <div className='checkbox-container'>
-            <CheckboxItem 
-              checked={ value.isDefault } 
+            <CheckboxItem
+              checked={ value.isDefault }
               onChange={ () => onDefaultChange(value) }
             />
           </div>
@@ -58,7 +58,6 @@ class AddressList extends Component {
     const { mode, list } = this.props
 
     return (
-      // <ul className='address-list-container'>
       <ul className={ `address-list-container mode-${ mode }` }>
         {list.map(this.renderAddressItem)}
       </ul>

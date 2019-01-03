@@ -173,8 +173,8 @@ class UserModel {
       if (result.body.list.length <= 0) {
         return false
       }
-    } else if (params.currentPage === 1 && params.currentPage < result.body.page.totalPage) {
-      this.hasMore = true
+    } else if (params.currentPage === 1 && params.currentPage <= result.body.page.totalPage) {
+      this.hasMore = false
     }
 
     return result.body.list
@@ -202,11 +202,10 @@ class UserModel {
       Toast.show(result.message, 1)
       return
     }
-
-    if (result.body) {
-      this.prizeListTotal = result.body.page.totalNum
+    if (!result.body) {
+      return
     }
-    this.newsListPageIndex = params.currentPage
+
     this.prizeListPageIndex = params.currentPage
     this.prizeListTotal = result.body.page.totalNum
 
@@ -216,8 +215,8 @@ class UserModel {
       if (result.body.list.length <= 0) {
         return false
       }
-    } else if (params.currentPage === 1 && params.currentPage < result.body.page.totalPage) {
-      this.hasMore = true
+    } else if (params.currentPage === 1 && params.currentPage <= result.body.page.totalPage) {
+      this.hasMore = false
     }
 
     return result.body.list
@@ -245,8 +244,8 @@ class UserModel {
       if (result.body.list.length <= 0) {
         return false
       }
-    } else if (params.currentPage === 1 && params.currentPage < result.body.page.totalPage) {
-      this.hasMore = true
+    } else if (params.currentPage === 1 && params.currentPage <= result.body.page.totalPage) {
+      this.hasMore = false
     }
 
     return result.body.list

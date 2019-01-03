@@ -93,7 +93,9 @@ class PrizeListPage extends Component {
   handleEndReached = async () => {
     const { PrizeModel } = this.props
     const { dataSource } = this.state
-    const { prizeListPageIndex, getPrizeList } = PrizeModel
+    const { prizeListPageIndex, getPrizeList, hasMore } = PrizeModel
+
+    if (!hasMore) return
 
     this.setState({ isLoading: true })
 
