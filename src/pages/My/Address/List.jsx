@@ -75,7 +75,6 @@ class AddressListPage extends Component {
     const { UserModel, history } = this.props
     const { chooseAddress, fromTarget } = this.state
     const { deleteAddress } = UserModel
-    const { id } = item
 
     if (type === 'create') {
       history.push(`${ BASE_PATH }/my/address/create`)
@@ -84,8 +83,12 @@ class AddressListPage extends Component {
         history.push(`${ fromTarget }?address=${ base64encode(item) }`)
       }
     } else if (type === 'edit') {
+      const { id } = item
+      
       history.push(`${ BASE_PATH }/my/address/create?id=${ id }`)
     } else if (type === 'delete') {
+      const { id } = item
+
       alert('删除收货地址', '您是否要删除该收货地址？', [
         { text: '取消' },
         {
