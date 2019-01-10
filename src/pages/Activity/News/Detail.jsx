@@ -3,7 +3,7 @@ import { inject, observer } from 'mobx-react'
 import { Toast } from 'antd-mobile'
 import News from '@components/News'
 // import ActionBtn from '@components/ActionBtn'
-import { FOLLOW_PAGE_URL } from '@utils/const'
+import { BASE_PATH, FOLLOW_PAGE_URL } from '@utils/const'
 import { base64encode, base64decode } from '@utils/tool'
 import { JS_API_LIST } from '@utils/config'
 import { wxConfig, wxShareTimeline, wxShareAppMessage } from '@utils/wx'
@@ -201,6 +201,18 @@ class NewsDetailPage extends Component {
     })
   }
 
+  handleShareClick = () => {
+    const { history } = this.props
+    const { params } = this.state
+    const { id } = params
+    const result = {
+      type: 1,
+      id,
+    }
+
+    history.push(`${ BASE_PATH }/follow?params=${ base64encode(result) }`)
+  }
+
   handleActionClick = () => {
     const { NewsModel } = this.props
     const { toggleShareVisible } = NewsModel
@@ -221,8 +233,8 @@ class NewsDetailPage extends Component {
     return (
       <div className='view-container'>
         <NewsTitle title={ title } date={ date } author={ author_name } />
-        <UserPanel userInfo={ userInfo } templateInfo={ newsTemplate } />
-        {panelVisible && <SharePanel userInfo={ userDetailInfo } templateInfo={ newsTemplate } />}
+        <UserPanel userInfo={ userInfo } templateInfo={ newsTemplate } onClick={ this.handleToggleClick } />
+        {panelVisible && <SharePanel userInfo={ userDetailInfo } templateInfo={ newsTemplate } onClick={ this.handleShareClick } />}
         <NewsContext context={ context } readCount={ readCount } shareCount={ shareCount } />
         <Statement context={ newsTemplate && newsTemplate.exemption } />
         <QrcodeArea qrcode={ qrcode } desc={ newsTemplate && newsTemplate.qrCodeGuide } />
