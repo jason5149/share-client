@@ -3,6 +3,9 @@ import React, { Component } from 'react'
 class UserPanel extends Component {
   render() {
     const { userInfo, templateInfo, onClick } = this.props
+
+    if (!userInfo) return null
+    
     const { headImgUrl } = userInfo
 
     return (
