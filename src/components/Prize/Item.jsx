@@ -60,6 +60,8 @@ class PrizeItem extends Component {
       onClick,
     } = this.props
 
+
+
     return (
       /* eslint-disable-next-line */
       <div className='prize-item-container' onClick={ () => onClick(id) }>
