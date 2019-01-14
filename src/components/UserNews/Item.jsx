@@ -7,7 +7,8 @@ class NewsItem extends Component {
       date,
       title, 
       readCount,
-      shareCount,
+      // shareCount,
+      operReadCount,
       author_name,
       readNumber,
       // reprintCount,
@@ -55,7 +56,7 @@ class NewsItem extends Component {
                   </span>
                   <span className='news-integral-desc'>
                     赠送阅读数：
-                    {shareCount}
+                    {operReadCount}
                   </span>
                 </div>
               </div>
