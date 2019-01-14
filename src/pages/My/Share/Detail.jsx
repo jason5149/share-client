@@ -161,7 +161,7 @@ class MyShareDetailPage extends Component {
 
     if (!newsDetail) return null
 
-    const { title, date, author_name, context, readCount, shareCount } = newsDetail
+    const { title, date, author_name, context, readCount, shareCount, reprintCount } = newsDetail
     // const { jhNews } = newsDetail
     // const { title, date, author_name, context, readCount, shareCount } = jhNews
 
@@ -171,7 +171,7 @@ class MyShareDetailPage extends Component {
         <NewsTitle title={ title } date={ date } author={ author_name } />
         <UserPanel userInfo={ userInfo } templateInfo={ newsTemplate } onClick={ this.handleToggleClick } />
         {panelVisible && <SharePanel userInfo={ userDetailInfo } templateInfo={ newsTemplate } onClick={ this.handleShareClick } />}
-        <NewsContext context={ context } readCount={ readCount } shareCount={ shareCount } />
+        <NewsContext context={ context } readCount={ readCount } shareCount={ shareCount } reprintCount={ reprintCount } />
         <Statement context={ newsTemplate && newsTemplate.exemption } />
         <QrcodeArea qrcode={ qrcode } desc={ newsTemplate && newsTemplate.qrCodeGuide } />
       </div>

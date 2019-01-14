@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 class NewsContext extends Component {
   render() {
-    const { context, readCount, shareCount } = this.props
+    const { context, readCount, reprintCount } = this.props
 
     return (
       <div className='news-context-container'>
@@ -16,7 +16,7 @@ class NewsContext extends Component {
           <span>
             <i className='share-icon' />
             转载：
-            {shareCount}
+            {reprintCount}
           </span>
         </div>
       </div>
