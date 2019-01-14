@@ -7,10 +7,11 @@ class NewsItem extends Component {
       date,
       title, 
       integral,
-      // readCount,
-      shareCount,
+      readCount,
+      // shareCount,
       author_name,
-      reprintCount,
+      // reprintCount,
+      operReadCount,
       thumbnail_pic_s,
       thumbnail_pic_s02,
       thumbnail_pic_s03, 
@@ -52,11 +53,11 @@ class NewsItem extends Component {
               <div layout='row' layout-align='start center'>
                 <span className='news-integral-desc'>
                   赠送阅读数：
-                  {shareCount}
+                  {operReadCount}
                 </span>
                 <span className='news-integral-desc'>
                   目标阅读数：
-                  {reprintCount}
+                  {readCount}
                 </span>
               </div>
             </div>
