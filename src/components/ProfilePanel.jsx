@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 class ProfilePanel extends Component {
   render() {
-    const { userInfo, integral, shareReadCount } = this.props
+    const { userInfo, integral, shareCount, shareReadCount, personalRate } = this.props
     const { headImgUrl } = userInfo
 
     return (
@@ -25,11 +25,17 @@ class ProfilePanel extends Component {
           </li>
           <li>
             <span className='profile-info-title'>总转载</span>
-            <span className='profile-info-desc'>3300次</span>
+            <span className='profile-info-desc'>
+              {shareCount}
+              次
+            </span>
           </li>
           <li>
             <span className='profile-info-title'>超越全国用户</span>
-            <span className='profile-info-desc'>57%</span>
+            <span className='profile-info-desc'>
+              {personalRate}
+              %
+            </span>
           </li>
         </ul>
       </div>

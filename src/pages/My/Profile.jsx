@@ -53,7 +53,13 @@ class MyProfilePage extends Component {
 
     return (
       <div className='view-container'>
-        <ProfilePanel userInfo={ wxUserInfo } integral={ userDetailInfo && userDetailInfo.integral } shareReadCount={ userDetailInfo && userDetailInfo.shareReadCount } />
+        <ProfilePanel 
+          userInfo={ wxUserInfo } 
+          integral={ userDetailInfo && userDetailInfo.integral } 
+          shareCount={ userDetailInfo && userDetailInfo.shareCount }
+          shareReadCount={ userDetailInfo && userDetailInfo.shareReadCount } 
+          personalRate={ userDetailInfo && userDetailInfo.personalRate }
+        />
         <WhiteSpace />
         <List>
           <Item arrow='horizontal' onClick={ () => this.handleItemClick('share') }>
