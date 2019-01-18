@@ -13,7 +13,7 @@ class FollowPage extends Component {
   }
 
   componentDidMount() {
-    document.title = '关注二维码'
+    // document.title = '关注二维码'
 
     this.init()
   }
@@ -66,6 +66,10 @@ class FollowPage extends Component {
     const { WxModel } = this.props
     const { qrcodeTicket } = this.state
     const { followConfig } = WxModel
+
+    if (followConfig && followConfig.context) {
+      document.title = followConfig.context
+    }
 
     return (
       <div style={{ width: '100%', height: '100%', position: 'relative' }} layout='row' layout-align='center center'>
