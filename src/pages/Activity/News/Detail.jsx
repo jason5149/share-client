@@ -148,7 +148,7 @@ class NewsDetailPage extends Component {
       const configResult = await wxConfig(appId, timestamp, nonceStr, signature, JS_API_LIST)
         
       if (configResult) {
-        const shareUrl = `${ url }?userId=${ userId }`
+        const shareUrl = `${ url }&userId=${ userId }`
 
         wxShareTimeline(title, url, thumbnail_pic_s).then(async result => {
           if (result) {
