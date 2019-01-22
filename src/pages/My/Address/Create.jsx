@@ -23,8 +23,11 @@ class CreateAddressPage extends Component {
   init() {
     document.title = '添加地址'
 
-    const { location } = this.props
+    const { UserModel, location } = this.props
+    const { emptyAddressInfo } = UserModel
     const { search } = location
+
+    emptyAddressInfo()
 
     /* eslint-disable-next-line */
     const params = new URLSearchParams(search)
