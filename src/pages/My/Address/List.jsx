@@ -66,7 +66,7 @@ class AddressListPage extends Component {
     })
 
     if (result) {
-      Toast.show('设置默认地址成功')
+      Toast.show('设置默认地址成功', 1)
       this.handleSearchAddressList()
     }
   }
