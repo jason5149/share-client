@@ -161,7 +161,7 @@ class NewsDetailPage extends Component {
 
         wxShareTimeline(title, url, thumbnail_pic_s).then(async result => {
           if (result) {
-            const shareResult = await shareNews({ newsId, type: 0, userId })
+            const shareResult = await shareNews({ newsId, type: 1, userId })
 
             if (shareResult) {
               toggleShareVisible(false)
@@ -172,7 +172,7 @@ class NewsDetailPage extends Component {
 
         wxShareAppMessage(title, desc, shareUrl, thumbnail_pic_s).then(async result => {
           if (result) {
-            const shareResult = await shareNews({ newsId, type: 0, userId })
+            const shareResult = await shareNews({ newsId, type: 1, userId })
 
             if (shareResult) {
               toggleShareVisible(false)
