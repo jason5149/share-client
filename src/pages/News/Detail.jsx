@@ -238,6 +238,8 @@ class NewsDetailPage extends Component {
 
     if (!newsDetail) return null
 
+    document.title = newsDetail.title
+
     const { title, date, author_name, context, readCount, shareCount, reprintCount } = newsDetail
 
     return (

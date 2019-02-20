@@ -161,6 +161,8 @@ class MyShareDetailPage extends Component {
 
     if (!newsDetail) return null
 
+    document.title = newsDetail.title
+
     const { title, date, author_name, context, readCount, shareCount, reprintCount } = newsDetail
     // const { jhNews } = newsDetail
     // const { title, date, author_name, context, readCount, shareCount } = jhNews
