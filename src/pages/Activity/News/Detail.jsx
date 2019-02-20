@@ -148,26 +148,26 @@ class NewsDetailPage extends Component {
       const configResult = await wxConfig(appId, timestamp, nonceStr, signature, JS_API_LIST)
         
       if (configResult) {
-        const shareUrl = `${ url }?userId=${ userId }`
+        const shareUrl = `${ url }&userId=${ userId }`
 
         wxShareTimeline(title, url, thumbnail_pic_s).then(async result => {
           if (result) {
-            const shareResult = await shareNews({ newsId, type: 0, userId })
+            const shareResult = await shareNews({ newsId, type: 2, userId })
 
             if (shareResult) {
               toggleShareVisible(false)
-              Toast.show('分享成功')
+              Toast.show('转载成功')
             }
           }
         })
         
         wxShareAppMessage(title, desc, shareUrl, thumbnail_pic_s).then(async result => {
           if (result) {
-            const shareResult = await shareNews({ newsId, type: 0, userId })
+            const shareResult = await shareNews({ newsId, type: 2, userId })
 
             if (shareResult) {
               toggleShareVisible(false)
-              Toast.show('分享成功')
+              Toast.show('转载成功')
             }
           }
         })

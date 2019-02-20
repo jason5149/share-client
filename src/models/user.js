@@ -283,6 +283,19 @@ class UserModel {
   }
 
   @action
+  emptyAddressInfo = () => {
+    this.addressInfo = {
+      userName:  '',
+      mobile:    '',
+      province:  '',
+      city:      '',
+      area:      '',
+      address:   '',
+      isDefault: false,
+    }
+  }
+
+  @action
   createAddress = async params => {
     const result = await createAddress(params)
 

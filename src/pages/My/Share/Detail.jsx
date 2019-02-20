@@ -106,11 +106,11 @@ class MyShareDetailPage extends Component {
       const configResult = await wxConfig(appId, timestamp, nonceStr, signature, JS_API_LIST)
 
       if (configResult) {
-        // const shareUrl = `${ window.location.host }${ BASE_PATH }/activity/news/${ newsId }?params=${ base64encode(userInfo) }`
+        const shareUrl = `${ window.location.host }${ BASE_PATH }/activity/news/${ newsId }?params=${ base64encode(userInfo) }`
 
-        wxShareAppMessage(title, desc, url, thumbnail_pic_s).then(async result => {
+        wxShareAppMessage(title, desc, shareUrl, thumbnail_pic_s).then(async result => {
           if (result) {
-            const shareResult = await shareNews({ newsId, type: 0, userId })
+            const shareResult = await shareNews({ newsId, type: 1, userId })
 
             if (shareResult) {
               toggleShareVisible(false)
@@ -121,7 +121,7 @@ class MyShareDetailPage extends Component {
 
         wxShareTimeline(title, url, thumbnail_pic_s).then(async result => {
           if (result) {
-            const shareResult = await shareNews({ newsId, type: 0, userId })
+            const shareResult = await shareNews({ newsId, type: 1, userId })
 
             if (shareResult) {
               toggleShareVisible(false)
