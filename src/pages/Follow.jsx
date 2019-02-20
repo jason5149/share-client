@@ -75,7 +75,7 @@ class FollowPage extends Component {
       <div style={{ width: '100%', height: '100%', position: 'relative' }} layout='row' layout-align='center center'>
         <div className='follow-qrcode-container'>
           {qrcodeTicket && <img src={ `https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=${ qrcodeTicket }` } alt='' />}
-          <span>{followConfig && followConfig.context}</span>
+          {/* <span>{followConfig && followConfig.context}</span> */}
         </div>
         {followConfig && <div className='follow-bg' style={{ backgroundImage: `url(${ followConfig.backImage })` }} />}
       </div>
