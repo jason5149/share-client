@@ -110,7 +110,7 @@ class PrizeDetailPage extends Component {
     })
 
     return (
-      <div className='view-container'>
+      <div className='view-container' style={{ overflow: 'hidden' }}>
         <div className='prize-detail-container'>
           <BannerCarousel list={ bannerList } />
           <PrizePanel { ...prizeDetail } />
