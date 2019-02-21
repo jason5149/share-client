@@ -228,14 +228,14 @@ class NewsDetailPage extends Component {
 
     if (!newsDetail) return null
 
-    const { title, date, author_name, context, readCount, shareCount } = newsDetail
+    const { title, date, author_name, context, readCount, shareCount, reprintCount } = newsDetail
 
     return (
       <div className='view-container'>
         <NewsTitle title={ title } date={ date } author={ author_name } />
         <UserPanel userInfo={ userInfo } templateInfo={ newsTemplate } onClick={ this.handleToggleClick } />
         {panelVisible && <SharePanel userInfo={ userDetailInfo } templateInfo={ newsTemplate } onClick={ this.handleShareClick } />}
-        <NewsContext context={ context } readCount={ readCount } shareCount={ shareCount } />
+        <NewsContext context={ context } readCount={ readCount } shareCount={ shareCount } reprintCount={ reprintCount } />
         <Statement context={ newsTemplate && newsTemplate.exemption } />
         <QrcodeArea qrcode={ qrcode } desc={ newsTemplate && newsTemplate.qrCodeGuide } />
         {/* <ActionBtn text='分享赚积分' onClick={ this.handleActionClick } /> */}
