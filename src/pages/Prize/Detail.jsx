@@ -118,7 +118,8 @@ class PrizeDetailPage extends Component {
           <PrizeImage { ...prizeDetail } />
         </div>
         {mobileModal && <MobileVerify onConfirm={ this.handleBindConfirm } onCancel={ this.handleBindCancel } />}
-        <PrizeActions 
+        <PrizeActions
+          type={ 1 } 
           integral={ userDetailInfo && userDetailInfo.integral } 
           onClick={ this.handleActionClick } 
         />

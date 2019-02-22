@@ -169,7 +169,7 @@ class MyShareDetailPage extends Component {
 
     return (
       <div className='view-container relatived'>
-        <i className={ `news-status ${ status ? 'process' : 'complete' }` } />
+        <i className={ `news-status ${ status === 1 ? 'process' : 'complete' }` } />
         <NewsTitle title={ title } date={ date } author={ author_name } />
         <UserPanel userInfo={ userInfo } templateInfo={ newsTemplate } onClick={ this.handleToggleClick } />
         {panelVisible && <SharePanel userInfo={ userDetailInfo } templateInfo={ newsTemplate } onClick={ this.handleShareClick } />}

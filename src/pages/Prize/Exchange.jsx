@@ -204,6 +204,7 @@ class PrizeExchangePage extends Component {
           />
         </div>
         <PrizeActions 
+          type={ 2 }
           integral={ count > 0 ? convertibility * count : 0 } 
           onClick={ this.handleActionClick }
         />
