@@ -57,7 +57,7 @@ class MyProfilePage extends Component {
           userInfo={ wxUserInfo } 
           integral={ userDetailInfo && userDetailInfo.integral } 
           shareCount={ userDetailInfo && userDetailInfo.shareCount }
-          shareReadCount={ userDetailInfo && userDetailInfo.shareReadCount } 
+          shareReprintCount={ userDetailInfo && userDetailInfo.shareReprintCount } 
           personalRate={ userDetailInfo && userDetailInfo.personalRate }
         />
         <WhiteSpace />
