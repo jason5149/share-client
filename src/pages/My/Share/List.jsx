@@ -155,7 +155,7 @@ class MyShareListPage extends Component {
                 className='news-list-container'
                 dataSource={ dataSource }
                 renderRow={ rowData => {
-                  const { readCount, shareCount, reprintCount, jhNews } = rowData
+                  const { readCount, shareCount, reprintCount, operReadCount, jhNews } = rowData
 
                   return (
                     <NewsItem 
@@ -163,6 +163,7 @@ class MyShareListPage extends Component {
                       readCount={ readCount } 
                       shareCount={ shareCount } 
                       reprintCount={ reprintCount }
+                      operReadCount={ operReadCount }
                       onClick={ this.handleItemClick }
                     />
                   ) 
