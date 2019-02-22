@@ -25,7 +25,7 @@ class AddressPicker extends Component {
         </Fragment>
       )
     } else {
-      return <span className='address-name'>请先添加收货地址</span>
+      return <span className='address-detail'>请先添加收货地址</span>
     }
   }
 

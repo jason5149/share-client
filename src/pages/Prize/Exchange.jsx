@@ -112,6 +112,12 @@ class PrizeExchangePage extends Component {
     const { prizeDetail, exchangePrize } = PrizeModel
     const { id: userId, integral } = userDetailInfo
     const { id: prizeId, convertibility } = prizeDetail
+
+    if (!defaultAddress) {
+      Toast.show('请选择收货地址')
+      return
+    }
+
     const { id: userAddressId } = defaultAddress
 
     if (count <= 0) {

@@ -121,7 +121,8 @@ class AddressListPage extends Component {
           onActionClick={ this.handleActionClick }
           onDefaultChange={ this.handleDefaultChange }
         />
-        {!chooseAddress && <AddressBottom onActionClick={ () => this.handleActionClick('create') } />}
+        {/* {!chooseAddress && <AddressBottom onActionClick={ () => this.handleActionClick('create') } />} */}
+        <AddressBottom onActionClick={ () => this.handleActionClick('create') } />
       </div>
     )
   }
