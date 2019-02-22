@@ -1,14 +1,19 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 
 class AddressPicker extends Component {
-  render() {
-    const { userName, mobile, province, city, area, address, onClick } = this.props
+  renderAddressDesc = () => {
+    const { 
+      userName = '', 
+      mobile = '', 
+      province = '', 
+      city = '', 
+      area = '', 
+      address = '', 
+    } = this.props
 
-    return (
-      /* eslint-disable-next-line */
-      <div className='address-picker-container' onClick={ onClick }>
-        <i className='address-icon' />
-        <div className='address-desc'>
+    if (userName) {
+      return (
+        <Fragment>
           <span className='address-name'>
             {userName}
             &nbsp;
@@ -17,6 +22,22 @@ class AddressPicker extends Component {
           <span className='address-detail'>
             { `${ province }${ city }${ area }${ address }` }
           </span>
+        </Fragment>
+      )
+    } else {
+      return <span className='address-name'>请先添加收货地址</span>
+    }
+  }
+
+  render() {
+    const { onClick } = this.props
+
+    return (
+      /* eslint-disable-next-line */
+      <div className='address-picker-container' onClick={ onClick }>
+        <i className='address-icon' />
+        <div className='address-desc'>
+          {this.renderAddressDesc()}
         </div>
         <i className='arrow-right-icon' />
       </div>

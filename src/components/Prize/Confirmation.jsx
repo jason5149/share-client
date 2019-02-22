@@ -34,7 +34,8 @@ class PrizeConfirmation extends Component {
               </li>
               <li>
                 积分：
-                {convertibility * count}
+                {/* {convertibility * count} */}
+                {convertibility}
               </li>
             </ul>
           </div>

@@ -56,7 +56,7 @@ class MyProfilePage extends Component {
         <ProfilePanel 
           userInfo={ wxUserInfo } 
           integral={ userDetailInfo && userDetailInfo.integral } 
-          shareCount={ userDetailInfo && userDetailInfo.shareCount }
+          shareReadCount={ userDetailInfo && userDetailInfo.shareReadCount }
           shareReprintCount={ userDetailInfo && userDetailInfo.shareReprintCount } 
           personalRate={ userDetailInfo && userDetailInfo.personalRate }
         />

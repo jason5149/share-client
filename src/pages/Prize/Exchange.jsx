@@ -177,10 +177,14 @@ class PrizeExchangePage extends Component {
   }
 
   render() {
-    const { PrizeModel, UserModel } = this.props
+    const { PrizeModel } = this.props
     const { count, defaultAddress } = this.state
-    const { userDetailInfo } = UserModel
+    // const { userDetailInfo } = UserModel
     const { prizeDetail } = PrizeModel
+
+    if (!prizeDetail) return null
+
+    const { convertibility } = prizeDetail
 
     return (
       <div className='view-container'>
@@ -194,12 +198,15 @@ class PrizeExchangePage extends Component {
           />
         </div>
         <PrizeActions 
-          integral={ userDetailInfo && userDetailInfo.integral } 
+          integral={ count > 0 ? convertibility * count : 0 } 
           onClick={ this.handleActionClick }
         />
       </div>
     )
   }
 }
+
+// {"id":2,"tradeNo":"20195022000002","openid":"owzYd1Mz9ualgzcuZ5crCSmtaH1s","headImgUrl":"http://thirdwx.qlogo.cn/mmopen/1ybFUCEophZiao9B2ft6mCdQsOxBfVdFOezu9XoticIhMItLK7sibx6fpCLbbyosJecR1fRAopUPfFeRoC419Ezk8dsTXCNyBI6/132","nickName":"Jason","sex":1,"country":"中国","province":"上海","city":"杨浦","mobile":null,"firstFollowTime":1550821808588,"lastFollowTime":null,"cancelFollowTime":null,"location":null,"createTime":null,"token":"B3966247477BCDA0DB8304E1A2F50668","shareCount":null,"prizeCount":null,"shareReadCount":null,"shareReprintCount":null,"integral":null,"doingJobCount":null,"finishedJobCount":null,"partnerId":null,"personalRate":null}
+// {"subscribe":null,"openId":"owzYd1Mz9ualgzcuZ5crCSmtaH1s","nickname":"Jason","sexDesc":"男","sex":1,"language":"zh_CN","city":"杨浦","province":"上海","country":"中国","headImgUrl":"http://thirdwx.qlogo.cn/mmopen/vi_32/IhGBSrcPDYxpuib46cyT3CpnEwNOUMib2tbEYYxcACLGIiaibWz76diaqbmOzSK7fe9BaQ4VZcVvPAVpl0H557X6YTA/132","subscribeTime":null,"unionId":null,"remark":null,"groupId":null,"tagIds":null,"privileges":[],"subscribeScene":null,"qrScene":null,"qrSceneStr":null}
 
 export default PrizeExchangePage

@@ -8,7 +8,7 @@ class PrizeActions extends Component {
     return (
       <div className='price-actions-container'>
         <span className='price-actions-text'>
-          积分：
+          所需积分：
           {integral}
         </span>
         {/* <Button type='warning' disabled={ integral === 0 } onClick={ onClick }>我要兑换</Button> */}

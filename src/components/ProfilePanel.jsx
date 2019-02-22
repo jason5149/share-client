@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 class ProfilePanel extends Component {
   render() {
-    const { userInfo, integral, shareReprintCount  , shareReadCount, personalRate } = this.props
+    const { userInfo, integral, shareReprintCount, shareReadCount, personalRate } = this.props
     const { headImgUrl } = userInfo
 
     return (
