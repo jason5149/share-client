@@ -179,10 +179,10 @@ class NewsDetailPage extends Component {
     const { UserModel, match } = this.props
     const { params } = this.state
     const { recordReadAction } = UserModel
-    const { id: userId } = params
+    const { id: shareUserId } = params
     const { id: newsId } = match.params
 
-    const result = await recordReadAction({ newsId, userId })
+    const result = await recordReadAction({ newsId, shareUserId })
 
     if (result) {
       this.setState({
