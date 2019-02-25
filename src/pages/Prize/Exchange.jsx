@@ -135,13 +135,18 @@ class PrizeExchangePage extends Component {
       userAddressId,
       userId,
     }
+
+    Toast.loading('兑换中...')
+  
     const result = await exchangePrize(params)
 
     if (result) {
-      Toast.show('兑换成功')
+      // Toast.show('兑换成功')
+
+      Toast.hide()
 
       setTimeout(() => {
-        history.push(`${ BASE_PATH }/prize`)
+        history.push(`${ BASE_PATH }/prize/result`)
       }, 200)
     }
   }

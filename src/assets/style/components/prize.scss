@@ -246,3 +246,29 @@
     @include size(px2rem(200), auto);
   }
 }
+
+.prize-result-container {
+  @extend [layout];
+  @extend [layout=row];
+  @extend [layout-align="center center"];
+  @include size(100%, 100%);
+  @include position;
+  ul {
+    color: $font-color-2;
+    font-size: px2rem(30);
+    @include size(100%, auto);
+    li {
+      text-align: center;
+      margin-bottom: px2rem(50);
+      @include size(100%, auto);
+      &:first-child {
+        color: $font-color-1;
+        font-size: px2rem(32);
+        font-weight: bold;
+      }
+      &:last-child {
+        text-decoration: underline;
+      }
+    }
+  }
+}
