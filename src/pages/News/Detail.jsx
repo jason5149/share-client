@@ -154,9 +154,14 @@ class NewsDetailPage extends Component {
 
     if (wxConfigResult) {
       const { appId, nonceStr, signature, timestamp  } = wxConfigResult
+
+      Toast.loading('加载中')
+
       const configResult = await wxConfig(appId, timestamp, nonceStr, signature, JS_API_LIST)
         
       if (configResult) {
+        Toast.hide()
+        
         const shareUrl = `${ window.location.host }${ BASE_PATH }/activity/news/${ newsId }?params=${ base64encode(userInfo) }`
 
         wxShareTimeline(title, url, thumbnail_pic_s).then(async result => {
