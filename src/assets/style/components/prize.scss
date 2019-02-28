@@ -15,7 +15,7 @@
       margin-bottom: px2rem(10);
       @extend [layout];
       @extend [layout=row];
-      @extend [layout-align="start center"];
+      @extend [layout-align="start start"];
       @include size(100%, auto);
       .prize-item-thumbnail {
         flex-shrink: 0;
