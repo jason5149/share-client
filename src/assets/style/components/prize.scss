@@ -23,10 +23,11 @@
         @include size(px2rem(200), px2rem(200));
       }
       .prize-item-info {
+        min-width: px2rem(200);
         @extend [layout];
         @extend [layout=column];
         @extend [layout-align="space-between start"];
-        @include size(100%, px2rem(200));
+        @include size(100%, auto);
         .prize-item-text {
           color: $font-color-1;
           font-size: px2rem(30);
@@ -41,7 +42,8 @@
         .prize-item-sub {
           color: $font-color-2;
           font-size: px2rem(24);
-          line-height: px2rem(40);
+          // line-height: px2rem(40);
+          line-height: 1.5;
           white-space: normal;
           @include textOverflow(100%, true, 2);
         }
