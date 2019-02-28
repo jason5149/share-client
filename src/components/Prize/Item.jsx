@@ -72,19 +72,17 @@ class PrizeItem extends Component {
           <div style={{ width: '100%' }} layout='column' layout-align='center start'>
             <div layout='row' layout-align='start center'>
               <div className='prize-item-spec'>
-                积分：
-                {convertibility}
+                { `积分：${ convertibility }` }
               </div>
             </div>
             <span className='prize-item-sub'>
-              收货人：
-              {userName}
-              &nbsp;
-              {mobile}
+              { `收货人：${ userName }` }
             </span>
             <span className='prize-item-sub'>
-              收货地址：
-              { `${ province || '' }${ city || '' }${ area || '' }${ address || '' }` }
+              { `手机号：${ mobile }` }
+            </span>
+            <span className='prize-item-sub'>
+              { `收货地址：${ province || '' }${ city || '' }${ area || '' }${ address || '' }` }
             </span>
           </div>
         </div>
