@@ -60,18 +60,16 @@ class PrizeItem extends Component {
       onClick,
     } = this.props
 
-
-
     return (
       /* eslint-disable-next-line */
       <div className='prize-item-container' onClick={ () => onClick(id) }>
         <img className='prize-item-thumbnail' src={ coverImg } alt='' />
         <div className='prize-item-info'>
-          <div layout='column' layout-align='center start'>
+          <div style={{ width: '100%' }} layout='column' layout-align='center start'>
             <span className='prize-item-text'>{name}</span>
             <span className='prize-item-text'>{model}</span>
           </div>
-          <div layout='column' layout-align='center start'>
+          <div style={{ width: '100%' }} layout='column' layout-align='center start'>
             <div layout='row' layout-align='start center'>
               <div className='prize-item-spec'>
                 积分：
@@ -86,7 +84,7 @@ class PrizeItem extends Component {
             </span>
             <span className='prize-item-sub'>
               收货地址：
-              { `${ province }${ city }${ area }${ address }` }
+              { `${ province || '' }${ city || '' }${ area || '' }${ address || '' }` }
             </span>
           </div>
         </div>

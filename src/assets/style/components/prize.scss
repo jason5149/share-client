@@ -34,8 +34,8 @@
         }
         .prize-item-spec {
           color: $theme-red;
+          margin: px2rem(10) px2rem(40) px2rem(10) 0;
           font-size: px2rem(30);
-          margin-right: px2rem(40);
           line-height: px2rem(40);
         }
         .prize-item-sub {
@@ -43,6 +43,7 @@
           font-size: px2rem(24);
           line-height: px2rem(40);
           white-space: normal;
+          @include textOverflow(100%, true, 2);
         }
       }
     }
