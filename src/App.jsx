@@ -1,25 +1,35 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 import { inject, observer } from 'mobx-react'
+import { Toast } from 'antd-mobile'
 import AuthRoute from '@components/AuthRoute'
 import ErrorBoundary from '@components/ErrorBoundary'
 import AsyncComponent from '@components/AsyncComponent'
 import { BASE_PATH } from '@utils/const'
 import { JS_API_LIST } from '@utils/config'
 import { wxConfig } from '@utils/wx'
+import { getUserInfo, setUserInfo, getWxUserInfo } from '@utils/cache'
 
 @inject(
   'WxModel',
+  'UserModel',
 )
 @observer
 class App extends Component {
+  state = {
+    userInfo:   getUserInfo(),
+    wxUserInfo: getWxUserInfo(),
+  }
+
   componentDidMount() {
     this.init()
   }
 
   async init() {
-    const { WxModel } = this.props
+    const { WxModel, UserModel } = this.props
+    const { userInfo, wxUserInfo } = this.state
     const { getWxConfig } = WxModel
+    const { login } = UserModel
 
     const url = window.location.href
 
@@ -29,6 +39,31 @@ class App extends Component {
       const { appId, nonceStr, signature, timestamp  } = wxConfigResult
 
       await wxConfig(appId, timestamp, nonceStr, signature, JS_API_LIST)
+    }
+
+    if (!userInfo) {
+      Toast.loading('加载中')
+      /* eslint-disable-next-line */
+      const search = new URLSearchParams(window.location.search)
+      const { openId: openid } = wxUserInfo
+      const type = search.get('type')
+      const id = search.get('id')
+
+      const params = {
+        openid,
+      }
+
+      if (type === 1 && id) {
+        params.partnerId = id
+      }
+
+      const result = await login(params)
+
+      Toast.hide()
+
+      if (result) {
+        setUserInfo(result)
+      }
     }
   }
 
