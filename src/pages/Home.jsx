@@ -47,13 +47,17 @@ class HomePage extends Component {
 
       const { openId: openid } = wxUserInfo
 
-      const result = await login({ openid })
+      if (openid) {
+        const result = await login({ openid })
+
+        Toast.hide()
+
+        if (result) {
+          setUserInfo(result)
+        }
+      }
 
       Toast.hide()
-
-      if (result) {
-        setUserInfo(result)
-      }
     }
 
     this.handleSearchBannerList()
