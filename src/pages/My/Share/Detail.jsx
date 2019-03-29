@@ -46,7 +46,7 @@ class MyShareDetailPage extends Component {
     console.log(params)
 
     this.setState({
-      status: params.status || 1,
+      status: parseInt(params.status, 10) || 1,
     })
 
     this.handleSearchQrcode()
