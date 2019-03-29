@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
 import { Toast } from 'antd-mobile'
+import { parse } from 'qs'
 import News from '@components/News'
 import { BASE_PATH, FOLLOW_PAGE_URL } from '@utils/const'
 import { getUserInfo } from '@utils/cache'
@@ -28,8 +29,7 @@ class MyShareDetailPage extends Component {
     userInfo:     getUserInfo(),
     qrcode:       '',
     panelVisible: true,
-    /* eslint-disable-next-line */
-    status:   new URLSearchParams(this.props.location.search).get('status'),
+    status:       1,
   }
 
   componentDidMount() {
@@ -38,6 +38,14 @@ class MyShareDetailPage extends Component {
 
   init() {
     document.title = '我的热文'
+
+    const { location } = this.props
+    const { search } = location
+    const params = search.indexOf('?') ? parse(search.indexOf('?')[1]) : null
+
+    this.setState({
+      status: params.status || 1,
+    })
 
     this.handleSearchQrcode()
     this.handleSearchUserInfo()
