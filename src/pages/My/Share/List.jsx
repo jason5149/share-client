@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
-import { Tabs, ListView, PullToRefresh } from 'antd-mobile'
+import { Tabs, ListView, PullToRefresh, Toast } from 'antd-mobile'
 import News from '@components/UserNews'
 import { BASE_PATH } from '@utils/const'
 
@@ -46,9 +46,14 @@ class MyShareListPage extends Component {
       pageSize: 10,
       status,
     }
+
+    Toast.loading('加载中')
+
     const result = await getNewsList(params)
 
     if (result) {
+      Toast.hide()
+
       this.newsList = this.newsList.concat(result)
 
       this.setState({
@@ -82,6 +87,7 @@ class MyShareListPage extends Component {
           dataSource: dataSource.cloneWithRows(result),
           refreshing: false,
           isLoading:  false,
+          isEmpty:    this.newsList.length === 0,
         })
       }, 800)
     }
@@ -110,6 +116,7 @@ class MyShareListPage extends Component {
         this.setState({
           dataSource: dataSource.cloneWithRows(this.newsList),
           isLoading:  false,
+          isEmpty:    this.newsList.length === 0,
         })
       }, 1000)
     }
@@ -117,7 +124,12 @@ class MyShareListPage extends Component {
 
   handleTabChange = ({ status }) => {
     this.newsList = []
-    this.handleSearchNewsList(1, status)
+
+    this.setState({
+      isEmpty: true,
+    }, () => {
+      this.handleSearchNewsList(1, status)
+    })
   }
 
   handleItemClick = id => {

@@ -1,4 +1,5 @@
 import 'isomorphic-fetch'
+import { Toast } from 'antd-mobile'
 import { isEmpty, merge, assign } from 'lodash'
 import { stringify } from 'qs'
 import { getUserInfo } from '@utils/cache'
@@ -22,6 +23,8 @@ const handleResult = ({ code, message, body }) => {
 const handleError = error => {
   /* eslint-disable-next-line */
   // console.error('REQUEST ERROR  ', error)
+  Toast.hide()
+
   return error
 }
 
