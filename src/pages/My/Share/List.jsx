@@ -123,11 +123,15 @@ class MyShareListPage extends Component {
   }
 
   handleTabChange = ({ status }) => {
+    const { UserModel } = this.props
+    const { setActivedTab } = UserModel
+
     this.newsList = []
 
     this.setState({
       isEmpty: true,
     }, () => {
+      setActivedTab(status)
       this.handleSearchNewsList(1, status)
     })
   }
