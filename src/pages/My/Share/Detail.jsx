@@ -41,7 +41,7 @@ class MyShareDetailPage extends Component {
 
     const { location } = this.props
     const { search } = location
-    const params = search.indexOf('?') ? parse(search.split('?')[1]) : null
+    const params = search.indexOf('?') !== -1 ? parse(search.split('?')[1]) : null
 
     this.setState({
       status: params.status || 1,
