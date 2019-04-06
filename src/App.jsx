@@ -64,6 +64,16 @@ class App extends Component {
       if (result) {
         setUserInfo(result)
       }
+    } else {
+      const { openid } = userInfo
+
+      const result = await login({
+        openid,
+      })
+
+      if (result) {
+        setUserInfo(result)
+      }
     }
   }
 
